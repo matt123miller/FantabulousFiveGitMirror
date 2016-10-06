@@ -198,7 +198,7 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 			}
 		}
 
-
+        // Raycasts the ground to check if we're grounded.
 		void CheckGroundStatus()
 		{
 			RaycastHit hitInfo;

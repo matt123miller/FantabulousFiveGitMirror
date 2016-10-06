@@ -35,8 +35,11 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 
         private void Update()
         {
+            // If we're not jumping...
             if (!m_Jump)
             {
+                // Then request the jump status from CrossPlatformInputManager.
+                // It may be true or false, who knows, it's used in FixedUpdate()
                 m_Jump = CrossPlatformInputManager.GetButtonDown("Jump");
             }
         }

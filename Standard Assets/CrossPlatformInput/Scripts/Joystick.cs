@@ -6,6 +6,9 @@ namespace UnityStandardAssets.CrossPlatformInput
 {
 	public class Joystick : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IDragHandler
 	{
+
+        // Maybe this can be used to have the user move horizontally on ledges. #
+        // Set the variable and call CreateVirtualAxes() when appropriate, MAYBE.
 		public enum AxisOption
 		{
 			// Options for which axes to use
@@ -51,9 +54,12 @@ namespace UnityStandardAssets.CrossPlatformInput
 			}
 		}
 
+
+        // Maybe call this again when we change control states between ledge shuffling and normal input?
+        // Hopefully this would have no bad consequences.
 		void CreateVirtualAxes()
 		{
-			// set axes to use
+			// set axes to use. Clever way of setting the booleans!
 			m_UseX = (axesToUse == AxisOption.Both || axesToUse == AxisOption.OnlyHorizontal);
 			m_UseY = (axesToUse == AxisOption.Both || axesToUse == AxisOption.OnlyVertical);
 

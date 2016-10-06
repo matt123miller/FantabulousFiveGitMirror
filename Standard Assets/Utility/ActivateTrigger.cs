@@ -44,6 +44,7 @@ namespace UnityStandardAssets.Utility
                     case Mode.Trigger:
                         if (targetGameObject != null)
                         {
+                            // Implement the method DoActivateTrigger on targetGameObject
                             targetGameObject.BroadcastMessage("DoActivateTrigger");
                         }
                         break;
