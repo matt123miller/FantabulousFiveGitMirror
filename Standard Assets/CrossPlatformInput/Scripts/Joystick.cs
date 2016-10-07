@@ -7,7 +7,7 @@ namespace UnityStandardAssets.CrossPlatformInput
 	public class Joystick : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IDragHandler
 	{
 
-        // Maybe this can be used to have the user move horizontally on ledges. #
+        // Maybe this can be used to have the user move horizontally on ledges.
         // Set the variable and call CreateVirtualAxes() when appropriate, MAYBE.
 		public enum AxisOption
 		{
@@ -54,17 +54,29 @@ namespace UnityStandardAssets.CrossPlatformInput
 			}
 		}
 
+        // Hopefully this layer on top of the existing functionality lets outside classes seamlessly change the axis. 
+        public void ChangeAxis(AxisOption axis)
+        {
+            axesToUse = axis;
+
+            // Unregister existing axis stored so that we only register the desired choices.
+            // Might cause problems when we test this, feel free to remove.
+            CrossPlatformInputManager.UnRegisterVirtualAxis(horizontalAxisName);
+            CrossPlatformInputManager.UnRegisterVirtualAxis(verticalAxisName);
+
+            CreateVirtualAxes();
+        }
 
         // Maybe call this again when we change control states between ledge shuffling and normal input?
-        // Hopefully this would have no bad consequences.
-		void CreateVirtualAxes()
+        // Hopefully this would have no bad consequences. As an inbetween measure I'll add a public helper method
+		private void CreateVirtualAxes()
 		{
 			// set axes to use. Clever way of setting the booleans!
 			m_UseX = (axesToUse == AxisOption.Both || axesToUse == AxisOption.OnlyHorizontal);
 			m_UseY = (axesToUse == AxisOption.Both || axesToUse == AxisOption.OnlyVertical);
 
-			// create new axes based on axes to use
-			if (m_UseX)
+            // create new axes based on axes to use
+            if (m_UseX)
 			{
 				m_HorizontalVirtualAxis = new CrossPlatformInputManager.VirtualAxis(horizontalAxisName);
 				CrossPlatformInputManager.RegisterVirtualAxis(m_HorizontalVirtualAxis);
@@ -75,6 +87,8 @@ namespace UnityStandardAssets.CrossPlatformInput
 				CrossPlatformInputManager.RegisterVirtualAxis(m_VerticalVirtualAxis);
 			}
 		}
+
+
 
 
 		public void OnDrag(PointerEventData data)
