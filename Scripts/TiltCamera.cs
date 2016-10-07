@@ -11,63 +11,30 @@ public class TiltCamera : MonoBehaviour {
     // I feel like this will be useful, to help control players view. Maybe pointless though, then remove the Clamp()
     public int yMinLimit = -20;
     public int yMaxLimit = 80;
-
-    public Quaternion initialRotation;
-    public Transform resetTarget;
-
     public float xDeg = 0.0f;
     public float yDeg = 0.0f;
+
+    public bool tilting = false;
+
+    public Quaternion resetRotation;
     private Quaternion currentRotation;
     private Quaternion desiredRotation;
-    private Quaternion rotation;
-    private Vector3 position;
 
     // Use this for initialization
     void Start () {
 
-        initialRotation = transform.rotation;
+        resetRotation = transform.localRotation;
 
-        xDeg = Vector3.Angle(Vector3.right, transform.right);
-        yDeg = Vector3.Angle(Vector3.up, transform.up);
+        //xDeg = Vector3.Angle(Vector3.right, transform.right);
+        //yDeg = Vector3.Angle(Vector3.up, transform.up);
 
         //be sure to grab the current rotations as starting points.
-        position = transform.position;
-        rotation = transform.rotation;
-        currentRotation = transform.rotation;
-        desiredRotation = transform.rotation;
-    }
-
-    public void Tilt()
-    {
-        // This for android.
-        //xDeg += Input.acceleration.x * xSpeed * 0.02f;
-        //yDeg -= Input.acceleration.y * ySpeed * 0.02f;
-
-        // Using mouse while android hates me.
-        xDeg += Input.GetAxis("Mouse X") * xSpeed * 0.02f;
-        yDeg -= Input.GetAxis("Mouse Y") * ySpeed * 0.02f;
-
-        //OrbitAngle
-
-        //Clamp the vertical axis for the orbit
-        yDeg = ClampAngle(yDeg, yMinLimit, yMaxLimit);
-        // set camera rotation
-        desiredRotation = Quaternion.Euler(yDeg, xDeg, 0);
-        currentRotation = transform.rotation;
-
-        // Apply the changes
-        transform.rotation = Quaternion.Lerp(currentRotation, desiredRotation, Time.deltaTime); // * damping
-    }
-
-    public void Reset()
-    {
-        // Include anything special that needs to be reset separate to the coroutine.
-     
-        StartCoroutine("LerpCameraBack");
+        currentRotation = transform.localRotation;
+        desiredRotation = transform.localRotation;
     }
 
     // Update is called once per frame
-    void Update ()
+    void Update()
     {
         // Eventually move this into some sort of overall UIInputManager class?
         if (Input.GetMouseButton(1))
@@ -78,35 +45,70 @@ public class TiltCamera : MonoBehaviour {
         {
             Reset();
         }
-	}
+    }
+
+    public void Tilt()
+    {
+
+        if (!tilting)
+        {
+            // Save our current rotation before doing anything else
+            resetRotation = transform.localRotation;
+            tilting = true;
+        }
+
+        // This for android.
+        //xDeg += Input.acceleration.x * xSpeed * 0.02f;
+        //yDeg -= Input.acceleration.y * ySpeed * 0.02f;
+        // will it need Input.acceleration.z ?
+
+        // Using mouse while android hates me.
+        xDeg += Input.GetAxis("Mouse X") * xSpeed * 0.02f;
+        yDeg -= Input.GetAxis("Mouse Y") * ySpeed * 0.02f;
+
+        //Clamp the vertical axis for the tilt
+        yDeg = ClampAngle(yDeg, yMinLimit, yMaxLimit);
+        // set camera rotation, move from the safety of angles to the unknown black magic of quaternions
+        desiredRotation = Quaternion.Euler(yDeg, xDeg, 0);
+        currentRotation = transform.localRotation;
+
+        // Apply the changes
+        transform.localRotation = Quaternion.Lerp(currentRotation, desiredRotation, Time.deltaTime); // * damping
+    }
+
+    public void Reset()
+    {
+        // Include anything special that needs to be reset separate to the coroutine.
+        xDeg = 0;
+        yDeg = 0;
+        tilting = false;
+
+        StartCoroutine("LerpCameraBack");
+    }
+
 
     private IEnumerator LerpCameraBack() {
 
         // How do I find the return angle and rotate back to normal? So scared.
-        //transform.rotation.eulerAngles = Vector3.Lerp(transform.rotation.eulerAngles, desiredRotation, Time.deltaTime);
-        currentRotation = transform.rotation;
-        desiredRotation = initialRotation;
+        // Quaternions are the devil
+        currentRotation = transform.localRotation;
+        desiredRotation = resetRotation;
 
-        float remainingAngle = Quaternion.Angle(transform.rotation, desiredRotation);
+        float remainingAngle = Quaternion.Angle(transform.localRotation, desiredRotation);
         float lerpTime = 0;
 
-        while (remainingAngle > 1)
+        while (remainingAngle > 1) // 1 degree of rotation
         {
             print(remainingAngle);
             lerpTime += Time.smoothDeltaTime;
-
-            rotation = Quaternion.Slerp(transform.rotation, desiredRotation, lerpTime * damping); //  Time.deltaTime * damping
-            transform.rotation = rotation;
-
-            remainingAngle = Quaternion.Angle(transform.rotation, desiredRotation);
+            transform.localRotation = Quaternion.Slerp(transform.localRotation, desiredRotation, lerpTime * damping);
+            remainingAngle = Quaternion.Angle(transform.localRotation, desiredRotation);
 
             yield return null;
         }
 
-        print("LerpCameraBack finished, hopefully it's correct!");
-        
-        // Compensate for any remaining angle changes
-        //transform.LookAt(resetTarget);
+        // Sets the rotation back, compensate for any remaining angle changes.
+        transform.localRotation = desiredRotation;
     }
 
     private static float ClampAngle(float angle, float min, float max)

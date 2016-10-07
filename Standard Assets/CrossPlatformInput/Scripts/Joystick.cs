@@ -55,7 +55,7 @@ namespace UnityStandardAssets.CrossPlatformInput
 		}
 
         // Hopefully this layer on top of the existing functionality lets outside classes seamlessly change the axis. 
-        public void ChangeAxis(AxisOption axis)
+        public void SetAxis(AxisOption axis)
         {
             axesToUse = axis;
 

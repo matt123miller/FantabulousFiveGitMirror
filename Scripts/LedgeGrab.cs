@@ -22,7 +22,7 @@ public class LedgeGrab : MonoBehaviour
         mobileJoystick = GameObject.Find("MobileJoystick");
         joystickScript = mobileJoystick.GetComponent<Joystick>();
     }
-
+    
     // Update is called once per frame
     void Update()
     {
@@ -69,7 +69,7 @@ public class LedgeGrab : MonoBehaviour
         //stops character from moving
         //  characterRigidbody.isKinematic = true;
         characterRigidbody.velocity = Vector3.zero;
-        characterRigidbody.constraints = RigidbodyConstraints.FreezePositionY  | RigidbodyConstraints.FreezeRotation;
+        characterRigidbody.constraints = RigidbodyConstraints.FreezePositionY | RigidbodyConstraints.FreezeRotation;
         onLedge = true;
  
     }
@@ -77,7 +77,7 @@ public class LedgeGrab : MonoBehaviour
     public void resetCharacter()
     {
         characterRigidbody.constraints = RigidbodyConstraints.FreezeRotation;
-        joystickScript.axesToUse = Joystick.AxisOption.Both;
+        joystickScript.SetAxis(Joystick.AxisOption.Both);
         character.gameObject.GetComponent<UnityStandardAssets.Characters.ThirdPerson.ThirdPersonUserControl>().enabled = true;
     }
 }
