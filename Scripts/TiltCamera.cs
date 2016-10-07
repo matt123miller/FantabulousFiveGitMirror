@@ -13,9 +13,10 @@ public class TiltCamera : MonoBehaviour {
     public int yMaxLimit = 80;
 
     public Quaternion initialRotation;
+    public Transform resetTarget;
 
-    private float xDeg = 0.0f;
-    private float yDeg = 0.0f;
+    public float xDeg = 0.0f;
+    public float yDeg = 0.0f;
     private Quaternion currentRotation;
     private Quaternion desiredRotation;
     private Quaternion rotation;
@@ -36,58 +37,81 @@ public class TiltCamera : MonoBehaviour {
         desiredRotation = transform.rotation;
     }
 
+    public void Tilt()
+    {
+        // This for android.
+        //xDeg += Input.acceleration.x * xSpeed * 0.02f;
+        //yDeg -= Input.acceleration.y * ySpeed * 0.02f;
+
+        // Using mouse while android hates me.
+        xDeg += Input.GetAxis("Mouse X") * xSpeed * 0.02f;
+        yDeg -= Input.GetAxis("Mouse Y") * ySpeed * 0.02f;
+
+        //OrbitAngle
+
+        //Clamp the vertical axis for the orbit
+        yDeg = ClampAngle(yDeg, yMinLimit, yMaxLimit);
+        // set camera rotation
+        desiredRotation = Quaternion.Euler(yDeg, xDeg, 0);
+        currentRotation = transform.rotation;
+
+        // Apply the changes
+        transform.rotation = Quaternion.Lerp(currentRotation, desiredRotation, Time.deltaTime); // * damping
+    }
+
+    public void Reset()
+    {
+        // Include anything special that needs to be reset separate to the coroutine.
+     
+        StartCoroutine("LerpCameraBack");
+    }
+
     // Update is called once per frame
     void Update ()
     {
-        // Eventually move into it's own method to call on button hold.
+        // Eventually move this into some sort of overall UIInputManager class?
         if (Input.GetMouseButton(1))
         {
-            // This for android.
-            //xDeg += Input.acceleration.x * xSpeed * 0.02f;
-            //yDeg -= Input.acceleration.y * ySpeed * 0.02f;
-
-            // Using mouse while android hates me.
-            xDeg += Input.GetAxis("Mouse X") * xSpeed * 0.02f;
-            yDeg -= Input.GetAxis("Mouse Y") * ySpeed * 0.02f;
-
-            //OrbitAngle
-
-            //Clamp the vertical axis for the orbit
-            yDeg = ClampAngle(yDeg, yMinLimit, yMaxLimit);
-            // set camera rotation
-            desiredRotation = Quaternion.Euler(yDeg, xDeg, 0);
-            currentRotation = transform.rotation;
-
-            rotation = Quaternion.Lerp(currentRotation, desiredRotation, Time.deltaTime); // * damping
-            transform.rotation = rotation;
+            Tilt();
         }
         else if (Input.GetMouseButtonUp(1))
         {
-            desiredRotation = initialRotation;
-            StartCoroutine("LerpCameraBack");
+            Reset();
         }
 	}
 
     private IEnumerator LerpCameraBack() {
 
-        // How do I find the return angle back to normal? So scared`
+        // How do I find the return angle and rotate back to normal? So scared.
+        //transform.rotation.eulerAngles = Vector3.Lerp(transform.rotation.eulerAngles, desiredRotation, Time.deltaTime);
+        currentRotation = transform.rotation;
+        desiredRotation = initialRotation;
 
-        currentRotation = transform.localRotation;
-        float remainingAngle = Quaternion.Angle(currentRotation, desiredRotation);
+        float remainingAngle = Quaternion.Angle(transform.rotation, desiredRotation);
+        float lerpTime = 0;
 
-        while (remainingAngle < 1)
+        while (remainingAngle > 1)
         {
-            rotation = Quaternion.Slerp(currentRotation, desiredRotation, Time.deltaTime); //  Time.deltaTime * damping
-            transform.localRotation = rotation;
+            print(remainingAngle);
+            lerpTime += Time.smoothDeltaTime;
+
+            rotation = Quaternion.Slerp(transform.rotation, desiredRotation, lerpTime * damping); //  Time.deltaTime * damping
+            transform.rotation = rotation;
+
+            remainingAngle = Quaternion.Angle(transform.rotation, desiredRotation);
+
             yield return null;
         }
 
-
+        print("LerpCameraBack finished, hopefully it's correct!");
+        
+        // Compensate for any remaining angle changes
+        //transform.LookAt(resetTarget);
     }
 
     private static float ClampAngle(float angle, float min, float max)
     {
-        // The equivalent of angle % 360 though I don't think that works with negative numbers.
+        // The equivalent of angle % 360 though I don't think that works with negative numbers. Hence this.
         if (angle < -360)
             angle += 360;
         if (angle > 360)
