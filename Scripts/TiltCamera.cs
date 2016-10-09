@@ -20,14 +20,21 @@ namespace UnityStandardAssets.CrossPlatformInput
         public float zDeg = 0.0f;
 
         public bool tilting = false;
+        public Gyroscope gyro;
 
-        public Quaternion resetRotation;
+        private Quaternion resetRotation;
         private Quaternion currentRotation;
         private Quaternion desiredRotation;
 
         // Use this for initialization
         void Start()
         {
+            //if (gyro.enabled == false)
+            //{
+
+            //}
+            gyro.enabled = true;
+            
 
             resetRotation = transform.localRotation;
 
@@ -58,7 +65,7 @@ namespace UnityStandardAssets.CrossPlatformInput
 
         public void Tilt()
         {
-
+            // Helps to stop us getting caught in a bad change of states. Reset at the end of LerpCameraBack()
             if (!tilting)
             {
                 // Save our current rotation before doing anything else
@@ -72,13 +79,15 @@ namespace UnityStandardAssets.CrossPlatformInput
                 xDeg += Input.GetAxis("Mouse X") * xSpeed * 0.02f;
                 yDeg -= Input.GetAxis("Mouse Y") * ySpeed * 0.02f;
             }
-            else if (Application.isMobilePlatform)
+            else if (Application.isMobilePlatform)// This for android.
             {
-                // This for android.
+                // Doesn't work? It seems like the simplest and most obviousy way!
+                //desiredRotation = gyro.attitude;
+
                 xDeg += Input.acceleration.x * xSpeed * 0.02f;
                 yDeg -= Input.acceleration.y * ySpeed * 0.02f;
                 // will it need Input.acceleration.z ? Add it to the Quaternion.Euler() call
-                zDeg += Input.acceleration.z * zSpeed * 0.02f; // +=, -=, = ????? No idea.
+                //zDeg += Input.acceleration.z * zSpeed * 0.02f; // +=, -=, = ????? No idea.
             }
 
             // Clamp the vertical axis for the tilt
@@ -86,7 +95,6 @@ namespace UnityStandardAssets.CrossPlatformInput
             // Set camera rotation, move from the safety of angles to the unknown black magic of quaternions
             desiredRotation = Quaternion.Euler(yDeg, xDeg, zDeg);
             currentRotation = transform.localRotation;
-
             // Apply the changes
             transform.localRotation = Quaternion.Lerp(currentRotation, desiredRotation, Time.deltaTime); // * damping
         }
