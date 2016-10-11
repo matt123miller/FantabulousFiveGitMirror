@@ -11,8 +11,7 @@ namespace UnityStandardAssets.CrossPlatformInput
 			Hardware,
 			Touch
 		}
-
-
+        
 		private static VirtualInput activeInput;
 
 		private static VirtualInput s_TouchInput;

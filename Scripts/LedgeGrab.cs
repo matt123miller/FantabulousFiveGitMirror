@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityStandardAssets.CrossPlatformInput;
+using UnityStandardAssets.Characters.ThirdPerson;
 
 public class LedgeGrab : MonoBehaviour
 {
@@ -30,7 +31,7 @@ public class LedgeGrab : MonoBehaviour
         if (onLedge && CrossPlatformInputManager.GetButtonDown("Jump"))
         {
             //stops player from making further input
-            character.gameObject.GetComponent<UnityStandardAssets.Characters.ThirdPerson.ThirdPersonUserControl>().enabled = false;
+            character.gameObject.GetComponent<ThirdPersonUserControl>().enabled = false;
             ////teleports character to top of the box
             character.transform.position = Vector3.Lerp(character.transform.position, ledgeCollider.transform.position, 5);
             character.transform.position = new Vector3(character.transform.position.x, character.transform.position.y + 0.5f);
@@ -40,7 +41,7 @@ public class LedgeGrab : MonoBehaviour
 
     void OnTriggerEnter(Collider collider)
     {
-        if (collider.gameObject.tag == "Player")
+        if (collider.CompareTag("Player"))
         {
             character = collider.gameObject;
             characterRigidbody = character.GetComponent<Rigidbody>();
@@ -78,6 +79,6 @@ public class LedgeGrab : MonoBehaviour
     {
         characterRigidbody.constraints = RigidbodyConstraints.FreezeRotation;
         joystickScript.SetAxis(Joystick.AxisOption.Both);
-        character.gameObject.GetComponent<UnityStandardAssets.Characters.ThirdPerson.ThirdPersonUserControl>().enabled = true;
+        character.GetComponent<ThirdPersonUserControl>().enabled = true;
     }
 }
