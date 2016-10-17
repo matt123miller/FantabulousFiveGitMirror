@@ -75,6 +75,14 @@ public class LedgeGrab : MonoBehaviour
         //  characterRigidbody.isKinematic = true;
         characterRigidbody.velocity = Vector3.zero;
         characterRigidbody.useGravity = false;
+        character.transform.LookAt(ledgeCollider.transform);
+
+        var rot = character.transform.rotation.eulerAngles;
+        rot.x = 0;
+        rot.z = 0;
+        rot.y = transform.rotation.eulerAngles.y;
+        character.transform.rotation = Quaternion.Euler(rot);
+
         characterRigidbody.constraints = RigidbodyConstraints.FreezePositionY | RigidbodyConstraints.FreezeRotation;
         joystickScript.SetAxis(Joystick.AxisOption.OnlyHorizontal);
         onLedge = true;
