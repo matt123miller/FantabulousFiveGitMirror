@@ -1035,6 +1035,11 @@ Prefab:
       propertyPath: m_RootOrder
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 114000012211795278, guid: 06e84ed0214f3864b9d5d47a1044743e,
+        type: 2}
+      propertyPath: debugText
+      value: 
+      objectReference: {fileID: 289320418}
     - target: {fileID: 4000010510441108, guid: 06e84ed0214f3864b9d5d47a1044743e, type: 2}
       propertyPath: m_LocalRotation.x
       value: 0.5326752
@@ -1055,11 +1060,6 @@ Prefab:
       propertyPath: m_Name
       value: ThirdPersonController
       objectReference: {fileID: 0}
-    - target: {fileID: 114000012211795278, guid: 06e84ed0214f3864b9d5d47a1044743e,
-        type: 2}
-      propertyPath: debugText
-      value: 
-      objectReference: {fileID: 289320418}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 06e84ed0214f3864b9d5d47a1044743e, type: 2}
   m_IsPrefabParent: 0

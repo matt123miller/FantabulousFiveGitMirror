@@ -7,37 +7,36 @@ namespace UnityStandardAssets.CrossPlatformInput
     [RequireComponent(typeof(Camera))]
     public class TiltCamera : MonoBehaviour
     {
+        
+        [SerializeField]
+        string tiltString;
         // This class is applied to the camera, which is a child of the character controller
         // As such all rotations are localRotation, in relation to the parent object (character controller);
         [Tooltip("The speed the camera will return back to normal, higher is quicker."), Range(0.1f, 1)]
         public float damping = 0.5f;
-        public float xSpeed = 100.0f;
-        public float ySpeed = 100.0f;
-        public float zSpeed = 100.0f;
-
-        // I feel like this will be useful, to help control players view. Maybe pointless though, then remove the Clamp()
-        public int yMinLimit = -20;
-        public int yMaxLimit = 80;
-        public float xDeg = 0.0f;
-        public float yDeg = 0.0f;
-        public float zDeg = 0.0f;
-
         public bool tilting = false;
-        public Gyroscope gyro;
+        public Text debugText;
+        
+        [Header("Only used for PC input")]
+        private float xSpeed = 100.0f;
+        private float ySpeed = 100.0f;
+        private float zSpeed = 100.0f;
+        // I feel like this will be useful, to help control players view. Maybe pointless though, then remove the Clamp()
+        private int yMinLimit = -20;
+        private int yMaxLimit = 80;
+        private float xDeg = 0.0f;
+        private float yDeg = 0.0f;
+        private float zDeg = 0.0f;
 
         private Quaternion resetRotation;
         private Quaternion negatePhoneRotation;
         private Quaternion currentRotation;
         private Quaternion desiredRotation;
 
-        public Text debugText;
 
         // Use this for initialization
         void Start()
         {
-            gyro = Input.gyro;
-            gyro.enabled = true;
-
             // Grab the current rotations as starting points.
             resetRotation = transform.localRotation;
             currentRotation = transform.localRotation;
@@ -50,9 +49,9 @@ namespace UnityStandardAssets.CrossPlatformInput
         void Update()
         {
             // Phone Input.
-            if (CrossPlatformInputManager.GetButton("Look"))
+            if (CrossPlatformInputManager.GetButton(tiltString))
                 Tilt();
-            else if (CrossPlatformInputManager.GetButtonUp("Look"))
+            else if (CrossPlatformInputManager.GetButtonUp(tiltString))
                 ResetRotation();
             
         }
@@ -70,39 +69,16 @@ namespace UnityStandardAssets.CrossPlatformInput
                 tilting = true;
                 debugText.enabled = true;
             }
-
-            if (Application.isEditor)
-            {
-                // Using mouse while android hates me.
-                xDeg += Input.GetAxis("Mouse X") * xSpeed * 0.02f;
-                yDeg -= Input.GetAxis("Mouse Y") * ySpeed * 0.02f;
-
-                // Clamp the vertical axis for the tilt.
-                yDeg = ClampAngle(yDeg, yMinLimit, yMaxLimit);
-
-                // move from the safety of angles to the unknown black magic of quaternions.
-                var lerpTo = Quaternion.Euler(yDeg, xDeg, zDeg);
-                // Apply the changes
-                desiredRotation = Quaternion.Lerp(currentRotation, lerpTo, Time.deltaTime);
-            }
-            else if (Application.isMobilePlatform)// This for android.
-            {
-                // what magic quaternion method do we use?
-                //desiredRotation = Quaternion.FromToRotation(DeviceRotation.GetRotation().eulerAngles, negatePhoneRotation.eulerAngles);// 1 should be instant?
-                //desiredRotation = Quaternion.Euler(v3);
-                //desiredRotation = Quaternion.Slerp(ALL THE THINGS);
-
-                // None! This is 1 rotation offest by another. No idea how it works.
-                // Why do you offset the right by the left? Who knows. It's magic.
-                desiredRotation = negatePhoneRotation * DeviceRotation.GetRotation();
-
-                // Maybe slerp?
-            }
+            
+            // None! This is 1 rotation offest by another. No idea how it works.
+            // Why do you offset the right by the left? Who knows. It's magic.
+            desiredRotation = negatePhoneRotation * DeviceRotation.GetRotation();
 
             // Set rotation at the end, assumes desiredRotation has been set in 1 of the above if statements.
             transform.localRotation = desiredRotation;
             // Cache it back into the conveniently shorter variable name.
             currentRotation = transform.localRotation;
+            debugText.text = desiredRotation.ToString();
         }
 
         public void ResetRotation()
@@ -144,10 +120,9 @@ namespace UnityStandardAssets.CrossPlatformInput
 
             // Sets the rotation back, compensate for any remaining angle changes.
             transform.localRotation = desiredRotation;
-
         }
 
-        
+
 
         private static float ClampAngle(float angle, float min, float max)
         {

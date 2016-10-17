@@ -2589,7 +2589,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d6be5f3ab4053784189cb843c1513087, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  tiltString: Look
   damping: 0.4
+  tilting: 0
+  debugText: {fileID: 0}
   xSpeed: 100
   ySpeed: 100
   zSpeed: 100
@@ -2598,8 +2601,6 @@ MonoBehaviour:
   xDeg: 0
   yDeg: 0
   zDeg: 0
-  tilting: 0
-  debugText: {fileID: 0}
 --- !u!114 &114000013056500870
 MonoBehaviour:
   m_ObjectHideFlags: 1
