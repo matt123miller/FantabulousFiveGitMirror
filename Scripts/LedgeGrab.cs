@@ -13,6 +13,7 @@ public class LedgeGrab : MonoBehaviour
     private GameObject mobileJoystick = null;
     private Joystick joystickScript = null;
     private Rigidbody characterRigidbody = null;
+    private ThirdPersonUserControl thirdPersonUserControl = null;
 
     // Use this for initialization
     void Start()
@@ -22,6 +23,7 @@ public class LedgeGrab : MonoBehaviour
         ledgeCollider = ledgeParent.transform.GetChild(1).gameObject;
         mobileJoystick = GameObject.Find("MobileJoystick");
         joystickScript = mobileJoystick.GetComponent<Joystick>();
+
     }
     
     // Update is called once per frame
@@ -31,7 +33,7 @@ public class LedgeGrab : MonoBehaviour
         if (onLedge && CrossPlatformInputManager.GetButtonDown("Jump"))
         {
             //stops player from making further input
-            character.gameObject.GetComponent<ThirdPersonUserControl>().enabled = false;
+            thirdPersonUserControl.enabled = false;
             ////teleports character to top of the box
             character.transform.position = Vector3.Lerp(character.transform.position, ledgeCollider.transform.position, 5);
             character.transform.position = new Vector3(character.transform.position.x, character.transform.position.y + 0.5f);
@@ -45,6 +47,7 @@ public class LedgeGrab : MonoBehaviour
         {
             character = collider.gameObject;
             characterRigidbody = character.GetComponent<Rigidbody>();
+            thirdPersonUserControl = character.GetComponent<ThirdPersonUserControl>();
         }
 
         if (character != null)
@@ -57,6 +60,7 @@ public class LedgeGrab : MonoBehaviour
     {
         resetCharacter();
         onLedge = false;
+        thirdPersonUserControl.isHanging = false;
     }
 
 
@@ -70,8 +74,12 @@ public class LedgeGrab : MonoBehaviour
         //stops character from moving
         //  characterRigidbody.isKinematic = true;
         characterRigidbody.velocity = Vector3.zero;
+        characterRigidbody.useGravity = false;
         characterRigidbody.constraints = RigidbodyConstraints.FreezePositionY | RigidbodyConstraints.FreezeRotation;
+        joystickScript.SetAxis(Joystick.AxisOption.OnlyHorizontal);
         onLedge = true;
+        thirdPersonUserControl.isHanging = true;
+        
  
     }
 
@@ -80,5 +88,6 @@ public class LedgeGrab : MonoBehaviour
         characterRigidbody.constraints = RigidbodyConstraints.FreezeRotation;
         joystickScript.SetAxis(Joystick.AxisOption.Both);
         character.GetComponent<ThirdPersonUserControl>().enabled = true;
+        characterRigidbody.useGravity = true;
     }
 }
