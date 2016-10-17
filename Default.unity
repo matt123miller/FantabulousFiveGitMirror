@@ -37,7 +37,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44692504, g: 0.4967869, b: 0.57508504, a: 1}
+  m_IndirectSpecularColor: {r: 0.44692534, g: 0.49678725, b: 0.5750856, a: 1}
 --- !u!157 &3
 LightmapSettings:
   m_ObjectHideFlags: 0
@@ -1035,11 +1035,6 @@ Prefab:
       propertyPath: m_RootOrder
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 114000012211795278, guid: 06e84ed0214f3864b9d5d47a1044743e,
-        type: 2}
-      propertyPath: debugText
-      value: 
-      objectReference: {fileID: 289320418}
     - target: {fileID: 4000010510441108, guid: 06e84ed0214f3864b9d5d47a1044743e, type: 2}
       propertyPath: m_LocalRotation.x
       value: 0.5326752
@@ -1059,6 +1054,15 @@ Prefab:
     - target: {fileID: 1000011286664310, guid: 06e84ed0214f3864b9d5d47a1044743e, type: 2}
       propertyPath: m_Name
       value: ThirdPersonController
+      objectReference: {fileID: 0}
+    - target: {fileID: 114000012211795278, guid: 06e84ed0214f3864b9d5d47a1044743e,
+        type: 2}
+      propertyPath: debugText
+      value: 
+      objectReference: {fileID: 289320418}
+    - target: {fileID: 1000010215840238, guid: 06e84ed0214f3864b9d5d47a1044743e, type: 2}
+      propertyPath: m_TagString
+      value: MainCamera
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 06e84ed0214f3864b9d5d47a1044743e, type: 2}
@@ -2357,10 +2361,10 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 2034228819}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.467, z: 0}
-  m_LocalScale: {x: 1.0666667, y: 0.01, z: 1.0666667}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalRotation: {x: 0, y: -0.7071068, z: 0, w: 0.7071068}
+  m_LocalPosition: {x: 0.503, y: 0.45, z: 0}
+  m_LocalScale: {x: 1, y: 0.05, z: 0.1}
+  m_LocalEulerAnglesHint: {x: 0, y: -90, z: 0}
   m_Children: []
   m_Father: {fileID: 311890311}
   m_RootOrder: 0
