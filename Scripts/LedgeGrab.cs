@@ -14,6 +14,7 @@ public class LedgeGrab : MonoBehaviour
     private Joystick joystickScript = null;
     private Rigidbody characterRigidbody = null;
     private ThirdPersonUserControl thirdPersonUserControl = null;
+    public bool automaticClimbUp = false;
 
     // Use this for initialization
     void Start()
@@ -25,18 +26,14 @@ public class LedgeGrab : MonoBehaviour
         joystickScript = mobileJoystick.GetComponent<Joystick>();
 
     }
-    
+
     // Update is called once per frame
     void Update()
     {
         //if on ledge = true and player presses jump, teleport to top of ledge
         if (onLedge && CrossPlatformInputManager.GetButtonDown("Jump"))
         {
-            //stops player from making further input
-            thirdPersonUserControl.enabled = false;
-            ////teleports character to top of the box
-            character.transform.position = Vector3.Lerp(character.transform.position, ledgeCollider.transform.position, 5);
-            character.transform.position = new Vector3(character.transform.position.x, character.transform.position.y + 0.5f);
+            moveCharacterToTop();
             resetCharacter();
         }
     }
@@ -52,7 +49,14 @@ public class LedgeGrab : MonoBehaviour
 
         if (character != null)
         {
-            grabLedge();
+            if (!ThirdPersonCharacter.m_IsGrounded)
+            {
+                grabLedge();
+            }
+            else
+            {
+                grabLedgeGrounded();
+            }
         }
     }
 
@@ -71,24 +75,29 @@ public class LedgeGrab : MonoBehaviour
     //give back input
     public void grabLedge()
     {
-        //stops character from moving
-        //  characterRigidbody.isKinematic = true;
+        freezeCharacter();
+        lookAtLedge(ledgeCollider.transform);
+        onLedge = true;
+    }
+
+    public void grabLedgeGrounded()
+    {
+        lookAtLedge(ledgeCollider.transform);
+        onLedge = true;
+        
+        if(automaticClimbUp)
+        {
+            moveCharacterToTop();
+        }
+    }
+
+    public void freezeCharacter()
+    {
         characterRigidbody.velocity = Vector3.zero;
         characterRigidbody.useGravity = false;
-        character.transform.LookAt(ledgeCollider.transform);
-
-        var rot = character.transform.rotation.eulerAngles;
-        rot.x = 0;
-        rot.z = 0;
-        rot.y = transform.rotation.eulerAngles.y;
-        character.transform.rotation = Quaternion.Euler(rot);
-
         characterRigidbody.constraints = RigidbodyConstraints.FreezePositionY | RigidbodyConstraints.FreezeRotation;
         joystickScript.SetAxis(Joystick.AxisOption.OnlyHorizontal);
-        onLedge = true;
         thirdPersonUserControl.isHanging = true;
-        
- 
     }
 
     public void resetCharacter()
@@ -98,4 +107,25 @@ public class LedgeGrab : MonoBehaviour
         character.GetComponent<ThirdPersonUserControl>().enabled = true;
         characterRigidbody.useGravity = true;
     }
+
+    public void lookAtLedge(Transform ledgeTransform)
+    {
+        character.transform.LookAt(ledgeTransform.transform);
+        var rotation = character.transform.rotation.eulerAngles;
+        rotation.x = 0;
+        rotation.z = 0;
+        rotation.y = this.transform.rotation.eulerAngles.y;
+        character.transform.rotation = Quaternion.Euler(rotation);
+    }
+
+    public void moveCharacterToTop()
+    {
+        //stops player from making further input
+        thirdPersonUserControl.enabled = false;
+        ////teleports character to top of the box
+        character.transform.position = Vector3.Lerp(character.transform.position, ledgeCollider.transform.position, 5);
+        character.transform.position = new Vector3(character.transform.position.x, character.transform.position.y + 0.5f);
+    }
+
+
 }
