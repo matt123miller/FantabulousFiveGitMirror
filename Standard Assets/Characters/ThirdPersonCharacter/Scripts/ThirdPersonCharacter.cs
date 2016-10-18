@@ -56,9 +56,7 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 
             m_TurnAmount = isHanging ? 0 : Mathf.Atan2(move.x, move.z);
             m_ForwardAmount = move.z;
-            //  Debug.Log(isHanging);
-            // Debug.Log(move);
-            Debug.Log("JUMP: " + jump);
+
 
             ApplyExtraTurnRotation();
 
@@ -77,6 +75,7 @@ namespace UnityStandardAssets.Characters.ThirdPerson
             }
 
             ScaleCapsuleForCrouching(crouch);
+            ScaleCapsuleForJump(jump);
             PreventStandingInLowHeadroom();
 
             // send input and other state parameters to the animator
@@ -106,6 +105,24 @@ namespace UnityStandardAssets.Characters.ThirdPerson
                 m_Capsule.center = m_CapsuleCenter;
                 m_Crouching = false;
             }
+        }
+
+        void ScaleCapsuleForJump(bool jump)
+        {
+            if (  !m_IsGrounded && m_Rigidbody.velocity.y > 0)
+            {
+                m_Capsule.height = m_CapsuleHeight / 2f;
+                //m_Capsule.center = new Vector3(m_Capsule.center.x, m_Capsule.center.y + 0.45f, m_Capsule.center.z);
+                //Debug.Log("I SHOULD BE SCALING");
+            }
+            else if (m_IsGrounded || (!m_IsGrounded && m_Rigidbody.velocity.y < 0))
+            {
+                m_Capsule.height = m_CapsuleHeight;
+                m_Capsule.center = m_CapsuleCenter;
+         
+            }
+
+            Debug.Log(m_Rigidbody.velocity.y);
         }
 
         void PreventStandingInLowHeadroom()

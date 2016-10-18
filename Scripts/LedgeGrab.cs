@@ -33,8 +33,8 @@ public class LedgeGrab : MonoBehaviour
         //if on ledge = true and player presses jump, teleport to top of ledge
         if (onLedge && CrossPlatformInputManager.GetButtonDown("Jump"))
         {
-            moveCharacterToTop();
-            resetCharacter();
+            MoveCharacterToTop();
+            ResetCharacter();
         }
     }
 
@@ -51,18 +51,18 @@ public class LedgeGrab : MonoBehaviour
         {
             if (!ThirdPersonCharacter.m_IsGrounded)
             {
-                grabLedge();
+                GrabLedge();
             }
             else
             {
-                grabLedgeGrounded();
+                GrabLedgeGrounded();
             }
         }
     }
 
     void OnTriggerExit(Collider collider)
     {
-        resetCharacter();
+        ResetCharacter();
         onLedge = false;
         thirdPersonUserControl.isHanging = false;
     }
@@ -73,25 +73,25 @@ public class LedgeGrab : MonoBehaviour
     //stop the player input
     //play animation
     //give back input
-    public void grabLedge()
+    public void GrabLedge()
     {
-        freezeCharacter();
-        lookAtLedge(ledgeCollider.transform);
+        FreezeCharacter();
+        LookAtLedge(ledgeCollider.transform);
         onLedge = true;
     }
 
-    public void grabLedgeGrounded()
+    public void GrabLedgeGrounded()
     {
-        lookAtLedge(ledgeCollider.transform);
+        LookAtLedge(ledgeCollider.transform);
         onLedge = true;
         
         if(automaticClimbUp)
         {
-            moveCharacterToTop();
+            MoveCharacterToTop();
         }
     }
 
-    public void freezeCharacter()
+    public void FreezeCharacter()
     {
         characterRigidbody.velocity = Vector3.zero;
         characterRigidbody.useGravity = false;
@@ -100,7 +100,7 @@ public class LedgeGrab : MonoBehaviour
         thirdPersonUserControl.isHanging = true;
     }
 
-    public void resetCharacter()
+    public void ResetCharacter()
     {
         characterRigidbody.constraints = RigidbodyConstraints.FreezeRotation;
         joystickScript.SetAxis(Joystick.AxisOption.Both);
@@ -108,7 +108,7 @@ public class LedgeGrab : MonoBehaviour
         characterRigidbody.useGravity = true;
     }
 
-    public void lookAtLedge(Transform ledgeTransform)
+    public void LookAtLedge(Transform ledgeTransform)
     {
         character.transform.LookAt(ledgeTransform.transform);
         var rotation = character.transform.rotation.eulerAngles;
@@ -118,7 +118,7 @@ public class LedgeGrab : MonoBehaviour
         character.transform.rotation = Quaternion.Euler(rotation);
     }
 
-    public void moveCharacterToTop()
+    public void MoveCharacterToTop()
     {
         //stops player from making further input
         thirdPersonUserControl.enabled = false;
