@@ -49,7 +49,7 @@ public class LedgeGrab : MonoBehaviour
 
         if (character != null)
         {
-            if (!ThirdPersonCharacter.m_IsGrounded)
+            if (!thirdPersonUserControl.characterController.m_IsGrounded)
             {
                 GrabLedge();
             }
@@ -110,12 +110,14 @@ public class LedgeGrab : MonoBehaviour
 
     public void LookAtLedge(Transform ledgeTransform)
     {
-        character.transform.LookAt(ledgeTransform.transform);
-        var rotation = character.transform.rotation.eulerAngles;
-        rotation.x = 0;
-        rotation.z = 0;
-        rotation.y = this.transform.rotation.eulerAngles.y;
-        character.transform.rotation = Quaternion.Euler(rotation);
+        //character.transform.LookAt(ledgeTransform.transform);
+        //var rotation = character.transform.rotation.eulerAngles;
+        //rotation.x = 0;
+        //rotation.z = 0;
+        //rotation.y = this.transform.rotation.eulerAngles.y;
+        //character.transform.rotation = Quaternion.Euler(rotation);
+        // You can just do this, interpolates between the rotations by time, use 1 for instant.
+        character.transform.rotation = Quaternion.Slerp(character.transform.rotation, transform.rotation, 1);
     }
 
     public void MoveCharacterToTop()
