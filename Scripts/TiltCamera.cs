@@ -42,6 +42,8 @@ namespace UnityStandardAssets.CrossPlatformInput
             currentRotation = transform.localRotation;
             desiredRotation = transform.localRotation;
 
+            // Remove for release
+            debugText = GameObject.Find("Rotation Debug").GetComponent<Text>();
             debugText.enabled = false;
         }
 
@@ -50,13 +52,16 @@ namespace UnityStandardAssets.CrossPlatformInput
         {
             // Phone Input.
             if (CrossPlatformInputManager.GetButton(tiltString))
-                Tilt();
+                TiltPhone();
             else if (CrossPlatformInputManager.GetButtonUp(tiltString))
                 ResetRotation();
             
         }
 
-        public void Tilt()
+        /// <summary>
+        /// This rotates the camera to match the orientation of the phone
+        /// </summary>
+        public void TiltPhone()
         {
             // Helps to stop us getting caught in a bad change of states. Resets in ResetRotation().
             if (!tilting)

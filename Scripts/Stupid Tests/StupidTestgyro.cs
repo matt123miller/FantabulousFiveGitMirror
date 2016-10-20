@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class testgyro : MonoBehaviour {
+public class StupidTestgyro : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {

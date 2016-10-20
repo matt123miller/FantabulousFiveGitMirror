@@ -4,6 +4,7 @@ using System.Collections;
 public static class Extensions {
 
     // Collections
+
     public static T RandomItem<T>(this T[] input) 
     {
         return input[Random.Range(0, input.Length - 1)];
@@ -49,7 +50,7 @@ public static class Extensions {
 
 
 
-    public static Transform FindChildWithTag(this Transform parent, string tag)
+    public static Transform GetChildWithTag(this Transform parent, string tag)
     {
         foreach (Transform tr in parent)
         {
