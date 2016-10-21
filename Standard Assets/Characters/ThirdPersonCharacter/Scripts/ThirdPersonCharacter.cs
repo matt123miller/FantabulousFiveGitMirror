@@ -122,7 +122,6 @@ namespace UnityStandardAssets.Characters.ThirdPerson
          
             }
 
-            Debug.Log(m_Rigidbody.velocity.y);
         }
 
         void PreventStandingInLowHeadroom()
