@@ -113,7 +113,7 @@ namespace UnityStandardAssets.Characters.ThirdPerson
             if (  !m_IsGrounded && m_Rigidbody.velocity.y > 0)
             {
                 m_Capsule.height = m_CapsuleHeight / 2f;
-                //m_Capsule.center = new Vector3(m_Capsule.center.x, m_Capsule.center.y + 0.45f, m_Capsule.center.z);
+                 //m_Capsule.center = new Vector3(m_Capsule.center.x, m_Capsule.center.y + 0.45f, m_Capsule.center.z);
                 //Debug.Log("I SHOULD BE SCALING");
             }
             else if (m_IsGrounded || (!m_IsGrounded && m_Rigidbody.velocity.y < 0))
@@ -243,7 +243,6 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 			{
 				m_GroundNormal = hitInfo.normal;
                 m_LastObjectGroundedOn = hitInfo.collider.gameObject.name;
-                Debug.Log("Last Object Grounded On: " + m_LastObjectGroundedOn);
 				m_IsGrounded = true;
 				m_Animator.applyRootMotion = true;
 			}

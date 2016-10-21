@@ -20,8 +20,8 @@ public class LedgeGrab : MonoBehaviour
     void Start()
     {
 
-        ledgeParent = gameObject.transform.parent.gameObject;
-        ledgeCollider = ledgeParent.transform.GetChild(1).gameObject;
+        ledgeCollider = gameObject.transform.parent.gameObject;
+        ledgeParent = ledgeCollider.gameObject.transform.parent.gameObject;
         mobileJoystick = GameObject.Find("MobileJoystick");
         joystickScript = mobileJoystick.GetComponent<Joystick>();
 
@@ -40,6 +40,9 @@ public class LedgeGrab : MonoBehaviour
 
     void OnTriggerEnter(Collider collider)
     {
+        Debug.Log("LedgeParent: " + ledgeParent.name);
+        Debug.Log("LedgeCollider: " + ledgeCollider.name);
+
         if (collider.CompareTag("Player"))
         {
             character = collider.gameObject;
@@ -50,9 +53,6 @@ public class LedgeGrab : MonoBehaviour
         if (character != null && thirdPersonUserControl.characterController.m_LastObjectGroundedOn != ledgeParent.name
             && thirdPersonUserControl.characterController.m_LastObjectGroundedOn != this.gameObject.name)
         {
-            Debug.Log("Ledge Parent: " + ledgeParent.name);
-         //   Debug.Log("Last Object Grounded On: " + thirdPersonUserControl.characterController.m_LastObjectGroundedOn);
-
             if (!thirdPersonUserControl.characterController.m_IsGrounded)
             {
                 GrabLedge();
@@ -129,8 +129,8 @@ public class LedgeGrab : MonoBehaviour
         //stops player from making further input
         thirdPersonUserControl.enabled = false;
         ////teleports character to top of the box
-        character.transform.position = Vector3.Lerp(character.transform.position, ledgeCollider.transform.position, 5);
-        character.transform.position = new Vector3(character.transform.position.x, character.transform.position.y + 0.5f);
+        character.transform.position = new Vector3(ledgeCollider.transform.position.x, ledgeCollider.transform.position.y + 5, ledgeCollider.transform.position.z);
+
     }
 
 
