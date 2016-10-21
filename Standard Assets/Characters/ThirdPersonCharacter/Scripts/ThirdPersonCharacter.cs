@@ -19,6 +19,7 @@ namespace UnityStandardAssets.Characters.ThirdPerson
         Rigidbody m_Rigidbody;
         Animator m_Animator;
         public bool m_IsGrounded;
+        public string m_LastObjectGroundedOn;
         float m_OrigGroundCheckDistance;
         const float k_Half = 0.5f;
         float m_TurnAmount;
@@ -241,6 +242,8 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 			if (Physics.Raycast(transform.position + (Vector3.up * 0.1f), Vector3.down, out hitInfo, m_GroundCheckDistance))
 			{
 				m_GroundNormal = hitInfo.normal;
+                m_LastObjectGroundedOn = hitInfo.collider.gameObject.name;
+                Debug.Log("Last Object Grounded On: " + m_LastObjectGroundedOn);
 				m_IsGrounded = true;
 				m_Animator.applyRootMotion = true;
 			}

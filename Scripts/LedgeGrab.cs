@@ -47,8 +47,12 @@ public class LedgeGrab : MonoBehaviour
             thirdPersonUserControl = character.GetComponent<ThirdPersonUserControl>();
         }
 
-        if (character != null)
+        if (character != null && thirdPersonUserControl.characterController.m_LastObjectGroundedOn != ledgeParent.name
+            && thirdPersonUserControl.characterController.m_LastObjectGroundedOn != this.gameObject.name)
         {
+            Debug.Log("Ledge Parent: " + ledgeParent.name);
+         //   Debug.Log("Last Object Grounded On: " + thirdPersonUserControl.characterController.m_LastObjectGroundedOn);
+
             if (!thirdPersonUserControl.characterController.m_IsGrounded)
             {
                 GrabLedge();
