@@ -24,7 +24,6 @@ public class ScreenFade : MonoBehaviour
 
         fadingImage.enabled = false;
         ToggleLoadingUI(false);
-
     }
 
 

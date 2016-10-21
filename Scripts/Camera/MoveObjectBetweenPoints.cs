@@ -16,6 +16,11 @@ public class MoveObjectBetweenPoints : MonoBehaviour
     // Use this for initialization
     void Start()
     {
+        if (startTransform == null)
+        {
+            Destroy(this);
+            return;
+        }
         originalTransform = transform;
         // move to the placement object
         transform.position = startTransform.position;
