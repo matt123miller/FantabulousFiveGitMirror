@@ -45,6 +45,9 @@ namespace UnityStandardAssets.CrossPlatformInput
             // Remove for release
             debugText = GameObject.Find("Rotation Debug").GetComponent<Text>();
             debugText.enabled = false;
+
+            TiltPhone();
+            tilting = false;
         }
 
         // Update is called once per frame
