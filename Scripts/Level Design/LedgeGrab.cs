@@ -129,8 +129,7 @@ public class LedgeGrab : MonoBehaviour
         //stops player from making further input
         thirdPersonUserControl.enabled = false;
         ////teleports character to top of the box
-        character.transform.position = new Vector3(ledgeCollider.transform.position.x, ledgeCollider.transform.position.y + 5, ledgeCollider.transform.position.z);
-
+        character.transform.position = new Vector3(ledgeCollider.transform.position.x, ledgeCollider.transform.position.y + 0.5f, ledgeCollider.transform.position.z);
     }
 
 
