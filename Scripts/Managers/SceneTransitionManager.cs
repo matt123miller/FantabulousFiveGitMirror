@@ -23,7 +23,6 @@ using UnityEngine.UI;
 
 public class SceneTransitionManager : MonoBehaviour
 {
-
     private static SceneTransitionManager _instance;
 
     // Singleton object, access this via SceneTransitionManager.Instance whenever you need to call a scene transition method.
@@ -36,48 +35,16 @@ public class SceneTransitionManager : MonoBehaviour
         }
     }
 
-
-    [Tooltip("To begin immediately use 0, increase it to delay the start time")]
-    [SerializeField]
-    private float fadeStartTime = 0;
-    [SerializeField]
-    private float fadeMultiplier = 5;
-    private float fadeProgress = 0;
-    private Image loadingImage;
-    private Text loadingText;
-    private Slider loadingSlider;
-
+    public ScreenFade fader;
+    
 
     void Awake()
     {
         _instance = this;
-
-        var fader = transform.GetChildWithTag("ScreenFader");
-        fader.gameObject.SetActive(true);
-        
-        loadingImage = fader.GetComponent<Image>();
-        loadingText = fader.GetComponentInChildren<Text>();
-        loadingSlider = fader.GetComponentInChildren<Slider>();
-
-        loadingImage.enabled = true;
-        
-        ToggleLoadingUI(false);
     }
+    
 
-
-    void Start()
-    {
-        // Performed in Start to allow all variables to be cacher first.
-        BeginFadeToClear();
-    }
- 
-    private void ToggleLoadingUI(bool set)
-    {
-        loadingText.gameObject.SetActive(set);
-        loadingText.enabled = set;
-        loadingSlider.gameObject.SetActive(set);
-        loadingSlider.enabled = set;
-    }
+    #region Level loading functionality
 
     /// <summary>
     /// Asynchronously begins loading the chosen level in the build settings
@@ -90,7 +57,7 @@ public class SceneTransitionManager : MonoBehaviour
         {
             // Handle this error however you like.
         }
-        else 
+        else
         {
             StartCoroutine(AsyncLoadLevel(targetScene));
         }
@@ -116,22 +83,21 @@ public class SceneTransitionManager : MonoBehaviour
 
     private IEnumerator AsyncLoadLevel(int targetScene)
     {
-        BeginFadeToBlack(false);
+        fader.BeginFadeToBlack(false);
 
-        while (fadeProgress < 0.95)
+        while (fader.fadeProgress < 0.95)
         {
             yield return null;
         }
                 
-        ToggleLoadingUI(true);
+        fader.ToggleLoadingUI(true);
         
         AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(targetScene);
 
         while (!asyncLoad.isDone)
         {
             // Here you put your loading screen code.
-            loadingSlider.value = asyncLoad.progress;
-            loadingText.color = new Color(loadingText.color.r, loadingText.color.g, loadingText.color.b, Mathf.PingPong(Time.time, 1));
+            fader.UpdateSlider(asyncLoad.progress);
 
             yield return null;
         }
@@ -139,56 +105,7 @@ public class SceneTransitionManager : MonoBehaviour
         // You don't need to turn the text and slider back off or call BeginFadeToClear() here as the old scene will now be destroyed.
         // The new scene that was just loaded asynchonously will replace it and should have a SceneManager object in it to handle fading etc.
     }
-   
+    #endregion
 
-    public void BeginFadeToBlack(bool fadeToClearFlag)
-    {
-        StartCoroutine(FadeToBlack(fadeStartTime + 1, fadeToClearFlag));
-    }
-
-    public void BeginFadeToClear()
-    {
-        StartCoroutine(FadeToClear(fadeStartTime + 1));
-    }
-
-    private IEnumerator FadeToClear(float fadeStartTime)
-    {
-        loadingImage.enabled = true;
-
-        for (float f = fadeStartTime; f >= 0; f -= ((0.1f * fadeMultiplier) * Time.deltaTime))
-        {
-
-            fadeProgress = f;
-            Color c = loadingImage.color;
-            c.a = f;
-            loadingImage.color = c;
-            yield return null;
-        }
-
-        loadingImage.enabled = false;
-    }
-
-    private IEnumerator FadeToBlack(float fadeStartTime, bool fadeToClearFlag)
-    {
-        loadingImage.enabled = true;
-
-        for (float f = 0f; f <= fadeStartTime; f += ((0.1f * fadeMultiplier) * Time.deltaTime))
-        {
-            fadeProgress = f;
-            Color c = loadingImage.color;
-            c.a = f;
-            loadingImage.color = c;
-            yield return null;
-        }
-        // Included in the unlikely event that scenes will fade to black only. 
-        if (fadeToClearFlag)
-        {
-            BeginFadeToClear();
-        }
-        else
-        {
-            
-        }
-    }
 
 }
