@@ -77,9 +77,10 @@ public static class Extensions {
 
     // Quaternions
     // Does this work?
-    public static void RotateBy(this Quaternion self, Quaternion rotation)
+    public static Quaternion RotateBy(this Quaternion left, Quaternion right)
     {
-        self = rotation * self;
+        left = right * left;
+        return left;
     }
 
 

@@ -7,7 +7,7 @@ namespace UnityStandardAssets.Characters.ThirdPerson
     [RequireComponent(typeof (ThirdPersonCharacter))]
     public class ThirdPersonUserControl : MonoBehaviour
     {
-        private ThirdPersonCharacter m_Character; // A reference to the ThirdPersonCharacter on the object
+        public ThirdPersonCharacter characterController { get; private set; }
         private Transform m_Cam;                  // A reference to the main camera in the scenes transform
         private Vector3 m_CamForward;             // The current forward direction of the camera
         private Vector3 m_Move;
@@ -30,7 +30,7 @@ namespace UnityStandardAssets.Characters.ThirdPerson
             }
 
             // get the third person character ( this should never be null due to require component )
-            m_Character = GetComponent<ThirdPersonCharacter>();
+            characterController = GetComponent<ThirdPersonCharacter>();
             isHanging = false;
         }
 
@@ -73,7 +73,7 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 #endif
 
             // pass all parameters to the character control script
-            m_Character.Move(m_Move, crouch, m_Jump, isHanging, m_Cam.right);
+            characterController.Move(m_Move, crouch, m_Jump, isHanging, m_Cam.right);
             m_Jump = false;
         }
     }
