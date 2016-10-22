@@ -18,7 +18,7 @@ using UnityEngine.UI;
     
     There is a loading bar and flashing loading text included as well, this is optional.
     If you do not wish to use these then remove the all the code concerning loadingText and loadingSlider.
-    To turn these off and on call the ToggleLoadingUI(bool) method, passing it a boolean for whether you want them on (true) or off (false).
+    To turn these off and on call the ToggleLoadingUIOn(bool) method, passing it a boolean for whether you want them on (true) or off (false).
 */
 
 public class SceneTransitionManager : MonoBehaviour
@@ -41,6 +41,8 @@ public class SceneTransitionManager : MonoBehaviour
     void Awake()
     {
         _instance = this;
+
+        //fader = GameObject.FindWithTag("ScreenFader").GetComponent<ScreenFade>();
     }
     
 
@@ -90,7 +92,7 @@ public class SceneTransitionManager : MonoBehaviour
             yield return null;
         }
                 
-        fader.ToggleLoadingUI(true);
+        fader.ToggleLoadingUIOn(true);
         
         AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(targetScene);
 

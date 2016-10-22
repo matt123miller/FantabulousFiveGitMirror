@@ -13,21 +13,11 @@ namespace UnityStandardAssets.CrossPlatformInput
         // This class is applied to the camera, which is a child of the character controller
         // As such all rotations are localRotation, in relation to the parent object (character controller);
         [Tooltip("The speed the camera will return back to normal, higher is quicker."), Range(0.1f, 1)]
-        public float damping = 0.5f;
+        public float lerpMultiplier = 0.5f;
+        public AnimationCurve curve;
         public bool tilting = false;
-        public Text debugText;
+        //public Text debugText;
         
-        [Header("Only used for PC input")]
-        private float xSpeed = 100.0f;
-        private float ySpeed = 100.0f;
-        private float zSpeed = 100.0f;
-        // I feel like this will be useful, to help control players view. Maybe pointless though, then remove the Clamp()
-        private int yMinLimit = -20;
-        private int yMaxLimit = 80;
-        private float xDeg = 0.0f;
-        private float yDeg = 0.0f;
-        private float zDeg = 0.0f;
-
         private Quaternion resetRotation;
         private Quaternion negatePhoneRotation;
         private Quaternion currentRotation;
@@ -43,11 +33,13 @@ namespace UnityStandardAssets.CrossPlatformInput
             desiredRotation = transform.localRotation;
 
             // Remove for release
-            debugText = GameObject.Find("Rotation Debug").GetComponent<Text>();
-            debugText.enabled = false;
+            //debugText = GameObject.Find("Rotation Debug").GetComponent<Text>();
+           // debugText.enabled = false;
 
-            TiltPhone();
-            tilting = false;
+            // Will this simple fix solve the first tilt on mobile?
+            //TiltPhone();
+            //tilting = false;
+            Input.gyro.enabled = true;
         }
 
         // Update is called once per frame
@@ -75,7 +67,7 @@ namespace UnityStandardAssets.CrossPlatformInput
                 // We are aiming to negate by this value later.
                 negatePhoneRotation = Quaternion.Inverse(DeviceRotation.GetRotation());
                 tilting = true;
-                debugText.enabled = true;
+                //debugText.enabled = true;
             }
             
             // None! This is 1 rotation offest by another. No idea how it works.
@@ -86,17 +78,14 @@ namespace UnityStandardAssets.CrossPlatformInput
             transform.localRotation = desiredRotation;
             // Cache it back into the conveniently shorter variable name.
             currentRotation = transform.localRotation;
-            debugText.text = desiredRotation.ToString();
+            //debugText.text = desiredRotation.ToString();
         }
 
         public void ResetRotation()
         {
             // Include anything special that needs to be reset separate to the coroutine.
-            xDeg = 0;
-            yDeg = 0;
-            zDeg = 0;
             tilting = false;
-            debugText.enabled = false;
+            //debugText.enabled = false;
 
             StartCoroutine("LerpCameraBack");
         }
@@ -113,17 +102,28 @@ namespace UnityStandardAssets.CrossPlatformInput
             // This gives the euclidian (360 degrees type) angle between the 2 quaternions.
             // Like most of this geometry stuff it's Angle(from, to)
             float remainingAngle = Quaternion.Angle(transform.localRotation, desiredRotation);
-            float lerpTime = 0;
+            float lerpCompletion = 0;
 
-            while (remainingAngle > 1) // 1 degree of rotation
+            //while (remainingAngle > 1) // 1 degree of rotation
+            //{
+            //    lerpTime += Time.smoothDeltaTime;
+            //    transform.localRotation = Quaternion.Slerp(transform.localRotation, desiredRotation, lerpTime * lerpMultiplier);
+            //    // What is the new remaining angle? This will be evaluated in the while condition
+            //    remainingAngle = Quaternion.Angle(transform.localRotation, desiredRotation);
+
+            //    yield return null;
+            //}
+
+            while (lerpCompletion < 0.99) 
             {
-                lerpTime += Time.smoothDeltaTime;
-                transform.localRotation = Quaternion.Slerp(transform.localRotation, desiredRotation, lerpTime * damping);
-                // What is the new remaining angle? This will be evaluated in the while condition
-                remainingAngle = Quaternion.Angle(transform.localRotation, desiredRotation);
+                lerpCompletion += Time.smoothDeltaTime * lerpMultiplier;
+                var curveValue = curve.Evaluate(lerpCompletion);
+
+                transform.localRotation = Quaternion.Slerp(currentRotation, desiredRotation, curveValue);
 
                 yield return null;
             }
+
             // The reset rotation has now finished, set any states and variables that need setting.
 
             // Sets the rotation back, compensate for any remaining angle changes.

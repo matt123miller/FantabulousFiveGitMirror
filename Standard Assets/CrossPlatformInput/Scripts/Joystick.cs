@@ -30,7 +30,7 @@ namespace UnityStandardAssets.CrossPlatformInput
 
 		void OnEnable()
 		{
-			CreateVirtualAxes();
+			SetAxis(axesToUse);
 		}
 
         void Start()

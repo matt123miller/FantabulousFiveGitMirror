@@ -1,6 +1,9 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityStandardAssets.CrossPlatformInput;
+
 
 namespace UnityStandardAssets.Characters.ThirdPerson
 {
@@ -15,6 +18,7 @@ namespace UnityStandardAssets.Characters.ThirdPerson
         public bool isHanging;
 
         
+
         private void Start()
         {
             // get the transform of the main camera
@@ -76,5 +80,7 @@ namespace UnityStandardAssets.Characters.ThirdPerson
             characterController.Move(m_Move, crouch, m_Jump, isHanging, m_Cam.right);
             m_Jump = false;
         }
+
+        
     }
 }

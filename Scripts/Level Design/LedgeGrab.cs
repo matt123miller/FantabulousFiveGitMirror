@@ -17,13 +17,13 @@ public class LedgeGrab : MonoBehaviour
     public bool automaticClimbUp = false;
 
     // Use this for initialization
-    void Start()
+    void Awake()
     {
 
         ledgeCollider = gameObject.transform.parent.gameObject;
         ledgeParent = ledgeCollider.gameObject.transform.parent.gameObject;
-        mobileJoystick = GameObject.Find("MobileJoystick");
-        joystickScript = mobileJoystick.GetComponent<Joystick>();
+        //mobileJoystick = GameObject.Find("MobileJoystick");
+        //joystickScript = mobileJoystick.GetComponent<Joystick>();
 
     }
 
@@ -43,11 +43,16 @@ public class LedgeGrab : MonoBehaviour
         Debug.Log("LedgeParent: " + ledgeParent.name);
         Debug.Log("LedgeCollider: " + ledgeCollider.name);
 
+       
+
         if (collider.CompareTag("Player"))
         {
+            joystickScript = GameObject.FindWithTag("UICanvas").GetComponentInChildren<Joystick>();
             character = collider.gameObject;
             characterRigidbody = character.GetComponent<Rigidbody>();
             thirdPersonUserControl = character.GetComponent<ThirdPersonUserControl>();
+
+
         }
 
         if (character != null && thirdPersonUserControl.characterController.m_LastObjectGroundedOn != ledgeParent.name
