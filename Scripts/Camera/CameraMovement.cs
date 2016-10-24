@@ -39,6 +39,7 @@ public class CameraMovement : MonoBehaviour {
     void lerpCameraBetweenPos(Transform originalPos, Transform newPos, float time)
     {
        characterCam.transform.localPosition =  Vector3.Lerp(originalPos.transform.localPosition, newPos.transform.localPosition, Time.deltaTime * time);
-     //  characterCam.transform.rotation =  Quaternion.Lerp(originalPos.localRotation, newPos.localRotation, Time.deltaTime * time);
+       characterCam.transform.localRotation =  Quaternion.Lerp(originalPos.localRotation, newPos.localRotation, Time.deltaTime * time);
+ 
     }
 }
