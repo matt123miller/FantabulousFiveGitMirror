@@ -1,0 +1,8 @@
+A collection of useful Git commands for the Terminal. Use with caution, it's a scary place.
+
+I changed the gitignore to exclude a folder that folder was still showing as new in my working copy.
+I ran the following 3 lines in terminal, pressing enter once terminal stops doing loads of things to execute the third line. 
+git rm . -r --cached
+git add .
+git commit -m "fixed untracked files"
+Found here: http://stackoverflow.com/questions/11451535/gitignore-not-working
