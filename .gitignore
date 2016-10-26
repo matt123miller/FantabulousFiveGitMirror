@@ -30,3 +30,5 @@ sysinfo.txt
 # Builds
 *.apk
 *.unitypackage
+Assets/Asset Store Tools.meta
+Assets/Editor/UnityVS.meta
