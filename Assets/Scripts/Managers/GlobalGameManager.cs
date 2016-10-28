@@ -4,12 +4,17 @@ using System.Collections.Generic;
 using JetBrains.Annotations;
 using UnityEngine.UI;
 using UnityStandardAssets.CrossPlatformInput;
+using UnityEngine.SceneManagement;
+using UnityEditor;
 
 public class GlobalGameManager : MonoBehaviour
 {
     private static GlobalGameManager _instance;
     private GameObject uiCanvas;
+    private GameObject playerPrefab;
     private GameObject player;
+    private string characterSelected;
+    private GameObject spawnPoint;
 
     // Singleton object, access this via GlobalGameManager.Instance whenever you need the global stuff.
     public static GlobalGameManager Instance
@@ -25,10 +30,21 @@ public class GlobalGameManager : MonoBehaviour
 
     void Awake()
     {
-        _instance = this;
 
-        player = GameObject.FindWithTag("Player");
+        _instance = this;
         uiCanvas = GameObject.FindWithTag("UICanvas");
+        Scene scene = SceneManager.GetActiveScene();
+
+        if (scene.name != "Tish Test")
+        {
+            string resourcesString = "Prefabs/Scene Requirements/Character/";
+            spawnPoint = GameObject.FindWithTag("SpawnPoint");
+            characterSelected = PlayerPrefs.GetString("CharacterSelected");
+            resourcesString += characterSelected;
+            playerPrefab = (GameObject)Resources.Load(resourcesString, typeof(GameObject));
+            player = Instantiate(playerPrefab, spawnPoint.transform.position, Quaternion.identity) as GameObject;
+        }
+
     }
 
     void OnEnable()
@@ -55,7 +71,10 @@ public class GlobalGameManager : MonoBehaviour
         if (setter)
         {
             var joystick = uiCanvas.GetComponentInChildren<Joystick>();
-            joystick.SetAxis(joystick.axesToUse);
+            if (joystick)
+            {
+                joystick.SetAxis(joystick.axesToUse);
+            }
         }
     }
 }

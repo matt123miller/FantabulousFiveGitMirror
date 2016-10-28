@@ -16,7 +16,7 @@ public class CameraMovement : MonoBehaviour {
     // Use this for initialization
     void Awake()
     {
-        character = GameObject.Find("ThirdPersonController");
+        character = GameObject.FindWithTag("Player");
         // characterCam = GameObject.FindWithTag("MainCamera");
         characterRigidbody = character.GetComponent<Rigidbody>();
         thirdPersonUserControl = character.GetComponent<ThirdPersonUserControl>();
