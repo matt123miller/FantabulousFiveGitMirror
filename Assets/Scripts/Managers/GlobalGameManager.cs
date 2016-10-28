@@ -1,12 +1,6 @@
 ﻿using UnityEngine;
-using System.Collections;
-using System.Collections.Generic;
-using JetBrains.Annotations;
-using UnityEngine.UI;
 using UnityStandardAssets.CrossPlatformInput;
 using UnityEngine.SceneManagement;
-using UnityEditor;
-
 public class GlobalGameManager : MonoBehaviour
 {
     private static GlobalGameManager _instance;
