@@ -35,6 +35,7 @@ public class SceneTransitionManager : MonoBehaviour
         }
     }
 
+    [HideInInspector]
     public ScreenFade fader;
     
 

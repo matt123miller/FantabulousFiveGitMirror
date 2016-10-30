@@ -1,14 +1,21 @@
 ﻿using UnityEngine;
 using UnityStandardAssets.CrossPlatformInput;
 using UnityEngine.SceneManagement;
+using System.Collections.Generic;
+
 public class GlobalGameManager : MonoBehaviour
 {
     private static GlobalGameManager _instance;
-    private GameObject uiCanvas;
     private GameObject playerPrefab;
     private GameObject player;
     private string characterSelected;
     private GameObject spawnPoint;
+
+    // Pause variables
+    [Header("SHOULD NOT INCLUDE THE FADECANVAS")]
+    public List<Canvas> uiCanvases;
+    private Canvas pauseCanvas;
+    private bool m_paused = false;
 
     // Singleton object, access this via GlobalGameManager.Instance whenever you need the global stuff.
     public static GlobalGameManager Instance
@@ -24,9 +31,15 @@ public class GlobalGameManager : MonoBehaviour
 
     void Awake()
     {
-
         _instance = this;
-        uiCanvas = GameObject.FindWithTag("UICanvas");
+
+        uiCanvases = new List<Canvas>();
+        uiCanvases.Add(GameObject.FindWithTag("UICanvas").GetComponent<Canvas>());
+
+        pauseCanvas = gameObject.GetComponent<Canvas>();
+        pauseCanvas.enabled = false;
+
+        // Loading the player prefab
         Scene scene = SceneManager.GetActiveScene();
 
         if (scene.name != "Tish Test")
@@ -58,17 +71,60 @@ public class GlobalGameManager : MonoBehaviour
 
     }
 
+    /// <summary>
+    /// Turns the stored Canvases off or on. Also handles the Joystick
+    /// </summary>
+    /// <param name="setter"></param>
     public void ToggleUI(bool setter)
     {
-        uiCanvas.SetActive(setter);
-
-        if (setter)
+        // Loop through our canvases
+        for (int i = 0; i < uiCanvases.Count; i++)
         {
-            var joystick = uiCanvas.GetComponentInChildren<Joystick>();
-            if (joystick)
+            var canvas = uiCanvases[i];
+            canvas.enabled = setter;
+
+            // If we're turning the UI on....
+            if (setter)
             {
-                joystick.SetAxis(joystick.axesToUse);
+                // We need to check if this canvas have a joystick?
+                var joystick = canvas.gameObject.GetComponentInChildren<Joystick>();
+
+                if (joystick == null)
+                {
+                    // We need to poke the Joystick into working properly, don't know why
+                    joystick.SetAxis(joystick.axesToUse);
+                }
             }
         }
+    }
+
+    public void PauseGame()
+    {
+        m_paused = !m_paused;
+        // Stop time
+        Time.timeScale = m_paused ? 0f : 1f;
+
+        ToggleUI(!m_paused);
+        pauseCanvas.enabled = m_paused;
+    }
+
+    /// <summary>
+    /// Returns to the main menu scene and tidies up variables/state
+    /// </summary>
+    public void ReturnToMenu()
+    {
+        // Do we need to tidy up any variables or state?
+        pauseCanvas.enabled = false;
+        SceneTransitionManager.Instance.LoadTargetLevel(0);
+    }
+
+    /// <summary>
+    /// Closes the game
+    /// </summary>
+    public void CloseGame()
+    {
+        // Does anything need to happen? Save data to playerprefs or whatever?
+
+        Application.Quit();
     }
 }
