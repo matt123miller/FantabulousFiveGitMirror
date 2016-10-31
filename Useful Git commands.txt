@@ -1,0 +1,23 @@
+A collection of useful Git commands for the Terminal. Use with caution, it's a scary place.
+
+I changed the gitignore to exclude a folder that folder was still showing as new in my working copy.
+I ran the following 3 lines in terminal, pressing enter once terminal stops doing loads of things to execute the third line. 
+Found here: http://stackoverflow.com/questions/11451535/gitignore-not-working
+git rm . -r --cached
+git add .
+git commit -m "fixed untracked files"
+
+
+
+Advice for deleting branches.
+Found here: http://stackoverflow.com/questions/5330145/when-to-delete-branches-in-git
+Delete old branches with
+git branch -d branch_name
+
+Delete them from the server with
+git push origin --delete branch_name
+
+or the old syntax
+git push origin :branch_name
+
+which reads as "push nothing into branch_name at origin".
