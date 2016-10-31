@@ -3,6 +3,21 @@ using System.Collections;
 
 public static class Extensions {
 
+
+    // Floats
+
+    public static float VolumeToDB(float volume)
+    {
+        if (volume > 0)
+            return 20f*Mathf.Log10(volume);
+        return -80f;
+    }
+
+    public static float DBToVolume(float db)
+    {
+        return Mathf.Pow(10f, db/20f);
+    }
+
     // Collections
     public static T RandomItem<T>(this T[] input) 
     {
