@@ -42,8 +42,6 @@ public class SceneTransitionManager : MonoBehaviour
     void Awake()
     {
         _instance = this;
-
-        //fader = GameObject.FindWithTag("ScreenFader").GetComponent<ScreenFade>();
     }
     
 

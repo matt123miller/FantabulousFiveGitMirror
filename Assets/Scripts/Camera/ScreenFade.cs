@@ -10,7 +10,7 @@ public class ScreenFade : MonoBehaviour
     [SerializeField]
     private float fadeMultiplier = 5;
     public float fadeProgress = 0;
-    public bool turnUIOnAfter = false;
+    public bool turnUIOnAfter = true;
     private Image fadingImage;
     private Text loadingText;
     private Slider loadingSlider;
@@ -19,22 +19,18 @@ public class ScreenFade : MonoBehaviour
 
     void OnEnable()
     {
-        gameObject.SetActive(true);
-
         fadingImage = GetComponent<Image>();
         loadingSlider = GetComponentInChildren<Slider>();
         loadingText = GetComponentInChildren<Text>();
         loadingSliderImage = loadingSlider.gameObject.GetComponentInChildren<Image>();
 
-        fadingImage.enabled = false;
+        fadingImage.enabled = true;
     }
 
     void Start()
     {
         // Performed in Start to allow all variables to be cached first.
-        GlobalGameManager.Instance.ToggleUI(false);
         ToggleLoadingUIOn(false);
-
         BeginFadeToClear();
         SceneTransitionManager.Instance.fader = this;
     }
@@ -81,6 +77,7 @@ public class ScreenFade : MonoBehaviour
         }
 
         fadingImage.enabled = false;
+
 
         if (turnUIOnAfter)
         {

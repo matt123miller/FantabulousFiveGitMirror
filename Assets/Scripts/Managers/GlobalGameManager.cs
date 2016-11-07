@@ -11,10 +11,11 @@ public class GlobalGameManager : MonoBehaviour
     private string characterSelected;
     private GameObject spawnPoint;
 
-    // Pause variables
-    [Header("SHOULD NOT INCLUDE THE FADECANVAS")]
-    public List<Canvas> uiCanvases;
-    private Canvas pauseCanvas;
+    // Various 
+    private Canvas touchCanvas;
+    private GameObject pauseScreen;
+    private GameObject fadeScreen;
+
     private bool m_paused = false;
 
     // Singleton object, access this via GlobalGameManager.Instance whenever you need the global stuff.
@@ -32,25 +33,27 @@ public class GlobalGameManager : MonoBehaviour
     void Awake()
     {
         _instance = this;
+       
+        touchCanvas = GameObject.FindWithTag("UICanvas").GetComponent<Canvas>();
+        pauseScreen = GameObject.FindWithTag("PauseScreen");
+        fadeScreen = GameObject.FindWithTag("FadeScreen");
 
-        uiCanvases = new List<Canvas>();
-        uiCanvases.Add(GameObject.FindWithTag("UICanvas").GetComponent<Canvas>());
+        pauseScreen.SetActive(false);
+        fadeScreen.SetActive(true);
 
-        pauseCanvas = gameObject.GetComponent<Canvas>();
-        pauseCanvas.enabled = false;
-
+        // This should probably be it's own class.
         // Loading the player prefab
-        Scene scene = SceneManager.GetActiveScene();
+        //Scene scene = SceneManager.GetActiveScene();
 
-        if (scene.name != "Tish Test")
-        {
-            string resourcesString = "Prefabs/Scene Requirements/Character/";
-            spawnPoint = GameObject.FindWithTag("SpawnPoint");
-            characterSelected = PlayerPrefs.GetString("CharacterSelected");
-            resourcesString += characterSelected;
-            playerPrefab = (GameObject)Resources.Load(resourcesString, typeof(GameObject));
-            player = Instantiate(playerPrefab, spawnPoint.transform.position, Quaternion.identity) as GameObject;
-        }
+        //if (scene.name != "Tish Test")
+        //{
+        //    string resourcesString = "Prefabs/Scene Requirements/Character/";
+        //    spawnPoint = GameObject.FindWithTag("SpawnPoint");
+        //    characterSelected = PlayerPrefs.GetString("CharacterSelected");
+        //    resourcesString += characterSelected;
+        //    playerPrefab = (GameObject)Resources.Load(resourcesString, typeof(GameObject));
+        //    player = Instantiate(playerPrefab, spawnPoint.transform.position, Quaternion.identity) as GameObject;
+        //}
 
     }
 
@@ -62,7 +65,7 @@ public class GlobalGameManager : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-
+        ToggleUI(false);
     }
 
     // Update is called once per frame
@@ -77,24 +80,44 @@ public class GlobalGameManager : MonoBehaviour
     /// <param name="setter"></param>
     public void ToggleUI(bool setter)
     {
-        // Loop through our canvases
-        for (int i = 0; i < uiCanvases.Count; i++)
+        touchCanvas.enabled = setter;
+
+        // If we're turning the UI on....
+        if (setter)
         {
-            var canvas = uiCanvases[i];
-            canvas.enabled = setter;
+            // We need to check if this canvas have a joystick?
+            var joystick = touchCanvas.gameObject.GetComponentInChildren<Joystick>();
+            joystick.SetAxis(joystick.axesToUse);
+        }
 
-            // If we're turning the UI on....
-            if (setter)
-            {
-                // We need to check if this canvas have a joystick?
-                var joystick = canvas.gameObject.GetComponentInChildren<Joystick>();
+        //// Loop through our canvases
+        //for (int i = 0; i < uiCanvases.Count; i++)
+        //{
+        //    var canvas = uiCanvases[i];
+        //    canvas.enabled = setter;
 
-                if (joystick == null)
-                {
-                    // We need to poke the Joystick into working properly, don't know why
-                    joystick.SetAxis(joystick.axesToUse);
-                }
-            }
+        //    // If we're turning the UI on....
+        //    if (setter)
+        //    {
+        //        // We need to check if this canvas have a joystick?
+        //        var joystick = canvas.gameObject.GetComponentInChildren<Joystick>();
+
+        //        if (joystick == null)
+        //        {
+        //            // We need to poke the Joystick into working properly, don't know why
+        //            joystick.SetAxis(joystick.axesToUse);
+        //        }
+        //    }
+        //}
+
+        touchCanvas.enabled = setter;
+
+        // If we're turning the UI on....
+        if (setter)
+        {
+            // We need to check if this canvas have a joystick?
+            var joystick = touchCanvas.gameObject.GetComponentInChildren<Joystick>();
+            joystick.SetAxis(joystick.axesToUse);
         }
     }
 
@@ -105,7 +128,7 @@ public class GlobalGameManager : MonoBehaviour
         Time.timeScale = m_paused ? 0f : 1f;
 
         ToggleUI(!m_paused);
-        pauseCanvas.enabled = m_paused;
+        pauseScreen.SetActive(m_paused);
     }
 
     /// <summary>
@@ -114,7 +137,7 @@ public class GlobalGameManager : MonoBehaviour
     public void ReturnToMenu()
     {
         // Do we need to tidy up any variables or state?
-        pauseCanvas.enabled = false;
+        pauseScreen.SetActive(false);
         SceneTransitionManager.Instance.LoadTargetLevel(0);
     }
 

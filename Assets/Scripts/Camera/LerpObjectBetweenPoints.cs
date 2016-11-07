@@ -2,7 +2,7 @@
 using System.Collections;
 using UnityStandardAssets.Characters.ThirdPerson;
 
-public class MoveCameraBetweenPoints : MonoBehaviour
+public class LerpObjectBetweenPoints : MonoBehaviour
 {
 
     // probably attached to camera
@@ -23,12 +23,6 @@ public class MoveCameraBetweenPoints : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-        if (startTransform == null)
-        {
-            GameObject.FindWithTag("ScreenFader").GetComponent<ScreenFade>().turnUIOnAfter = true;
-            this.enabled = false;
-            return;
-        }
         originalPos = transform.position;
         originalRotation = transform.rotation;
         print(originalPos);
@@ -50,7 +44,7 @@ public class MoveCameraBetweenPoints : MonoBehaviour
 
             if (lerpCompletion >= 1)
             {
-                GlobalGameManager.Instance.ToggleUI(true);
+                // The movement has finished now.
                 this.enabled = false;
                 return; // probably return here as we don't want to do other things?
             }
