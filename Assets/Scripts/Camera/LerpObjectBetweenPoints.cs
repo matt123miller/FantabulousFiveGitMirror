@@ -17,12 +17,18 @@ public class LerpObjectBetweenPoints : MonoBehaviour
     private Quaternion originalRotation;
 
     void Awake()
-    {
-    }
-
+	{
+		// This will remove the script if it doesn't need to be used.
+		if (startTransform == null) {
+			this.enabled = false;
+			return;
+		}
+	}
     // Use this for initialization
     void Start()
     {
+		
+
         originalPos = transform.position;
         originalRotation = transform.rotation;
         print(originalPos);
