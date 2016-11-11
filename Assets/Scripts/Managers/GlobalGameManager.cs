@@ -29,10 +29,10 @@ public class GlobalGameManager : MonoBehaviour
     void Awake()
     {
         _instance = this;
-       
+
         touchCanvas = GameObject.FindWithTag("UICanvas").GetComponent<Canvas>();
-        pauseScreen = GameObject.FindWithTag("PauseScreen");
-        fadeScreen = GameObject.FindWithTag("FadeScreen");
+		pauseScreen = transform.FindChild("PauseScreen").gameObject;
+		fadeScreen = transform.FindChild("FadeScreen").gameObject;
 
         pauseScreen.SetActive(false);
         fadeScreen.SetActive(true);
@@ -96,19 +96,6 @@ public class GlobalGameManager : MonoBehaviour
         //    }
         //}
 
-        touchCanvas.enabled = setter;
-
-        // If we're turning the UI on....
-        if (setter)
-        {
-            // We need to check if this canvas have a joystick?
-            var joystick = touchCanvas.gameObject.GetComponentInChildren<Joystick>();
-            if(joystick)
-            {
-                joystick.SetAxis(joystick.axesToUse);
-            }
-
-        }
     }
 
     public void PauseGame()

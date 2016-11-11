@@ -11,6 +11,8 @@ public class ScreenFade : MonoBehaviour
     private float fadeMultiplier = 5;
     public float fadeProgress = 0;
     public bool turnUIOnAfter = true;
+
+	// These are the components manipulated by the class.
     private Image fadingImage;
     private Text loadingText;
     private Slider loadingSlider;
