@@ -9,7 +9,7 @@ public class CharacterSelect : MonoBehaviour {
     // Use this for initialization
     void Start () {
 
-        GameObject.FindWithTag("ScreenFader").GetComponent<ScreenFade>().turnUIOnAfter = true;
+       // GameObject.FindWithTag("ScreenFader").GetComponent<ScreenFade>().turnUIOnAfter = true;
 
         m_characterList = new GameObject[transform.childCount];
         for (int i = 0; i < transform.childCount; i++)

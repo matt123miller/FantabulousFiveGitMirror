@@ -27,7 +27,7 @@ public class CameraMovement : MonoBehaviour {
     {
 
         float characterVelocity = characterRigidbody.velocity.normalized.magnitude;
-        Debug.Log(characterVelocity);
+       // Debug.Log(characterVelocity);
 
         //changes camera to 'travelling' position - far out
         if (characterVelocity > 0 && characterCam.transform.localPosition != travellingCameraPos.transform.localPosition)
