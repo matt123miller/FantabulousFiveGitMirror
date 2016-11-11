@@ -1,0 +1,34 @@
+﻿using UnityEngine;
+using System.Collections;
+using UnityEngine.SceneManagement;
+
+public class CharacterInstantiate : MonoBehaviour {
+
+    private GameObject playerPrefab;
+    private GameObject player;
+    private string characterSelected;
+    private GameObject spawnPoint;
+    private Scene scene;
+
+	// Use this for initialization
+	void Start () {
+
+        scene = SceneManager.GetActiveScene();
+
+        if(scene.name == "Default")
+        {
+            string resourcesString = "Prefabs/Scene Requirements/Character/";
+            spawnPoint = GameObject.FindWithTag("SpawnPoint");
+            characterSelected = PlayerPrefs.GetString("CharacterSelected");
+            resourcesString += characterSelected;
+            playerPrefab = (GameObject)Resources.Load(resourcesString, typeof(GameObject));
+            if (spawnPoint)
+            {
+                player = Instantiate(playerPrefab, spawnPoint.transform.position, Quaternion.identity) as GameObject;
+            }
+
+        }
+
+    }
+	
+}

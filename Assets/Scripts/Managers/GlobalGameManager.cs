@@ -6,10 +6,6 @@ using System.Collections.Generic;
 public class GlobalGameManager : MonoBehaviour
 {
     private static GlobalGameManager _instance;
-    private GameObject playerPrefab;
-    private GameObject player;
-    private string characterSelected;
-    private GameObject spawnPoint;
 
     // Various 
     private Canvas touchCanvas;
@@ -40,25 +36,6 @@ public class GlobalGameManager : MonoBehaviour
 
         pauseScreen.SetActive(false);
         fadeScreen.SetActive(true);
-
-        // This should probably be it's own class.
-        // Loading the player prefab
-        Scene scene = SceneManager.GetActiveScene();
-
-        if (scene.name != "Tish Test")
-        {
-            string resourcesString = "Prefabs/Scene Requirements/Character/";
-            spawnPoint = GameObject.FindWithTag("SpawnPoint");
-            characterSelected = PlayerPrefs.GetString("CharacterSelected");
-            resourcesString += characterSelected;
-            playerPrefab = (GameObject)Resources.Load(resourcesString, typeof(GameObject));
-            if(spawnPoint)
-            {
-                player = Instantiate(playerPrefab, spawnPoint.transform.position, Quaternion.identity) as GameObject;
-            }
-
-            
-        }
 
     }
 
