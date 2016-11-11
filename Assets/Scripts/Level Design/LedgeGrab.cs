@@ -22,9 +22,7 @@ public class LedgeGrab : MonoBehaviour
 
         ledgeCollider = gameObject.transform.parent.gameObject;
         ledgeParent = ledgeCollider.gameObject.transform.parent.gameObject;
-        //mobileJoystick = GameObject.Find("MobileJoystick");
-        //joystickScript = mobileJoystick.GetComponent<Joystick>();
-
+   
     }
 
     // Update is called once per frame
@@ -40,10 +38,6 @@ public class LedgeGrab : MonoBehaviour
 
     void OnTriggerEnter(Collider collider)
     {
-        Debug.Log("LedgeParent: " + ledgeParent.name);
-        Debug.Log("LedgeCollider: " + ledgeCollider.name);
-
-       
 
         if (collider.CompareTag("Player"))
         {
@@ -51,8 +45,6 @@ public class LedgeGrab : MonoBehaviour
             character = collider.gameObject;
             characterRigidbody = character.GetComponent<Rigidbody>();
             thirdPersonUserControl = character.GetComponent<ThirdPersonUserControl>();
-
-
         }
 
         if (character != null && thirdPersonUserControl.characterController.m_LastObjectGroundedOn != ledgeParent.name
@@ -119,12 +111,6 @@ public class LedgeGrab : MonoBehaviour
 
     public void LookAtLedge(Transform ledgeTransform)
     {
-        //character.transform.LookAt(ledgeTransform.transform);
-        //var rotation = character.transform.rotation.eulerAngles;
-        //rotation.x = 0;
-        //rotation.z = 0;
-        //rotation.y = this.transform.rotation.eulerAngles.y;
-        //character.transform.rotation = Quaternion.Euler(rotation);
         // You can just do this, interpolates between the rotations by time, use 1 for instant.
         character.transform.rotation = Quaternion.Slerp(character.transform.rotation, transform.rotation, 1);
     }
