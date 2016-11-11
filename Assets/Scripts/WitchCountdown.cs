@@ -24,6 +24,7 @@ public class WitchCountdown : MonoBehaviour {
         StartCoroutine(GetReadyForWitch());
     }
 
+    //Get Ready Countdown timer and then fires co-routine for keeping still
     public IEnumerator GetReadyForWitch()
     {
         for (int i = 4; i >= 1; i--)
