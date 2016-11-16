@@ -32,3 +32,6 @@ sysinfo.txt
 *.unitypackage
 Assets/Asset Store Tools.meta
 Assets/Editor/UnityVS.meta
+Assets/Plugins/Editor.meta
+Assets/Plugins/Editor/VSCode.cs
+Assets/Plugins/Editor/VSCode.cs.meta
