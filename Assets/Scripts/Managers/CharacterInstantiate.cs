@@ -15,7 +15,7 @@ public class CharacterInstantiate : MonoBehaviour {
 
         scene = SceneManager.GetActiveScene();
 
-        if(scene.name == "Default")
+        if(scene.name != "MainMenu" || scene.name != "Tish Test")
         {
             string resourcesString = "Prefabs/Scene Requirements/Character/";
             spawnPoint = GameObject.FindWithTag("SpawnPoint");
