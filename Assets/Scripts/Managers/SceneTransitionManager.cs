@@ -56,7 +56,8 @@ public class SceneTransitionManager : MonoBehaviour
     {
         if (targetScene > SceneManager.sceneCountInBuildSettings)
         {
-            // Handle this error however you like.
+            // returns to main menu.
+            StartCoroutine(AsyncLoadLevel(0));
         }
         else
         {
@@ -75,6 +76,8 @@ public class SceneTransitionManager : MonoBehaviour
         {
             // There are no scenes left. Maybe return to main menu?
             // Handle this error however you like.
+            StartCoroutine(AsyncLoadLevel(0)); // returns to the main menu
+
         }
         else 
         {
