@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using UnityEngine;
+using UnityStandardAssets.CrossPlatformInput;
 
 namespace UnityStandardAssets.Utility
 {
@@ -19,11 +20,12 @@ namespace UnityStandardAssets.Utility
         private void Update()
         {
             // Make sure the user pressed the mouse down
-            if (!Input.GetMouseButtonDown(0))
+            if (!Input.GetMouseButton(0))
             {
                 return;
             }
 
+            
             var mainCamera = FindCamera();
 
             // We need to actually hit an object
@@ -40,7 +42,7 @@ namespace UnityStandardAssets.Utility
             {
                 return;
             }
-
+            
             if (!m_SpringJoint)
             {
                 var go = new GameObject("Rigidbody dragger");

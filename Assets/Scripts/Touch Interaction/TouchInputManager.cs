@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.EventSystems;
 
 public class TouchInputManager : MonoBehaviour {
 
@@ -7,6 +8,7 @@ public class TouchInputManager : MonoBehaviour {
 	RaycastHit _hit;
 	Touch _touch;
 	Vector3 _touchPosition;
+
 	// Use this for initialization
 	void Start () {
 	
@@ -15,7 +17,12 @@ public class TouchInputManager : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 
-
+    //    if (EventSystem.current.IsPointerOverGameObject() ||
+    //EventSystem.current.currentSelectedGameObject != null)
+    //    {
+    //        print("what is this");
+    //        return;
+    //    }
 #if UNITY_EDITOR
         print("Editor");
         if (Input.GetMouseButtonDown(0)){
@@ -28,7 +35,7 @@ public class TouchInputManager : MonoBehaviour {
 
 				var touchable = _hit.transform.GetComponent<TouchInteractive>();
 
-				if (touchable != null){
+				if (touchable){
 					touchable.Interact(_touchPosition);
 				}
 			}
@@ -58,7 +65,7 @@ public class TouchInputManager : MonoBehaviour {
             // Check for an ITouchInteractive
             var touchable = _hit.transform.GetComponent<TouchInteractive>();
 
-            if (touchable != null)
+            if (touchable)
             {
                 // Call Interact() on it
                 touchable.Interact(_touchPosition);
