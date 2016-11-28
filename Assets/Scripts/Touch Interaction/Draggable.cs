@@ -25,7 +25,7 @@ public class Draggable : TouchInteractive {
 
 	public override void Interact(Vector3 fingerPosition)
 	{
-        print("Interacting");
+        print("Drag that");
 	    Vector3 moveBy = transform.position - fingerPosition;
 	    Vector3 adjustment;
         // strip out the unnecessary axis of movement

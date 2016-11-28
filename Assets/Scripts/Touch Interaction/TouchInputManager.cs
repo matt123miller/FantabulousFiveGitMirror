@@ -20,7 +20,7 @@ public class TouchInputManager : MonoBehaviour {
         if (Input.GetMouseButtonDown(0)){
 
 			_touchPosition = Input.mousePosition;
-			print(_touchPosition);	
+			//print(_touchPosition);	
 			_ray = Camera.main.ScreenPointToRay(_touchPosition);
 
 			if (Physics.Raycast(_ray, out _hit)) {
