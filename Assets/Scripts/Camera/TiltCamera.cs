@@ -98,22 +98,8 @@ namespace UnityStandardAssets.CrossPlatformInput
             currentRotation = transform.localRotation;
             // We will return to this point. desiredRotaiton doesn't change throughout the whole coroutine.
             desiredRotation = resetRotation;
-
-            // This gives the euclidian (360 degrees type) angle between the 2 quaternions.
-            // Like most of this geometry stuff it's Angle(from, to)
-            float remainingAngle = Quaternion.Angle(transform.localRotation, desiredRotation);
             float lerpCompletion = 0;
-
-            //while (remainingAngle > 1) // 1 degree of rotation
-            //{
-            //    lerpTime += Time.smoothDeltaTime;
-            //    transform.localRotation = Quaternion.Slerp(transform.localRotation, desiredRotation, lerpTime * lerpMultiplier);
-            //    // What is the new remaining angle? This will be evaluated in the while condition
-            //    remainingAngle = Quaternion.Angle(transform.localRotation, desiredRotation);
-
-            //    yield return null;
-            //}
-
+            
             while (lerpCompletion < 0.99) 
             {
                 lerpCompletion += Time.smoothDeltaTime * lerpMultiplier;

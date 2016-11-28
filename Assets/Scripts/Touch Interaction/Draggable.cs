@@ -27,26 +27,29 @@ public class Draggable : TouchInteractive {
 	{
         print("Interacting");
 	    Vector3 moveBy = transform.position - fingerPosition;
-
+	    Vector3 adjustment;
         // strip out the unnecessary axis of movement
 	    if (movementAxis == MoveAxis.Both)
 	    {
-	        moveBy = new Vector3(moveBy.x, 0, moveBy.z);
+            adjustment = new Vector3(1, 0, 1);
 	    }
         else if (movementAxis == MoveAxis.Vertical)
 	    {
-            moveBy = new Vector3(0, 0, moveBy.z);
+            adjustment = new Vector3(0, 0, 1);
         }
         else // Horizontal
 	    {
-            moveBy = new Vector3(moveBy.x, 0, 0);
+            adjustment = new Vector3(1, 0, 0);
         }
 
         // Move towards the finger position as fast as the rigidbody will allow
-	    var v3 = 3;
+        // Is there a shorter way to do this???
+	    moveBy.x *= adjustment.x;
+        moveBy.y *= adjustment.y;
+        moveBy.z *= adjustment.z;
+
+        // move
 
 
-
-
-	}
+    }
 }
