@@ -7,6 +7,8 @@ public class GlobalGameManager : MonoBehaviour
 {
     private static GlobalGameManager _instance;
 
+    private Transform playerTransform;
+
     // Various 
     private Canvas touchCanvas;
     private GameObject pauseScreen;
@@ -22,6 +24,16 @@ public class GlobalGameManager : MonoBehaviour
             if (_instance == null) { _instance = new GlobalGameManager(); }
             return _instance;
         }
+    }
+
+    public Transform PlayerTransform // Lazy loaded, will it work?
+    {
+        get
+        {
+            if (!playerTransform) { playerTransform = GameObject.FindWithTag("Player").transform; }
+            return playerTransform;
+        }
+        set { playerTransform = value; }
     }
 
     // 3 starting methods called in the order shown. Awake, OnEnable, Start.
@@ -41,6 +53,7 @@ public class GlobalGameManager : MonoBehaviour
 
     void OnEnable()
     {
+        //playerTransform = GameObject.FindWithTag("Player").transform;
         
     }
 
