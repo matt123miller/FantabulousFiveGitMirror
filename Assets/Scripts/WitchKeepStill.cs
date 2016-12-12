@@ -8,20 +8,23 @@ public class WitchKeepStill : MonoBehaviour {
     private Vector3 accelerometerTiltVal;
     private bool keepStillTriggered = false;
     private bool isStill = true;
-    private Text witchPromptText; 
+    private Text witchPromptText;
+    private Vector3 initialDeviceRotation;
+    private Vector3 currentDeviceRotation;
 
 	// Use this for initialization
 	void Start () {
         witchPromptText = GameObject.Find("Witch Prompt Text").GetComponent<Text>();
         deviceTilt = GameObject.Find("DeviceTiltTest").GetComponent<DeviceTilt>();
+    
 	}
 	
 	// Update is called once per frame
 	void Update () {
 
-        accelerometerTiltVal= deviceTilt.getTilt();
+        accelerometerTiltVal = deviceTilt.LowPassFilterAccelerometer();
         movementCheck(accelerometerTiltVal);
-
+ 
 	}
 
     //timer for 10 seconds
@@ -29,6 +32,8 @@ public class WitchKeepStill : MonoBehaviour {
     {
         //guard boolean to make sure the movementCheck is only relevant for these 10 seconds
         keepStillTriggered = true;
+        initialDeviceRotation = DeviceRotation.GetRotation().eulerAngles;
+
         for (int i = 10; i >= 1; i--)
         {
             //if we moved, stop the timer
@@ -56,10 +61,12 @@ public class WitchKeepStill : MonoBehaviour {
     //checks magnitude of the acceleromter value - detecting any shake
     public void movementCheck(Vector3 accelerometerCurrentVal)
     {
+        currentDeviceRotation = DeviceRotation.GetRotation().eulerAngles;
+        Debug.Log(initialDeviceRotation - currentDeviceRotation);
         if (keepStillTriggered)
         {
-            Debug.Log(accelerometerCurrentVal.magnitude);
-            if (Input.acceleration.magnitude > 1.01f)
+
+            if (accelerometerCurrentVal.magnitude > 1f || hasRotationChanged(currentDeviceRotation))
             {
                 witchPromptText.text = "YOU MOVED - GAME OVER";
                 isStill = false;
@@ -71,5 +78,27 @@ public class WitchKeepStill : MonoBehaviour {
     {
         keepStillTriggered = false;
         isStill = true;
+    }
+
+    public bool hasRotationChanged(Vector3 rotation)
+    {
+        int rotBuffer = 10;
+
+        if (currentDeviceRotation.x > (initialDeviceRotation.x + rotBuffer) || currentDeviceRotation.x < (initialDeviceRotation.x - rotBuffer)) 
+        {
+            return true;
+        }
+        else if (currentDeviceRotation.y > (initialDeviceRotation.y + rotBuffer) || currentDeviceRotation.y < (initialDeviceRotation.y - rotBuffer))
+        {
+            return true;
+        }
+        else if (currentDeviceRotation.z > (initialDeviceRotation.z + rotBuffer) || currentDeviceRotation.z < (initialDeviceRotation.z - rotBuffer))
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
     }
 }
