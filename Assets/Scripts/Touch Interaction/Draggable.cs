@@ -11,7 +11,7 @@ public class Draggable : TouchInteractive {
 	// Need to work out how to define a drag axis, 1 or 2 dimensions.
 
     public MoveAxis movementAxis = MoveAxis.Both;
-    private Rigidbody rb;
+    public Rigidbody rb;
     
 	void Awake ()
 	{
@@ -28,6 +28,12 @@ public class Draggable : TouchInteractive {
         print("Drag that");
 	    Vector3 moveBy = transform.position - fingerPosition;
 	    Vector3 adjustment;
+
+	    if (movementAxis == MoveAxis.None)
+	    {
+	        return;
+        }
+
         // strip out the unnecessary axis of movement
 	    if (movementAxis == MoveAxis.Both)
 	    {
@@ -47,9 +53,14 @@ public class Draggable : TouchInteractive {
 	    moveBy.x *= adjustment.x;
         moveBy.y *= adjustment.y;
         moveBy.z *= adjustment.z;
+        
+	    // move
 
-        // move
 
+	}
 
+    public override void FinishInteraction()
+    {
+        print("Drag finished");
     }
 }

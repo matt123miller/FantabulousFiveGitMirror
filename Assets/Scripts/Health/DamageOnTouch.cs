@@ -11,7 +11,7 @@ public class DamageOnTouch : MonoBehaviour
 
     public void LateUpdate()
     {
-        _velocity = (_lastPosition - (Vector2)transform.position) / Time.deltaTime;
+        //_velocity = (_lastPosition - (Vector2)transform.position) / Time.deltaTime;
         _lastPosition = transform.position;
     }
 
