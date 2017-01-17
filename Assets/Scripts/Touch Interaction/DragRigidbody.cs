@@ -41,6 +41,7 @@ public class DragRigidbody : MonoBehaviour
             return;
         }
 
+
         if (!m_SpringJoint)
         {
             var go = new GameObject("Rigidbody dragger");
@@ -82,6 +83,9 @@ public class DragRigidbody : MonoBehaviour
             m_SpringJoint.connectedBody.angularDrag = oldAngularDrag;
             m_SpringJoint.connectedBody = null;
         }
+
+        //At the end remove the spawned spring object.
+        Destroy(m_SpringJoint.gameObject);
 
     }
 

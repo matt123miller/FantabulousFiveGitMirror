@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine.EventSystems;
 
 public class TouchInputManager : MonoBehaviour {
@@ -8,6 +9,8 @@ public class TouchInputManager : MonoBehaviour {
 	RaycastHit _hit;
 	Touch _touch;
 	Vector3 _touchPosition;
+
+    private TouchInteractive[] touchables;
 
 	// Use this for initialization
 	void Start () {
@@ -26,8 +29,8 @@ public class TouchInputManager : MonoBehaviour {
 			if (Physics.Raycast(_ray, out _hit)) {
 
                 // Get all my touchables.
-				var touchables = _hit.transform.GetComponents<TouchInteractive>();
-
+				touchables = _hit.transform.GetComponents<TouchInteractive>();
+                
                 foreach (TouchInteractive touch in touchables)
 			    {
                     // Call Interact(v3) on it.
@@ -35,6 +38,15 @@ public class TouchInputManager : MonoBehaviour {
 			    }
 			}
 		}
+        
+        else if (Input.GetMouseButtonUp(0))
+        {
+            foreach (var touch in touchables)
+            {
+                touch.FinishInteraction();
+            }
+        }
+
 //#elif MOBILE_INPUT
 //        print("Mobile");
 //        var touches = Input.touches;

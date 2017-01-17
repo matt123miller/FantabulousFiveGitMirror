@@ -21,10 +21,14 @@ public class GlobalGameManager : MonoBehaviour
     {
         get
         {
-            if (_instance == null) { _instance = new GlobalGameManager(); }
+            if (_instance == null)
+            {
+                _instance = GameObject.FindWithTag("GlobalGameManager").GetComponent<GlobalGameManager>();
+            }
             return _instance;
         }
     }
+    
 
     public Transform PlayerTransform // Lazy loaded, will it work?
     {

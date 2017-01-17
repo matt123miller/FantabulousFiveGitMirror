@@ -7,10 +7,12 @@ public abstract class TouchInteractive : MonoBehaviour {
 
     public enum MoveAxis
     {
-        Both, Horizontal, Vertical
+        None, Both, Horizontal, Vertical
     }
 
     public abstract void Interact(Vector3 touchPosition);
+
+    public abstract void FinishInteraction();
 }
 
 

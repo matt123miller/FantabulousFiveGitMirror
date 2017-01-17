@@ -33,7 +33,6 @@ public class MovingPortraits : MonoBehaviour
 
     void Start()
     {
-        player = GlobalGameManager.Instance.PlayerTransform;
 
     }
 
@@ -43,12 +42,15 @@ public class MovingPortraits : MonoBehaviour
         if (!collider.CompareTag("Player"))
             return;
 
+        player = collider.transform;
+
         // player in relation to painting
         Vector3 playerToPainting = player.position - transform.position;
         float sqrDistance = playerToPainting.sqrMagnitude;
 
         float percentDistance = sqrDistance * invSqrColliderDistance;
-        print(percentDistance);
+        //print(percentDistance);
+
         // move the contents of the painting accordingly 
 
 
