@@ -11,7 +11,7 @@ public class CharacterInstantiate : MonoBehaviour {
     private Scene scene;
 
 	// Use this for initialization
-	void Start () {
+	void Awake () {
 
         scene = SceneManager.GetActiveScene();
 

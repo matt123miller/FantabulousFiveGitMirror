@@ -62,7 +62,6 @@ public class WitchKeepStill : MonoBehaviour {
     public void movementCheck(Vector3 accelerometerCurrentVal)
     {
         currentDeviceRotation = DeviceRotation.GetRotation().eulerAngles;
-        Debug.Log(initialDeviceRotation - currentDeviceRotation);
         if (keepStillTriggered)
         {
 
