@@ -7,6 +7,7 @@ public class ObjNoise : MonoBehaviour {
     private float impactVelocity;
     private Noise noiseScript;
     private float pushNoiseModifier = 100;
+    float pushTimer = 0;
 
     public void Start()
     {
@@ -22,8 +23,19 @@ public class ObjNoise : MonoBehaviour {
 
     public void OnCollisionStay(Collision collision)
     {
-        GetImpactVelocity(collision);
-        calcNoise(weightOfObj, impactVelocity);
+        pushTimer += Time.deltaTime;
+
+        if(pushTimer >= 1)
+        {
+            GetImpactVelocity(collision);
+            calcNoise(weightOfObj, impactVelocity);
+            pushTimer = 0;
+        }
+    }
+
+    public void OnCollisionExit()
+    {
+        pushTimer = 0;
     }
 
     public void GetImpactVelocity(Collision collision)
