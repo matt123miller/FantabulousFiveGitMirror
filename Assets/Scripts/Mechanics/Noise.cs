@@ -8,18 +8,30 @@ public class Noise : MonoBehaviour
     public float maxNoise = 100f;
     public GameObject noiseBar;
 
-    public void Awake()
+    public void Start()
     {
         currentNoise = 0;
         SetNoiseBar(currentNoise);
-        InvokeRepeating("DecreaseNoise", 1f, 1f);
+        //InvokeRepeating("DecreaseNoise", 1f, 1f);
     }
 
 
-    public void DecreaseNoise()
+    //public void DecreaseNoise()
+    //{
+    //    currentNoise += 2;
+    //    SetNoiseBar(CalculateNoiseVal(currentNoise)); //making sure that noise value is set to value between 0 - 1 before setting UI
+    //}
+
+    public void AddToNoise(float moreNoise)
     {
-        currentNoise += 2;
-        SetNoiseBar(CalculateNoiseVal(currentNoise)); //making sure that noise value is set to value between 0 - 1 before setting UI
+        currentNoise += moreNoise;
+        SetNoiseBar(CalculateNoiseVal(currentNoise));
+        if (currentNoise >= 100)
+        {
+            TriggerWitch();
+            ResetNoiseBar();
+        }
+
     }
 
     public void SetNoiseBar(float noiseVal)
@@ -33,5 +45,16 @@ public class Noise : MonoBehaviour
     {
         float calculatedNoise = currentNoiseVal / maxNoise;
         return calculatedNoise;
+    }
+
+    public void TriggerWitch()
+    {
+
+    }
+
+    public void ResetNoiseBar()
+    {
+        currentNoise = 0;
+        noiseBar.transform.localScale = new Vector3(0, noiseBar.transform.localScale.y, noiseBar.transform.localScale.z);
     }
 }
