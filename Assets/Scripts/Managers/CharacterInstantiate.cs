@@ -11,15 +11,11 @@ public class CharacterInstantiate : MonoBehaviour
     private GameObject spawnPoint;
     private Scene scene;
 
-<<<<<<< HEAD
-	// Use this for initialization
-	void Awake () {
-=======
+
+	
     // Use this for initialization
     void Awake()
     {
->>>>>>> 3c971a98ee7672be9fa3e8005ba27e8644841f31
-
         scene = SceneManager.GetActiveScene();
 
         if (scene.name != "MainMenu" || scene.name != "Tish Test")
