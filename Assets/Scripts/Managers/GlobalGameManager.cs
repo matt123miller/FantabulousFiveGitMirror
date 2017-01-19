@@ -7,7 +7,7 @@ public class GlobalGameManager : MonoBehaviour
 {
     private static GlobalGameManager _instance;
 
-    private Transform playerTransform;
+    private Transform _playerTransform;
 
     // Various 
     private Canvas touchCanvas;
@@ -28,16 +28,19 @@ public class GlobalGameManager : MonoBehaviour
             return _instance;
         }
     }
-    
+
 
     public Transform PlayerTransform // Lazy loaded, will it work?
     {
         get
         {
-            if (!playerTransform) { playerTransform = GameObject.FindWithTag("Player").transform; }
-            return playerTransform;
+            if (!_playerTransform)
+            {
+                _playerTransform = GameObject.FindWithTag("Player").transform; 
+            }
+            return _playerTransform;
         }
-        set { playerTransform = value; }
+        set { _playerTransform = value; }
     }
 
     // 3 starting methods called in the order shown. Awake, OnEnable, Start.
@@ -47,8 +50,8 @@ public class GlobalGameManager : MonoBehaviour
         _instance = this;
 
         touchCanvas = GameObject.FindWithTag("UICanvas").GetComponent<Canvas>();
-		pauseScreen = transform.FindChild("PauseScreen").gameObject;
-		fadeScreen = transform.FindChild("FadeScreen").gameObject;
+        pauseScreen = transform.FindChild("PauseScreen").gameObject;
+        fadeScreen = transform.FindChild("FadeScreen").gameObject;
 
         pauseScreen.SetActive(false);
         fadeScreen.SetActive(true);
@@ -57,8 +60,8 @@ public class GlobalGameManager : MonoBehaviour
 
     void OnEnable()
     {
-        //playerTransform = GameObject.FindWithTag("Player").transform;
-        
+
+
     }
 
     // Use this for initialization
@@ -86,7 +89,7 @@ public class GlobalGameManager : MonoBehaviour
         {
             // We need to check if this canvas have a joystick?
             var joystick = touchCanvas.gameObject.GetComponentInChildren<Joystick>();
-            if(joystick)
+            if (joystick)
             {
                 joystick.SetAxis(joystick.axesToUse);
             }

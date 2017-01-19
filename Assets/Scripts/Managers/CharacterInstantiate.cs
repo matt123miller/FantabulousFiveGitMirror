@@ -28,7 +28,7 @@ public class CharacterInstantiate : MonoBehaviour
             if (spawnPoint)
             {
                 player = Instantiate(playerPrefab, spawnPoint.transform.position, Quaternion.identity) as GameObject;
-                GlobalGameManager.Instance.PlayerTransform = player.transform;
+                //GlobalGameManager.Instance.PlayerTransform = player.transform;
             }
         }
 
