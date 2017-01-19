@@ -2,7 +2,8 @@
 using System.Collections;
 using UnityEngine.SceneManagement;
 
-public class CharacterInstantiate : MonoBehaviour {
+public class CharacterInstantiate : MonoBehaviour
+{
 
     private GameObject playerPrefab;
     private GameObject player;
@@ -10,12 +11,18 @@ public class CharacterInstantiate : MonoBehaviour {
     private GameObject spawnPoint;
     private Scene scene;
 
+<<<<<<< HEAD
 	// Use this for initialization
 	void Awake () {
+=======
+    // Use this for initialization
+    void Awake()
+    {
+>>>>>>> 3c971a98ee7672be9fa3e8005ba27e8644841f31
 
         scene = SceneManager.GetActiveScene();
 
-        if(scene.name != "MainMenu" || scene.name != "Tish Test")
+        if (scene.name != "MainMenu" || scene.name != "Tish Test")
         {
             string resourcesString = "Prefabs/Scene Requirements/Character/";
             spawnPoint = GameObject.FindWithTag("SpawnPoint");
@@ -25,10 +32,10 @@ public class CharacterInstantiate : MonoBehaviour {
             if (spawnPoint)
             {
                 player = Instantiate(playerPrefab, spawnPoint.transform.position, Quaternion.identity) as GameObject;
+                GlobalGameManager.Instance.PlayerTransform = player.transform;
             }
-
         }
 
     }
-	
+
 }

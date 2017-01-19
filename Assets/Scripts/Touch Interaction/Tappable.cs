@@ -1,9 +1,9 @@
 ﻿using UnityEngine;
 using System.Collections;
-
+[RequireComponent(typeof(Rigidbody))]
 public class Tappable : TouchInteractive {
 
-	public Color newColour;
+	public Color newColour = new Color(0,1,0);
 	// Use this for initialization
 	void Start () {
 	
@@ -19,4 +19,9 @@ public class Tappable : TouchInteractive {
 		print("Tap that");
 		GetComponent<MeshRenderer>().material.color = newColour;
 	}
+
+    public override void FinishInteraction()
+    {
+        print("Finish tap");
+    }
 }
