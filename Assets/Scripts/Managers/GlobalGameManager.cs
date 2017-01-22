@@ -95,29 +95,11 @@ public class GlobalGameManager : MonoBehaviour
             }
 
         }
-
-        //// Loop through our canvases
-        //for (int i = 0; i < uiCanvases.Count; i++)
-        //{
-        //    var canvas = uiCanvases[i];
-        //    canvas.enabled = setter;
-
-        //    // If we're turning the UI on....
-        //    if (setter)
-        //    {
-        //        // We need to check if this canvas have a joystick?
-        //        var joystick = canvas.gameObject.GetComponentInChildren<Joystick>();
-
-        //        if (joystick == null)
-        //        {
-        //            // We need to poke the Joystick into working properly, don't know why
-        //            joystick.SetAxis(joystick.axesToUse);
-        //        }
-        //    }
-        //}
-
     }
 
+    /// <summary>
+    /// Toggles pause setting and will turn the UI off/on
+    /// </summary>
     public void PauseGame()
     {
         m_paused = !m_paused;

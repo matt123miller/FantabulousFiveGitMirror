@@ -3,12 +3,16 @@ using System.Collections;
 using UnityStandardAssets.CrossPlatformInput;
 
 [RequireComponent(typeof(Rigidbody))]
-public class Draggable : TouchInteractive {
+public class Draggable : MonoBehaviour, TouchInteractive {
 
 	// Can a draggable also be tapped? 
 	// Or should it just do the drag action, for example it would only be dragged a tiiiiny bit
 
 	// Need to work out how to define a drag axis, 1 or 2 dimensions.
+    public enum MoveAxis
+    {
+        None, Both, Horizontal, Vertical
+    }
 
     public MoveAxis movementAxis = MoveAxis.Both;
     public Rigidbody rb;
@@ -23,7 +27,7 @@ public class Draggable : TouchInteractive {
 	
 	} 
 
-	public override void Interact(Vector3 fingerPosition)
+	public void Interact(Vector3 fingerPosition)
 	{
         print("Drag that");
 	    Vector3 moveBy = transform.position - fingerPosition;
@@ -59,7 +63,7 @@ public class Draggable : TouchInteractive {
 
 	}
 
-    public override void FinishInteraction()
+    public void FinishInteraction()
     {
         print("Drag finished");
     }

@@ -1,27 +1,35 @@
 ﻿using UnityEngine;
 using System.Collections;
-[RequireComponent(typeof(Rigidbody))]
-public class Tappable : TouchInteractive {
+
+// Why should tappable objects require a Rigidbody
+[RequireComponent(typeof(Animator))]
+public class Tappable : MonoBehaviour , TouchInteractive {
 
 	public Color newColour = new Color(0,1,0);
+    private Color oldColour;
+
+    public Animator animator;
+    public string triggerName;
+
 	// Use this for initialization
 	void Start () {
-	
-	}
-	
-	// Update is called once per frame
-	void Update () {
-	
-	}
 
-	public override void Interact(Vector3 fingerPosition){
+        oldColour = GetComponent<MeshRenderer>().material.color;
+        animator = GetComponent<Animator>();
+	}
+	
+
+	public void Interact(Vector3 fingerPosition){
 
 		print("Tap that");
 		GetComponent<MeshRenderer>().material.color = newColour;
+
+        animator.SetTrigger(triggerName);
 	}
 
-    public override void FinishInteraction()
+    public void FinishInteraction()
     {
         print("Finish tap");
+        GetComponent<MeshRenderer>().material.color = oldColour;
     }
 }
