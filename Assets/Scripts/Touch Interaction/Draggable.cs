@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityStandardAssets.CrossPlatformInput;
+using System;
 
 [RequireComponent(typeof(Rigidbody))]
 public class Draggable : MonoBehaviour, TouchInteractive {
@@ -27,38 +28,43 @@ public class Draggable : MonoBehaviour, TouchInteractive {
 	
 	} 
 
+    public void Interact()
+    {
+
+    }
+
 	public void Interact(Vector3 fingerPosition)
 	{
-        print("Drag that");
-	    Vector3 moveBy = transform.position - fingerPosition;
-	    Vector3 adjustment;
+     //   print("Drag that");
+	    //Vector3 moveBy = transform.position - fingerPosition;
+	    //Vector3 adjustment;
 
-	    if (movementAxis == MoveAxis.None)
-	    {
-	        return;
-        }
+	    //if (movementAxis == MoveAxis.None)
+	    //{
+	    //    return;
+     //   }
 
-        // strip out the unnecessary axis of movement
-	    if (movementAxis == MoveAxis.Both)
-	    {
-            adjustment = new Vector3(1, 0, 1);
-	    }
-        else if (movementAxis == MoveAxis.Vertical)
-	    {
-            adjustment = new Vector3(0, 0, 1);
-        }
-        else // Horizontal
-	    {
-            adjustment = new Vector3(1, 0, 0);
-        }
+     //   // strip out the unnecessary axis of movement
+	    //if (movementAxis == MoveAxis.Both)
+	    //{
+     //       adjustment = new Vector3(1, 0, 1);
+	    //}
+     //   else if (movementAxis == MoveAxis.Vertical)
+	    //{
+     //       adjustment = new Vector3(0, 0, 1);
+     //   }
+     //   else // Horizontal
+	    //{
+     //       adjustment = new Vector3(1, 0, 0);
+     //   }
 
-        // Move towards the finger position as fast as the rigidbody will allow
-        // Is there a shorter way to do this???
-	    moveBy.x *= adjustment.x;
-        moveBy.y *= adjustment.y;
-        moveBy.z *= adjustment.z;
+     //   // Move towards the finger position as fast as the rigidbody will allow
+     //   // Is there a shorter way to do this???
+	    //moveBy.x *= adjustment.x;
+     //   moveBy.y *= adjustment.y;
+     //   moveBy.z *= adjustment.z;
         
-	    // move
+	    //// move
 
 
 	}
@@ -67,4 +73,5 @@ public class Draggable : MonoBehaviour, TouchInteractive {
     {
         print("Drag finished");
     }
+
 }

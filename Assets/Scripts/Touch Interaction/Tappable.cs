@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System;
 
 // Why should tappable objects require a Rigidbody
 [RequireComponent(typeof(Animator))]
@@ -19,12 +20,18 @@ public class Tappable : MonoBehaviour , TouchInteractive {
 	}
 	
 
-	public void Interact(Vector3 fingerPosition){
 
+    public void Interact()
+    {
 		print("Tap that");
 		GetComponent<MeshRenderer>().material.color = newColour;
 
         animator.SetTrigger(triggerName);
+    }
+
+	public void Interact(Vector3 fingerPosition)
+    {
+        // Not showing in the EventHandler inspector?
 	}
 
     public void FinishInteraction()

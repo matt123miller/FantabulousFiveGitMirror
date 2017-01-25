@@ -10,6 +10,7 @@ namespace UnityStandardAssets.Utility
         const float fpsMeasurePeriod = 0.5f;
         private int m_FpsAccumulator = 0;
         private float m_FpsNextPeriod = 0;
+        [SerializeField]
         private int m_CurrentFps;
         const string display = "{0} FPS";
         private Text m_Text;
