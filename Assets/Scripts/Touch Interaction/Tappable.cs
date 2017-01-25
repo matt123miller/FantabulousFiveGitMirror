@@ -13,6 +13,7 @@ public class Tappable : MonoBehaviour , TouchInteractive {
 
     public Animator animator;
     public string triggerName;
+    public bool withinRange = false;
 
 	// Use this for initialization
 	void Start () {
@@ -21,13 +22,34 @@ public class Tappable : MonoBehaviour , TouchInteractive {
         animator = GetComponent<Animator>();
         
 	}
-	
 
+    private void OnTriggerEnter(Collider other)
+    {
+        if (!other.CompareTag("Player"))
+        {
+            return;
+        }
+
+        withinRange = true;
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (!other.CompareTag("Player"))
+        {
+            return;
+        }
+
+        withinRange = false;
+    }
 
     public void Interact()
     {
-		print("Tap that");
-		GetComponent<MeshRenderer>().material.color = newColour;
+        if (!withinRange)
+            return;
+
+        print("Tap that");
+        GetComponent<MeshRenderer>().material.color = newColour;
 
         animator.SetTrigger(triggerName);
     }
@@ -39,6 +61,9 @@ public class Tappable : MonoBehaviour , TouchInteractive {
 
     public void FinishInteraction()
     {
+        if (!withinRange)
+            return;
+
         print("Finish tap");
         GetComponent<MeshRenderer>().material.color = oldColour;
     }
