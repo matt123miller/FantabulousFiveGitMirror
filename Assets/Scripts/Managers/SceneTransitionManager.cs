@@ -53,7 +53,7 @@ public class SceneTransitionManager : MonoBehaviour
     /// <param name="targetScene"></param>
     public void LoadTargetLevel(int targetScene)
     {
-        if (targetScene > SceneManager.sceneCountInBuildSettings)
+        if (targetScene >= SceneManager.sceneCountInBuildSettings)
         {
             // returns to main menu.
             StartCoroutine(AsyncLoadLevel(0));
@@ -71,7 +71,7 @@ public class SceneTransitionManager : MonoBehaviour
     {
         int targetScene = SceneManager.GetActiveScene().buildIndex + 1;
         
-        if (targetScene > SceneManager.sceneCountInBuildSettings)
+        if (targetScene >= SceneManager.sceneCountInBuildSettings)
         {
             // There are no scenes left. Maybe return to main menu?
             // Handle this error however you like.
