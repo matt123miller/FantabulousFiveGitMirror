@@ -27,7 +27,7 @@ public class CharacterInstantiate : MonoBehaviour
             _playerPrefab = (GameObject)Resources.Load(resourcesString, typeof(GameObject));
             if (_spawnPoint)
             {
-                _player = Instantiate(_playerPrefab, _spawnPoint.transform.position, Quaternion.identity) as GameObject;
+                _player = Instantiate(_playerPrefab, _spawnPoint.transform.position, _spawnPoint.transform.rotation) as GameObject;
                 //GlobalGameManager.Instance.PlayerTransform = _player.transform;
             }
         }
