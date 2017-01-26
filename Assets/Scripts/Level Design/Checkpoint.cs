@@ -8,11 +8,13 @@ public class Checkpoint : MonoBehaviour
     public bool activated = false;
     public static GameObject[] checkpoints;
     private Animator _animator;
+    private SaveLoad _saveLoadsScript;
 
     void Start()
     {
         checkpoints = GameObject.FindGameObjectsWithTag("Checkpoint");
         _animator = GetComponent<Animator>();
+        _saveLoadsScript = GameObject.Find("GameManager").GetComponent<SaveLoad>();
     }
 
     void OnTriggerEnter(Collider other)
@@ -21,6 +23,9 @@ public class Checkpoint : MonoBehaviour
         if (other.tag == "Player")
         {
             ActivateCheckPoint();
+            _saveLoadsScript.Save(gameObject.transform.position);
+            Debug.Log("Saved!");
+            
         }
     }
 
@@ -44,6 +49,24 @@ public class Checkpoint : MonoBehaviour
         var result = GameObject.FindWithTag("SpawnPoint").transform.position;
 
         foreach (var point in checkpoints)
+        {
+            if (point.GetComponent<Checkpoint>().activated)
+            {
+                result = point.transform.position;
+                break;
+            }
+        }
+
+        return result;
+    }
+
+    //overload for use when loading saved data
+    public static Vector3 GetActiveCheckpointPosition(GameObject[] loadedCheckPoints)
+    {
+        // If player die without activate any checkpoint, we will return a default position
+        var result = GameObject.FindWithTag("SpawnPoint").transform.position;
+
+        foreach (var point in loadedCheckPoints)
         {
             if (point.GetComponent<Checkpoint>().activated)
             {

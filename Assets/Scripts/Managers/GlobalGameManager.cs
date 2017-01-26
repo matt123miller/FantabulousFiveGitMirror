@@ -16,6 +16,7 @@ public class GlobalGameManager : MonoBehaviour
 
     private bool _paused = false;
 
+
     // Singleton object, access this via GlobalGameManager.Instance whenever you need the global stuff.
     public static GlobalGameManager Instance
     {
