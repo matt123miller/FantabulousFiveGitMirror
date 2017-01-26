@@ -7,13 +7,13 @@ public class Noise : MonoBehaviour
     public float currentNoise;
     public float maxNoise = 100f;
     public GameObject noiseBar;
-    private WitchCountdown witchCountDownScript;
+    private WitchCountdown _witchCountDownScript;
 
     public void Start()
     {
         currentNoise = 0;
         SetNoiseBar(currentNoise);
-        witchCountDownScript = GameObject.Find("MechanicsScripts").GetComponent<WitchCountdown>();
+        _witchCountDownScript = GameObject.Find("MechanicsScripts").GetComponent<WitchCountdown>();
         //InvokeRepeating("DecreaseNoise", 1f, 1f);
     }
 
@@ -51,7 +51,7 @@ public class Noise : MonoBehaviour
 
     public void TriggerWitch()
     {
-        witchCountDownScript.startGetReadyCountdown();
+        _witchCountDownScript.startGetReadyCountdown();
     }
 
     public void ResetNoiseBar()

@@ -3,45 +3,45 @@ using System.Collections;
 
 public class ObjNoise : MonoBehaviour {
 
-    private float weightOfObj;
-    private float impactVelocity;
-    private Noise noiseScript;
-    private float pushNoiseModifier = 100;
-    float pushTimer = 0;
+    private float _weightOfObj;
+    private float _impactVelocity;
+    private Noise _noiseScript;
+    private float _pushNoiseModifier = 100;
+    private float _pushTimer = 0;
 
     public void Start()
     {
-        weightOfObj = GetComponent<Rigidbody>().mass;
-        noiseScript = GameObject.FindGameObjectWithTag("NoiseBar").GetComponent<Noise>();
+        _weightOfObj = GetComponent<Rigidbody>().mass;
+        _noiseScript = GameObject.FindGameObjectWithTag("NoiseBar").GetComponent<Noise>();
     }
 
     public void OnCollisionEnter(Collision collision)
     {
         GetImpactVelocity(collision);
-        calcNoise(weightOfObj, impactVelocity);
+        calcNoise(_weightOfObj, _impactVelocity);
     }
 
     public void OnCollisionStay(Collision collision)
     {
-        pushTimer += Time.deltaTime;
+        _pushTimer += Time.deltaTime;
 
-        if(pushTimer >= 1)
+        if(_pushTimer >= 1)
         {
             GetImpactVelocity(collision);
-            calcNoise(weightOfObj, impactVelocity);
-            pushTimer = 0;
+            calcNoise(_weightOfObj, _impactVelocity);
+            _pushTimer = 0;
         }
     }
 
     public void OnCollisionExit()
     {
-        pushTimer = 0;
+        _pushTimer = 0;
     }
 
     public void GetImpactVelocity(Collision collision)
     {
-        impactVelocity = collision.relativeVelocity.magnitude;
-        Debug.Log("IMPACT VELOCITY" + impactVelocity + " " + gameObject.name + " " +  collision.collider.name);
+        _impactVelocity = collision.relativeVelocity.magnitude;
+        Debug.Log("IMPACT VELOCITY" + _impactVelocity + " " + gameObject.name + " " +  collision.collider.name);
     }
 
     public void calcNoise(float weight, float impactVel)
@@ -58,6 +58,6 @@ public class ObjNoise : MonoBehaviour {
 
     public void updateNoiseBar(float noise)
     {
-        noiseScript.AddToNoise(noise);
+        _noiseScript.AddToNoise(noise);
     }
 }

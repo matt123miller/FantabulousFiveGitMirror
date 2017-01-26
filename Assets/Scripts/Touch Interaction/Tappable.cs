@@ -9,7 +9,7 @@ using System;
 public class Tappable : MonoBehaviour , TouchInteractive {
 
 	public Color newColour = new Color(0,1,0);
-    private Color oldColour;
+    private Color _oldColour;
 
     public Animator animator;
     public string triggerName;
@@ -18,7 +18,7 @@ public class Tappable : MonoBehaviour , TouchInteractive {
 	// Use this for initialization
 	void Start () {
 
-        oldColour = GetComponent<MeshRenderer>().material.color;
+        _oldColour = GetComponent<MeshRenderer>().material.color;
         animator = GetComponent<Animator>();
         
 	}
@@ -65,6 +65,6 @@ public class Tappable : MonoBehaviour , TouchInteractive {
             return;
 
         print("Finish tap");
-        GetComponent<MeshRenderer>().material.color = oldColour;
+        GetComponent<MeshRenderer>().material.color = _oldColour;
     }
 }

@@ -13,8 +13,8 @@ public class LerpObjectBetweenPoints : MonoBehaviour
     public AnimationCurve curve;
     public float lerpCompletion;
 
-    private Vector3 originalPos;
-    private Quaternion originalRotation;
+    private Vector3 _originalPos;
+    private Quaternion _originalRotation;
 
     void Awake()
 	{
@@ -29,9 +29,9 @@ public class LerpObjectBetweenPoints : MonoBehaviour
     {
 		
 
-        originalPos = transform.position;
-        originalRotation = transform.rotation;
-        print(originalPos);
+        _originalPos = transform.position;
+        _originalRotation = transform.rotation;
+        print(_originalPos);
         // move to the placement object
         transform.position = startTransform.position;
         transform.rotation = startTransform.rotation;
@@ -45,8 +45,8 @@ public class LerpObjectBetweenPoints : MonoBehaviour
             timeValue += (Time.deltaTime/moveDuration);
             lerpCompletion = curve.Evaluate(timeValue);
 
-            transform.position = Vector3.Lerp(startTransform.position, originalPos, lerpCompletion);
-            transform.rotation = Quaternion.Slerp(startTransform.rotation, originalRotation, lerpCompletion);
+            transform.position = Vector3.Lerp(startTransform.position, _originalPos, lerpCompletion);
+            transform.rotation = Quaternion.Slerp(startTransform.rotation, _originalRotation, lerpCompletion);
 
             if (lerpCompletion >= 1)
             {

@@ -4,29 +4,29 @@ using UnityStandardAssets.Characters.ThirdPerson;
 
 public class CameraMovement : MonoBehaviour {
 
-    private GameObject character;
+    private GameObject _character;
     public GameObject characterCam;
-    private Rigidbody characterRigidbody;
+    private Rigidbody _characterRigidbody;
     public GameObject idleCameraPos;
     public GameObject travellingCameraPos;
-    private Vector3 hangingCameraPos;
+    private Vector3 _hangingCameraPos;
     public float lerpTime = 0.5f;
-    private ThirdPersonUserControl thirdPersonUserControl;
+    private ThirdPersonUserControl _thirdPersonUserControl;
     
     // Use this for initialization
     void Awake()
     {
-        character = GameObject.FindWithTag("Player");
+        _character = GameObject.FindWithTag("Player");
         // characterCam = GameObject.FindWithTag("MainCamera");
-        characterRigidbody = character.GetComponent<Rigidbody>();
-        thirdPersonUserControl = character.GetComponent<ThirdPersonUserControl>();
+        _characterRigidbody = _character.GetComponent<Rigidbody>();
+        _thirdPersonUserControl = _character.GetComponent<ThirdPersonUserControl>();
 
     }
     // Update is called once per frame
     void Update()
     {
 
-        float characterVelocity = characterRigidbody.velocity.normalized.magnitude;
+        float characterVelocity = _characterRigidbody.velocity.normalized.magnitude;
        // Debug.Log(characterVelocity);
 
         //changes camera to 'travelling' position - far out
@@ -35,12 +35,12 @@ public class CameraMovement : MonoBehaviour {
             lerpCameraBetweenPos(characterCam.transform, travellingCameraPos.transform, lerpTime);
         }
         //changed camera to 'idle' position - close up
-        else if (characterVelocity <= 0 && characterCam.transform.localPosition != idleCameraPos.transform.localPosition && !thirdPersonUserControl.isHanging)
+        else if (characterVelocity <= 0 && characterCam.transform.localPosition != idleCameraPos.transform.localPosition && !_thirdPersonUserControl.isHanging)
         {
             lerpCameraBetweenPos(characterCam.transform, idleCameraPos.transform, lerpTime);
         }
         //changes camera to 'travelling' position only if hanging on a ledge
-        else if(thirdPersonUserControl.isHanging)
+        else if(_thirdPersonUserControl.isHanging)
         {
             lerpCameraBetweenPos(characterCam.transform, travellingCameraPos.transform, lerpTime);
         }

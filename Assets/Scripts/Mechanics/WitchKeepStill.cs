@@ -6,8 +6,8 @@ using UnityStandardAssets.Characters.ThirdPerson;
 
 public class WitchKeepStill : MonoBehaviour {
 
-    private DeviceTilt deviceTilt;
-    private Vector3 accelerometerTiltVal;
+    private DeviceTilt _deviceTilt;
+    private Vector3 _accelerometerTiltVal;
     private bool keepStillTriggered = false;
     private bool isStill = true;
     private Text witchPromptText;
@@ -18,15 +18,15 @@ public class WitchKeepStill : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
         witchPromptText = GameObject.Find("Witch Prompt Text").GetComponent<Text>();
-        deviceTilt = GameObject.Find("MechanicsScripts").GetComponent<DeviceTilt>();
+        _deviceTilt = GameObject.Find("MechanicsScripts").GetComponent<DeviceTilt>();
         thirdPersonUserControl = GameObject.FindGameObjectWithTag("Player").GetComponent<ThirdPersonUserControl>();
 	}
 	
 	// Update is called once per frame
 	void Update () {
 
-        accelerometerTiltVal = deviceTilt.LowPassFilterAccelerometer();
-        movementCheck(accelerometerTiltVal);
+        _accelerometerTiltVal = _deviceTilt.LowPassFilterAccelerometer();
+        movementCheck(_accelerometerTiltVal);
  
 	}
 

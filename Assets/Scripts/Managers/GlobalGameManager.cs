@@ -10,11 +10,11 @@ public class GlobalGameManager : MonoBehaviour
     private Transform _playerTransform;
 
     // Various 
-    private Canvas touchCanvas;
-    private GameObject pauseScreen;
-    private GameObject fadeScreen;
+    private Canvas _touchCanvas;
+    private GameObject _pauseScreen;
+    private GameObject _fadeScreen;
 
-    private bool m_paused = false;
+    private bool _paused = false;
 
     // Singleton object, access this via GlobalGameManager.Instance whenever you need the global stuff.
     public static GlobalGameManager Instance
@@ -49,12 +49,12 @@ public class GlobalGameManager : MonoBehaviour
     {
         _instance = this;
 
-        touchCanvas = GameObject.FindWithTag("UICanvas").GetComponent<Canvas>();
-        pauseScreen = transform.FindChild("PauseScreen").gameObject;
-        fadeScreen = transform.FindChild("FadeScreen").gameObject;
+        _touchCanvas = GameObject.FindWithTag("UICanvas").GetComponent<Canvas>();
+        _pauseScreen = transform.FindChild("PauseScreen").gameObject;
+        _fadeScreen = transform.FindChild("FadeScreen").gameObject;
 
-        pauseScreen.SetActive(false);
-        fadeScreen.SetActive(true);
+        _pauseScreen.SetActive(false);
+        _fadeScreen.SetActive(true);
 
     }
 
@@ -82,13 +82,13 @@ public class GlobalGameManager : MonoBehaviour
     /// <param name="setter"></param>
     public void ToggleUI(bool setter)
     {
-        touchCanvas.enabled = setter;
+        _touchCanvas.enabled = setter;
 
         // If we're turning the UI on....
         if (setter)
         {
             // We need to check if this canvas have a joystick?
-            var joystick = touchCanvas.gameObject.GetComponentInChildren<Joystick>();
+            var joystick = _touchCanvas.gameObject.GetComponentInChildren<Joystick>();
             if (joystick)
             {
                 joystick.SetAxis(joystick.axesToUse);
@@ -102,12 +102,12 @@ public class GlobalGameManager : MonoBehaviour
     /// </summary>
     public void PauseGame()
     {
-        m_paused = !m_paused;
+        _paused = !_paused;
         // Stop time
-        Time.timeScale = m_paused ? 0f : 1f;
+        Time.timeScale = _paused ? 0f : 1f;
 
-        ToggleUI(!m_paused);
-        pauseScreen.SetActive(m_paused);
+        ToggleUI(!_paused);
+        _pauseScreen.SetActive(_paused);
     }
 
     /// <summary>
@@ -116,7 +116,7 @@ public class GlobalGameManager : MonoBehaviour
     public void ReturnToMenu()
     {
         // Do we need to tidy up any variables or state?
-        pauseScreen.SetActive(false);
+        _pauseScreen.SetActive(false);
         SceneTransitionManager.Instance.LoadTargetLevel(0);
     }
 

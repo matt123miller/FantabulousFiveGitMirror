@@ -5,14 +5,14 @@ using UnityStandardAssets.CrossPlatformInput;
 
 public class DragRigidbody : MonoBehaviour
 {
-    const float k_Spring = 50.0f;
-    const float k_Damper = 5.0f;
-    const float k_Drag = 10.0f;
-    const float k_AngularDrag = 5.0f;
-    const float k_Distance = 0.2f;
-    const bool k_AttachToCenterOfMass = false;
+    private const float _spring = 50.0f;
+    private const float _damper = 5.0f;
+    private const float _drag = 10.0f;
+    private const float _angularDrag = 5.0f;
+    private const float _distance = 0.2f;
+    private const bool _attachToCenterOfMass = false;
 
-    private SpringJoint m_SpringJoint;
+    private SpringJoint _springJoint;
 
 
     private void Update()
@@ -42,21 +42,21 @@ public class DragRigidbody : MonoBehaviour
         }
 
 
-        if (!m_SpringJoint)
+        if (!_springJoint)
         {
             var go = new GameObject("Rigidbody dragger");
             Rigidbody body = go.AddComponent<Rigidbody>();
-            m_SpringJoint = go.AddComponent<SpringJoint>();
+            _springJoint = go.AddComponent<SpringJoint>();
             body.isKinematic = true;
         }
 
-        m_SpringJoint.transform.position = hit.point;
-        m_SpringJoint.anchor = Vector3.zero;
+        _springJoint.transform.position = hit.point;
+        _springJoint.anchor = Vector3.zero;
 
-        m_SpringJoint.spring = k_Spring;
-        m_SpringJoint.damper = k_Damper;
-        m_SpringJoint.maxDistance = k_Distance;
-        m_SpringJoint.connectedBody = hit.rigidbody;
+        _springJoint.spring = _spring;
+        _springJoint.damper = _damper;
+        _springJoint.maxDistance = _distance;
+        _springJoint.connectedBody = hit.rigidbody;
 
         StartCoroutine("DragObject", hit.distance);
     }
@@ -64,28 +64,28 @@ public class DragRigidbody : MonoBehaviour
 
     private IEnumerator DragObject(float distance)
     {
-        var oldDrag = m_SpringJoint.connectedBody.drag;
-        var oldAngularDrag = m_SpringJoint.connectedBody.angularDrag;
-        m_SpringJoint.connectedBody.drag = k_Drag;
-        m_SpringJoint.connectedBody.angularDrag = k_AngularDrag;
+        var oldDrag = _springJoint.connectedBody.drag;
+        var oldAngularDrag = _springJoint.connectedBody.angularDrag;
+        _springJoint.connectedBody.drag = _drag;
+        _springJoint.connectedBody.angularDrag = _angularDrag;
         var mainCamera = FindCamera();
         while (Input.GetMouseButton(0))
         {
             var ray = mainCamera.ScreenPointToRay(Input.mousePosition);
-            m_SpringJoint.transform.position = ray.GetPoint(distance);
+            _springJoint.transform.position = ray.GetPoint(distance);
             yield return null;
         }
 
 
-        if (m_SpringJoint.connectedBody)
+        if (_springJoint.connectedBody)
         {
-            m_SpringJoint.connectedBody.drag = oldDrag;
-            m_SpringJoint.connectedBody.angularDrag = oldAngularDrag;
-            m_SpringJoint.connectedBody = null;
+            _springJoint.connectedBody.drag = oldDrag;
+            _springJoint.connectedBody.angularDrag = oldAngularDrag;
+            _springJoint.connectedBody = null;
         }
 
         //At the end remove the spawned spring object.
-        Destroy(m_SpringJoint.gameObject);
+        Destroy(_springJoint.gameObject);
 
     }
 

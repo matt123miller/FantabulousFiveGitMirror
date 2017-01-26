@@ -4,14 +4,14 @@ using UnityEngine.UI;
 
 public class WitchCountdown : MonoBehaviour {
 
-    Text witchPromptText;
-    WitchKeepStill keepStillScript;
+    private Text _witchPromptText;
+    private WitchKeepStill _keepStillScript;
 
 	// Use this for initialization
 	void Start () {
-        witchPromptText = GameObject.Find("Witch Prompt Text").GetComponent<Text>();
-        witchPromptText.text = " ";
-        keepStillScript = GameObject.Find("MechanicsScripts").GetComponent<WitchKeepStill>();
+        _witchPromptText = GameObject.Find("Witch Prompt Text").GetComponent<Text>();
+        _witchPromptText.text = " ";
+        _keepStillScript = GameObject.Find("MechanicsScripts").GetComponent<WitchKeepStill>();
 	}
 	
 	// Update is called once per frame
@@ -31,19 +31,19 @@ public class WitchCountdown : MonoBehaviour {
         {
             if(i == 4)
             {
-                witchPromptText.text = "THE WITCH IS COMING!";
+                _witchPromptText.text = "THE WITCH IS COMING!";
             }
             else
             {
-                witchPromptText.text = i.ToString();
+                _witchPromptText.text = i.ToString();
             }
 
             yield return new WaitForSecondsRealtime(1f);
         }
 
-        witchPromptText.text = "STAY STILL!";
+        _witchPromptText.text = "STAY STILL!";
 
-       StartCoroutine(keepStillScript.KeepStillTime());
+       StartCoroutine(_keepStillScript.KeepStillTime());
     }
 
 

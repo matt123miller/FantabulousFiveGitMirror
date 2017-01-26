@@ -104,7 +104,6 @@ public static class Extensions {
     // Logic created by @DanInFiction on Twitter, I stole it to make an extension method.
     public static void LookAt2D(this Transform self, Transform target)
     {
-
         self.right = target.position - self.position;
     }
 }

@@ -3,10 +3,10 @@ using System.Collections;
 
 public class MovingPortraits : MonoBehaviour
 {
-    private Camera renderCamera;
-    private Transform paintingContents;
-    private Transform player;
-    private float invSqrColliderDistance;
+    private Camera _renderCamera;
+    private Transform _paintingContents;
+    private Transform _player;
+    private float _invSqrColliderDistance;
     //private float sqr
 
     [Range(0, 5)]
@@ -18,15 +18,15 @@ public class MovingPortraits : MonoBehaviour
     void Awake()
     {
         // Get my components
-        renderCamera = GetComponentInChildren<Camera>();
-        invSqrColliderDistance = GetComponent<SphereCollider>().radius; // Get it.
-        invSqrColliderDistance *= invSqrColliderDistance; // Square it
-        invSqrColliderDistance = 1 / invSqrColliderDistance; // Inverse it
-        paintingContents = transform.GetChild(0);
+        _renderCamera = GetComponentInChildren<Camera>();
+        _invSqrColliderDistance = GetComponent<SphereCollider>().radius; // Get it.
+        _invSqrColliderDistance *= _invSqrColliderDistance; // Square it
+        _invSqrColliderDistance = 1 / _invSqrColliderDistance; // Inverse it
+        _paintingContents = transform.GetChild(0);
 
         // Create and set the render texture.
         RenderTexture rTex = new RenderTexture(width, height, 0);
-        renderCamera.targetTexture = rTex;
+        _renderCamera.targetTexture = rTex;
         GetComponent<MeshRenderer>().material.mainTexture = rTex;
 
     }
@@ -42,13 +42,13 @@ public class MovingPortraits : MonoBehaviour
         if (!collider.CompareTag("Player"))
             return;
 
-        player = collider.transform;
+        _player = collider.transform;
 
-        // player in relation to painting
-        Vector3 playerToPainting = player.position - transform.position;
+        // _player in relation to painting
+        Vector3 playerToPainting = _player.position - transform.position;
         float sqrDistance = playerToPainting.sqrMagnitude;
 
-        float percentDistance = sqrDistance * invSqrColliderDistance;
+        float percentDistance = sqrDistance * _invSqrColliderDistance;
         //print(percentDistance);
 
         // move the contents of the painting accordingly 

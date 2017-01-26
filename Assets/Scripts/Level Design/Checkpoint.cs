@@ -7,12 +7,12 @@ public class Checkpoint : MonoBehaviour
 {
     public bool activated = false;
     public static GameObject[] checkpoints;
-    private Animator animator;
+    private Animator _animator;
 
     void Start()
     {
         checkpoints = GameObject.FindGameObjectsWithTag("Checkpoint");
-        animator = GetComponent<Animator>();
+        _animator = GetComponent<Animator>();
     }
 
     void OnTriggerEnter(Collider other)
@@ -35,7 +35,7 @@ public class Checkpoint : MonoBehaviour
 
         // We activated this instance of the checkpoint, which would be the one just hit
         activated = true;
-        //animator.SetBool("Active", true);
+        //_animator.SetBool("Active", true);
     }
 
     public static Vector3 GetActiveCheckpointPosition()

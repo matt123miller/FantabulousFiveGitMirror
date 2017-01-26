@@ -6,22 +6,22 @@ using UnityStandardAssets.Characters.ThirdPerson;
 public class LedgeGrab : MonoBehaviour
 {
 
-    private GameObject character = null;
-    private bool onLedge = false;
-    private GameObject ledgeCollider = null;
-    private GameObject ledgeParent = null;
-    private GameObject mobileJoystick = null;
-    private Joystick joystickScript = null;
-    private Rigidbody characterRigidbody = null;
-    private ThirdPersonUserControl thirdPersonUserControl = null;
+    private GameObject _character = null;
+    private bool _onLedge = false;
+    private GameObject _ledgeCollider = null;
+    private GameObject _ledgeParent = null;
+    private GameObject _mobileJoystick = null;
+    private Joystick _joystickScript = null;
+    private Rigidbody _characterRigidbody = null;
+    private ThirdPersonUserControl _thirdPersonUserControl = null;
     public bool automaticClimbUp = false;
 
     // Use this for initialization
     void Awake()
     {
 
-        ledgeCollider = gameObject.transform.parent.gameObject;
-        ledgeParent = ledgeCollider.gameObject.transform.parent.gameObject;
+        _ledgeCollider = gameObject.transform.parent.gameObject;
+        _ledgeParent = _ledgeCollider.gameObject.transform.parent.gameObject;
    
     }
 
@@ -29,7 +29,7 @@ public class LedgeGrab : MonoBehaviour
     void Update()
     {
         //if on ledge = true and player presses jump, teleport to top of ledge
-        if (onLedge && CrossPlatformInputManager.GetButtonDown("Jump"))
+        if (_onLedge && CrossPlatformInputManager.GetButtonDown("Jump"))
         {
             MoveCharacterToTop();
             ResetCharacter();
@@ -41,16 +41,16 @@ public class LedgeGrab : MonoBehaviour
 
         if (collider.CompareTag("Player"))
         {
-            joystickScript = GameObject.FindWithTag("UICanvas").GetComponentInChildren<Joystick>();
-            character = collider.gameObject;
-            characterRigidbody = character.GetComponent<Rigidbody>();
-            thirdPersonUserControl = character.GetComponent<ThirdPersonUserControl>();
+            _joystickScript = GameObject.FindWithTag("UICanvas").GetComponentInChildren<Joystick>();
+            _character = collider.gameObject;
+            _characterRigidbody = _character.GetComponent<Rigidbody>();
+            _thirdPersonUserControl = _character.GetComponent<ThirdPersonUserControl>();
         }
 
-        if (character != null && thirdPersonUserControl.characterController.m_LastObjectGroundedOn != ledgeParent.name
-            && thirdPersonUserControl.characterController.m_LastObjectGroundedOn != this.gameObject.name)
+        if (_character != null && _thirdPersonUserControl.characterController.m_LastObjectGroundedOn != _ledgeParent.name
+            && _thirdPersonUserControl.characterController.m_LastObjectGroundedOn != this.gameObject.name)
         {
-            if (!thirdPersonUserControl.characterController.m_IsGrounded)
+            if (!_thirdPersonUserControl.characterController.m_IsGrounded)
             {
                 GrabLedge();
             }
@@ -64,8 +64,8 @@ public class LedgeGrab : MonoBehaviour
     void OnTriggerExit(Collider collider)
     {
         ResetCharacter();
-        onLedge = false;
-        thirdPersonUserControl.isHanging = false;
+        _onLedge = false;
+        _thirdPersonUserControl.isHanging = false;
     }
 
 
@@ -77,14 +77,14 @@ public class LedgeGrab : MonoBehaviour
     public void GrabLedge()
     {
         FreezeCharacter();
-        LookAtLedge(ledgeCollider.transform);
-        onLedge = true;
+        LookAtLedge(_ledgeCollider.transform);
+        _onLedge = true;
     }
 
     public void GrabLedgeGrounded()
     {
-        LookAtLedge(ledgeCollider.transform);
-        onLedge = true;
+        LookAtLedge(_ledgeCollider.transform);
+        _onLedge = true;
         
         if(automaticClimbUp)
         {
@@ -94,33 +94,33 @@ public class LedgeGrab : MonoBehaviour
 
     public void FreezeCharacter()
     {
-        characterRigidbody.velocity = Vector3.zero;
-        characterRigidbody.useGravity = false;
-        characterRigidbody.constraints = RigidbodyConstraints.FreezePositionY | RigidbodyConstraints.FreezeRotation;
-        joystickScript.SetAxis(Joystick.AxisOption.OnlyHorizontal);
-        thirdPersonUserControl.isHanging = true;
+        _characterRigidbody.velocity = Vector3.zero;
+        _characterRigidbody.useGravity = false;
+        _characterRigidbody.constraints = RigidbodyConstraints.FreezePositionY | RigidbodyConstraints.FreezeRotation;
+        _joystickScript.SetAxis(Joystick.AxisOption.OnlyHorizontal);
+        _thirdPersonUserControl.isHanging = true;
     }
 
     public void ResetCharacter()
     {
-        characterRigidbody.constraints = RigidbodyConstraints.FreezeRotation;
-        joystickScript.SetAxis(Joystick.AxisOption.Both);
-        character.GetComponent<ThirdPersonUserControl>().enabled = true;
-        characterRigidbody.useGravity = true;
+        _characterRigidbody.constraints = RigidbodyConstraints.FreezeRotation;
+        _joystickScript.SetAxis(Joystick.AxisOption.Both);
+        _character.GetComponent<ThirdPersonUserControl>().enabled = true;
+        _characterRigidbody.useGravity = true;
     }
 
     public void LookAtLedge(Transform ledgeTransform)
     {
         // You can just do this, interpolates between the rotations by time, use 1 for instant.
-        character.transform.rotation = Quaternion.Slerp(character.transform.rotation, transform.rotation, 1);
+        _character.transform.rotation = Quaternion.Slerp(_character.transform.rotation, transform.rotation, 1);
     }
 
     public void MoveCharacterToTop()
     {
         //stops player from making further input
-        thirdPersonUserControl.enabled = false;
+        _thirdPersonUserControl.enabled = false;
         ////teleports character to top of the box
-        character.transform.position = new Vector3(ledgeCollider.transform.position.x, ledgeCollider.transform.position.y + 0.5f, ledgeCollider.transform.position.z);
+        _character.transform.position = new Vector3(_ledgeCollider.transform.position.x, _ledgeCollider.transform.position.y + 0.5f, _ledgeCollider.transform.position.z);
     }
 
 

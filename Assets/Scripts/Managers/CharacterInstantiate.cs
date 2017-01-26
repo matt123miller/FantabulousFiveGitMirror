@@ -5,30 +5,30 @@ using UnityEngine.SceneManagement;
 public class CharacterInstantiate : MonoBehaviour
 {
 
-    private GameObject playerPrefab;
-    private GameObject player;
-    private string characterSelected;
-    private GameObject spawnPoint;
-    private Scene scene;
+    private GameObject _playerPrefab;
+    private GameObject _player;
+    private string _characterSelected;
+    private GameObject _spawnPoint;
+    private Scene _scene;
 
 
 	
     // Use this for initialization
     void Awake()
     {
-        scene = SceneManager.GetActiveScene();
+        _scene = SceneManager.GetActiveScene();
 
-        if (scene.name != "MainMenu" || scene.name != "Tish Test")
+        if (_scene.name != "MainMenu" || _scene.name != "Tish Test")
         {
             string resourcesString = "Prefabs/Scene Requirements/Character/";
-            spawnPoint = GameObject.FindWithTag("SpawnPoint");
-            characterSelected = PlayerPrefs.GetString("CharacterSelected");
-            resourcesString += characterSelected;
-            playerPrefab = (GameObject)Resources.Load(resourcesString, typeof(GameObject));
-            if (spawnPoint)
+            _spawnPoint = GameObject.FindWithTag("SpawnPoint");
+            _characterSelected = PlayerPrefs.GetString("CharacterSelected");
+            resourcesString += _characterSelected;
+            _playerPrefab = (GameObject)Resources.Load(resourcesString, typeof(GameObject));
+            if (_spawnPoint)
             {
-                player = Instantiate(playerPrefab, spawnPoint.transform.position, Quaternion.identity) as GameObject;
-                //GlobalGameManager.Instance.PlayerTransform = player.transform;
+                _player = Instantiate(_playerPrefab, _spawnPoint.transform.position, Quaternion.identity) as GameObject;
+                //GlobalGameManager.Instance.PlayerTransform = _player.transform;
             }
         }
 

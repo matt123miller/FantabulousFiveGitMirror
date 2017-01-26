@@ -8,13 +8,12 @@ using UnityEngine.EventSystems;
 /// </summary>
 public class TouchInputManager : MonoBehaviour {
 
-	Ray _ray;
-	RaycastHit _hit;
-	Touch _touch;
-	Vector3 _touchPosition;
+	private Ray _ray;
+	private RaycastHit _hit;
+	private Touch _touch;
+	private Vector3 _touchPosition;
 
-    //private TouchInteractive[] touchables;
-    private List<TouchInteractive> touchables;
+    private List<TouchInteractive> _touchables;
 
     // Use this for initialization
     void Start () {
@@ -35,10 +34,10 @@ public class TouchInputManager : MonoBehaviour {
             if (Physics.Raycast(_ray, out _hit))
             {
 
-                // Get all my touchables.
-                touchables = new List<TouchInteractive>(_hit.transform.GetComponents<TouchInteractive>());
+                // Get all my _touchables.
+                _touchables = new List<TouchInteractive>(_hit.transform.GetComponents<TouchInteractive>());
 
-                foreach (TouchInteractive touch in touchables)
+                foreach (TouchInteractive touch in _touchables)
                 {
                     // Call Interact(vector3) on it.
                     touch.Interact(_hit.transform.position);
@@ -48,16 +47,16 @@ public class TouchInputManager : MonoBehaviour {
 
         else if (Input.GetMouseButtonUp(0))
         {
-            //if (touchables.Count != 0)
+            //if (_touchables.Count != 0)
             //{
-            //    touchables
-            //    touchables.Clear();
+            //    _touchables
+            //    _touchables.Clear();
             //}
-            foreach (var touch in touchables)
+            foreach (var touch in _touchables)
             {
                 touch.FinishInteraction();
             }
-            touchables.Clear();
+            _touchables.Clear();
         }
     }
 
