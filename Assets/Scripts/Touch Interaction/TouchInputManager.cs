@@ -3,6 +3,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.EventSystems;
 
+/// <summary>
+/// Currently not in use, I don't know if we'll ever need it now that we've found Event Triggers
+/// </summary>
 public class TouchInputManager : MonoBehaviour {
 
 	Ray _ray;
@@ -21,39 +24,41 @@ public class TouchInputManager : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 
-        //if (Input.GetMouseButtonDown(0)) {
+        if (Input.GetMouseButtonDown(0))
+        {
 
-        //    _touchPosition = Input.mousePosition;
-        //    //print(_touchPosition);	
-        //    _ray = Camera.main.ScreenPointToRay(_touchPosition);
+            _touchPosition = Input.mousePosition;
+            //print(_touchPosition);	
+            _ray = Camera.main.ScreenPointToRay(_touchPosition);
 
 
-        //    if (Physics.Raycast(_ray, out _hit)) {
+            if (Physics.Raycast(_ray, out _hit))
+            {
 
-        //        // Get all my touchables.
-        //        touchables = new List<TouchInteractive> (_hit.transform.GetComponents<TouchInteractive>());
+                // Get all my touchables.
+                touchables = new List<TouchInteractive>(_hit.transform.GetComponents<TouchInteractive>());
 
-        //        foreach (TouchInteractive touch in touchables)
-        //        {
-        //            // Call Interact(vector3) on it.
-        //            touch.Interact(_hit.transform.position);
-        //        }
-        //    }
-        //}
+                foreach (TouchInteractive touch in touchables)
+                {
+                    // Call Interact(vector3) on it.
+                    touch.Interact(_hit.transform.position);
+                }
+            }
+        }
 
-        //else if (Input.GetMouseButtonUp(0))
-        //{
-        //    //if (touchables.Count != 0)
-        //    //{
-        //    //    touchables
-        //    //    touchables.Clear();
-        //    //}
-        //    foreach (var touch in touchables)
-        //    {
-        //        touch.FinishInteraction();
-        //    }
-        //    touchables.Clear();
-        //}
+        else if (Input.GetMouseButtonUp(0))
+        {
+            //if (touchables.Count != 0)
+            //{
+            //    touchables
+            //    touchables.Clear();
+            //}
+            foreach (var touch in touchables)
+            {
+                touch.FinishInteraction();
+            }
+            touchables.Clear();
+        }
     }
 
     void TapOccurred(){
