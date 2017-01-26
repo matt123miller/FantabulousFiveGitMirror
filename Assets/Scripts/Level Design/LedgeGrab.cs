@@ -50,7 +50,7 @@ public class LedgeGrab : MonoBehaviour
         if (_character != null && _thirdPersonUserControl.characterController.m_LastObjectGroundedOn != _ledgeParent.name
             && _thirdPersonUserControl.characterController.m_LastObjectGroundedOn != this.gameObject.name)
         {
-            if (!_thirdPersonUserControl.characterController.m_IsGrounded)
+            if (!_thirdPersonUserControl.characterController.isGrounded)
             {
                 GrabLedge();
             }

@@ -59,7 +59,13 @@ namespace UnityStandardAssets.Characters.ThirdPerson
             float v = CrossPlatformInputManager.GetAxis("Vertical");
             bool crouch = Input.GetKey(KeyCode.C);
 
-            // calculate move direction to pass to character
+            CalculateAndMove(v, h, crouch);
+            m_Jump = false;
+        }
+
+        public void CalculateAndMove(float v, float h, bool crouch)
+        {
+// calculate move direction to pass to character
             if (m_Cam != null)
             {
                 // calculate camera relative direction to move:
@@ -72,13 +78,12 @@ namespace UnityStandardAssets.Characters.ThirdPerson
                 m_Move = v*Vector3.forward + h*Vector3.right;
             }
 #if !MOBILE_INPUT
-			// walk speed multiplier
+// walk speed multiplier
 	        if (Input.GetKey(KeyCode.LeftShift)) m_Move *= 0.5f;
 #endif
 
             // pass all parameters to the character control script
             characterController.Move(m_Move, crouch, m_Jump, isHanging, m_Cam.right);
-            m_Jump = false;
         }
 
         //gets the current movement value

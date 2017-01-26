@@ -18,7 +18,7 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 
         Rigidbody m_Rigidbody;
         Animator m_Animator;
-        public bool m_IsGrounded;
+        public bool isGrounded;
         public string m_LastObjectGroundedOn;
         float m_OrigGroundCheckDistance;
         const float k_Half = 0.5f;
@@ -62,7 +62,7 @@ namespace UnityStandardAssets.Characters.ThirdPerson
             ApplyExtraTurnRotation();
 
             // control and velocity handling is different when grounded and airborne:
-            if (m_IsGrounded)
+            if (isGrounded)
             {
                 HandleGroundedMovement(crouch, jump);
             }
@@ -70,7 +70,7 @@ namespace UnityStandardAssets.Characters.ThirdPerson
             {
                 HandleHangingMovement(move, m_CamForward);
             }
-            else if (!m_IsGrounded)
+            else if (!isGrounded)
             {
                 HandleAirborneMovement();
             }
@@ -86,7 +86,7 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 
         void ScaleCapsuleForCrouching(bool crouch)
         {
-            if (m_IsGrounded && crouch)
+            if (isGrounded && crouch)
             {
                 if (m_Crouching) return;
                 m_Capsule.height = m_Capsule.height / 2f;
@@ -110,13 +110,13 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 
         void ScaleCapsuleForJump(bool jump)
         {
-            if (  !m_IsGrounded && m_Rigidbody.velocity.y > 0)
+            if (  !isGrounded && m_Rigidbody.velocity.y > 0)
             {
                 m_Capsule.height = m_CapsuleHeight / 2f;
                  //m_Capsule.center = new Vector3(m_Capsule.center.x, m_Capsule.center.y + 0.45f, m_Capsule.center.z);
                 //Debug.Log("I SHOULD BE SCALING");
             }
-            else if (m_IsGrounded || (!m_IsGrounded && m_Rigidbody.velocity.y < 0))
+            else if (isGrounded || (!isGrounded && m_Rigidbody.velocity.y < 0))
             {
                 m_Capsule.height = m_CapsuleHeight;
                 m_Capsule.center = m_CapsuleCenter;
@@ -146,8 +146,8 @@ namespace UnityStandardAssets.Characters.ThirdPerson
             m_Animator.SetFloat("Forward", m_ForwardAmount, 0.1f, Time.deltaTime);
             m_Animator.SetFloat("Turn", m_TurnAmount, 0.1f, Time.deltaTime);
             m_Animator.SetBool("Crouch", m_Crouching);
-            m_Animator.SetBool("OnGround", m_IsGrounded);
-            if (!m_IsGrounded)
+            m_Animator.SetBool("OnGround", isGrounded);
+            if (!isGrounded)
             {
                 m_Animator.SetFloat("Jump", m_Rigidbody.velocity.y);
             }
@@ -159,14 +159,14 @@ namespace UnityStandardAssets.Characters.ThirdPerson
                 Mathf.Repeat(
                     m_Animator.GetCurrentAnimatorStateInfo(0).normalizedTime + m_RunCycleLegOffset, 1);
             float jumpLeg = (runCycle < k_Half ? 1 : -1) * m_ForwardAmount;
-            if (m_IsGrounded)
+            if (isGrounded)
             {
                 m_Animator.SetFloat("JumpLeg", jumpLeg);
             }
 
             // the anim speed multiplier allows the overall speed of walking/running to be tweaked in the inspector,
             // which affects the movement speed because of the root motion.
-            if (m_IsGrounded && move.magnitude > 0)
+            if (isGrounded && move.magnitude > 0)
             {
                 m_Animator.speed = m_AnimSpeedMultiplier;
             }
@@ -195,7 +195,7 @@ namespace UnityStandardAssets.Characters.ThirdPerson
             {
                 // jump!
                 m_Rigidbody.velocity = new Vector3(m_Rigidbody.velocity.x, m_JumpPower, m_Rigidbody.velocity.z);
-                m_IsGrounded = false;
+                isGrounded = false;
                 m_Animator.applyRootMotion = false;
                 m_GroundCheckDistance = 0.1f;
             }
@@ -219,7 +219,7 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 		{
 			// we implement this function to override the default root motion.
 			// this allows us to modify the positional speed before it's applied.
-			if (m_IsGrounded && Time.deltaTime > 0)
+			if (isGrounded && Time.deltaTime > 0)
 			{
 				Vector3 v = (m_Animator.deltaPosition * m_MoveSpeedMultiplier) / Time.deltaTime;
 
@@ -243,12 +243,12 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 			{
 				m_GroundNormal = hitInfo.normal;
                 m_LastObjectGroundedOn = hitInfo.collider.gameObject.name;
-				m_IsGrounded = true;
+				isGrounded = true;
 				m_Animator.applyRootMotion = true;
 			}
 			else
 			{
-				m_IsGrounded = false;
+				isGrounded = false;
 				m_GroundNormal = Vector3.up;
 				m_Animator.applyRootMotion = false;
 			}
