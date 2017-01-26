@@ -11,7 +11,7 @@ public class WitchCountdown : MonoBehaviour {
 	void Start () {
         witchPromptText = GameObject.Find("Witch Prompt Text").GetComponent<Text>();
         witchPromptText.text = " ";
-        keepStillScript = GameObject.Find("DeviceTiltTest").GetComponent<WitchKeepStill>();
+        keepStillScript = GameObject.Find("MechanicsScripts").GetComponent<WitchKeepStill>();
 	}
 	
 	// Update is called once per frame
