@@ -41,7 +41,7 @@ public class ObjNoise : MonoBehaviour {
     public void GetImpactVelocity(Collision collision)
     {
         impactVelocity = collision.relativeVelocity.magnitude;
-        Debug.Log("IMPACT VELOCITY" + impactVelocity);
+        Debug.Log("IMPACT VELOCITY" + impactVelocity + " " + gameObject.name + " " +  collision.collider.name);
     }
 
     public void calcNoise(float weight, float impactVel)
