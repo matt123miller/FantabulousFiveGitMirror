@@ -1,6 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
+using UnityStandardAssets.CrossPlatformInput;
+using UnityStandardAssets.Characters.ThirdPerson;
 
 public class WitchKeepStill : MonoBehaviour {
 
@@ -11,12 +13,13 @@ public class WitchKeepStill : MonoBehaviour {
     private Text witchPromptText;
     private Vector3 initialDeviceRotation;
     private Vector3 currentDeviceRotation;
+    private ThirdPersonUserControl thirdPersonUserControl;
 
 	// Use this for initialization
 	void Start () {
         witchPromptText = GameObject.Find("Witch Prompt Text").GetComponent<Text>();
         deviceTilt = GameObject.Find("MechanicsScripts").GetComponent<DeviceTilt>();
-    
+        thirdPersonUserControl = GameObject.FindGameObjectWithTag("Player").GetComponent<ThirdPersonUserControl>();
 	}
 	
 	// Update is called once per frame
@@ -65,7 +68,7 @@ public class WitchKeepStill : MonoBehaviour {
         if (keepStillTriggered)
         {
 
-            if (accelerometerCurrentVal.magnitude > 1f || hasRotationChanged(currentDeviceRotation))
+            if (accelerometerCurrentVal.magnitude > 1f || hasRotationChanged(currentDeviceRotation) || thirdPersonUserControl.GetMoveValue() > 0)
             {
                 witchPromptText.text = "YOU MOVED - GAME OVER";
                 isStill = false;

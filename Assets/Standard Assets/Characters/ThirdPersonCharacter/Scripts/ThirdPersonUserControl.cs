@@ -81,6 +81,11 @@ namespace UnityStandardAssets.Characters.ThirdPerson
             m_Jump = false;
         }
 
+        //gets the current movement value
+        public float GetMoveValue()
+        {
+            return m_Move.magnitude;
+        }
         
     }
 }
