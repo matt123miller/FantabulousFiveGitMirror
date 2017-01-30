@@ -14,7 +14,7 @@ public class Checkpoint : MonoBehaviour
     {
         checkpoints = GameObject.FindGameObjectsWithTag("Checkpoint");
         _animator = GetComponent<Animator>();
-        _saveLoadsScript = GameObject.Find("GameManager").GetComponent<SaveLoad>();
+        _saveLoadsScript = FindObjectOfType<SaveLoad>();
     }
 
     void OnTriggerEnter(Collider other)
