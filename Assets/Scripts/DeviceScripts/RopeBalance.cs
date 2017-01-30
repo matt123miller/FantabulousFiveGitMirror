@@ -1,7 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityStandardAssets.Characters.ThirdPerson;
-using UnityStandardAssets.Utility.Inspector;
 
 
 //We need a target at the each end of the rope for alligning the player to.
