@@ -21,12 +21,12 @@ public static class Extensions
 
     public static float AsRadian(this float angle)
     {
-        return angle * (Mathf.PI / 180f);
+        return angle * Mathf.Deg2Rad;
     }
 
     public static float AsAngle(this float radian)
     {
-        return radian * (180f / Mathf.PI);
+        return radian * Mathf.Rad2Deg;
     }
 
     // Collections
