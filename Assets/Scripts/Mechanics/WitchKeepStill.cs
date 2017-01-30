@@ -68,7 +68,7 @@ public class WitchKeepStill : MonoBehaviour {
         if (keepStillTriggered)
         {
 
-            if (accelerometerCurrentVal.magnitude > 1f || hasRotationChanged(currentDeviceRotation) || thirdPersonUserControl.GetMoveValue() > 0)
+            if (accelerometerCurrentVal.magnitude > 1f || hasRotationChanged(currentDeviceRotation) || thirdPersonUserControl.GetMoveMagnitude() > 0)
             {
                 witchPromptText.text = "YOU MOVED - GAME OVER";
                 isStill = false;

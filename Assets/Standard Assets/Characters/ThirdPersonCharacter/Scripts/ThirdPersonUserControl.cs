@@ -87,7 +87,7 @@ namespace UnityStandardAssets.Characters.ThirdPerson
         }
 
         //gets the current movement value
-        public float GetMoveValue()
+        public float GetMoveMagnitude()
         {
             return m_Move.magnitude;
         }
