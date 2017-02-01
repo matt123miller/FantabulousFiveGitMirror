@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using System.Collections;
 
 public class Noise : MonoBehaviour
@@ -6,14 +7,16 @@ public class Noise : MonoBehaviour
 
     public float currentNoise;
     public float maxNoise = 100f;
-    public GameObject noiseBar;
+    public Slider noiseBar;
     private WitchCountdown _witchCountDownScript;
 
     public void Start()
     {
+        _witchCountDownScript = GameObject.Find("MechanicsScripts").GetComponent<WitchCountdown>();
+        noiseBar = GetComponent<Slider>();
+
         currentNoise = 0;
         SetNoiseBar(currentNoise);
-        _witchCountDownScript = GameObject.Find("MechanicsScripts").GetComponent<WitchCountdown>();
         //InvokeRepeating("DecreaseNoise", 1f, 1f);
     }
 
@@ -28,7 +31,7 @@ public class Noise : MonoBehaviour
     {
         currentNoise += moreNoise;
         SetNoiseBar(CalculateNoiseVal(currentNoise));
-        if (currentNoise >= 100)
+        if (currentNoise >= 100) // Should this be maxNoise?
         {
             TriggerWitch();
             ResetNoiseBar();
@@ -39,7 +42,7 @@ public class Noise : MonoBehaviour
     public void SetNoiseBar(float noiseVal)
     {
         //noiseBar needs to be a value between 0 - 1
-        noiseBar.transform.localScale = new Vector3(noiseVal, noiseBar.transform.localScale.y, noiseBar.transform.localScale.z);
+        noiseBar.value = noiseVal;  //transform.localScale = new Vector3(noiseVal, noiseBar.transform.localScale.y, noiseBar.transform.localScale.z);
     }
 
     //makes sure that noise value is between 0 - 1 for noiseBar
