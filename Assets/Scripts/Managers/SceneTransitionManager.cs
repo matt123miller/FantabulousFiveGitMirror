@@ -84,6 +84,12 @@ public class SceneTransitionManager : MonoBehaviour
         }
     }
 
+    public void ReloadCurrentLevel()
+    {
+        int targetScene = SceneManager.GetActiveScene().buildIndex;
+        StartCoroutine(AsyncLoadLevel(targetScene));
+    }
+
     private IEnumerator AsyncLoadLevel(int targetScene)
     {
         fader.BeginFadeToBlack(false);

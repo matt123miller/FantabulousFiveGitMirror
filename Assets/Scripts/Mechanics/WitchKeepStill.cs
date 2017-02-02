@@ -14,12 +14,15 @@ public class WitchKeepStill : MonoBehaviour {
     private Vector3 initialDeviceRotation;
     private Vector3 currentDeviceRotation;
     private ThirdPersonUserControl thirdPersonUserControl;
+    private LoadLevel loadLevelScript;
+
 
 	// Use this for initialization
 	void Start () {
         witchPromptText = GameObject.Find("Witch Prompt Text").GetComponent<Text>();
         _deviceTilt = GameObject.Find("MechanicsScripts").GetComponent<DeviceTilt>();
         thirdPersonUserControl = GameObject.FindGameObjectWithTag("Player").GetComponent<ThirdPersonUserControl>();
+        loadLevelScript = GameObject.Find("GameManager").GetComponent<LoadLevel>();
 	}
 	
 	// Update is called once per frame
@@ -42,6 +45,8 @@ public class WitchKeepStill : MonoBehaviour {
             //if we moved, stop the timer
             if(!isStill)
             {
+                yield return new WaitForSecondsRealtime(2.5f);
+                loadLevelScript.LoadSavedLevel(true);
                 break;
             }
 
@@ -61,13 +66,13 @@ public class WitchKeepStill : MonoBehaviour {
         reset();
     }
 
+
     //checks magnitude of the acceleromter value - detecting any shake
     public void movementCheck(Vector3 accelerometerCurrentVal)
     {
         currentDeviceRotation = DeviceRotation.GetRotation().eulerAngles;
         if (keepStillTriggered)
         {
-
             if (accelerometerCurrentVal.magnitude > 1f || hasRotationChanged(currentDeviceRotation) || thirdPersonUserControl.GetMoveMagnitude() > 0)
             {
                 witchPromptText.text = "YOU MOVED - GAME OVER";
@@ -75,6 +80,7 @@ public class WitchKeepStill : MonoBehaviour {
             }
         }
     }
+
 
     public void reset()
     {

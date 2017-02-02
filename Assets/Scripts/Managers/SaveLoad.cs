@@ -36,5 +36,13 @@ public class SaveLoad : MonoBehaviour {
         return null;
     }
 
+    public void Delete()
+    {
+        if(File.Exists(Application.persistentDataPath + "/playerInfo.dat"))
+        {
+            File.Delete(Application.persistentDataPath + "/playerInfo.dat");
+        }
+    }
+
 
 }
