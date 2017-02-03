@@ -4,15 +4,18 @@ using UnityStandardAssets.Characters.ThirdPerson;
 
 public class CameraMovement : MonoBehaviour {
 
+    private ThirdPersonUserControl _thirdPersonUserControl;
+    private RopeBalance _balance;
     private GameObject _character;
-    public GameObject characterCam;
     private Rigidbody _characterRigidbody;
+    private Vector3 _hangingCameraPos;
+
+    public GameObject characterCam;
     public GameObject idleCameraPos;
     public GameObject travellingCameraPos;
-    private Vector3 _hangingCameraPos;
+    public GameObject balancingCameraPos;
     public float lerpTime = 0.5f;
-    private ThirdPersonUserControl _thirdPersonUserControl;
-    
+
     // Use this for initialization
     void Awake()
     {
@@ -20,17 +23,20 @@ public class CameraMovement : MonoBehaviour {
         // characterCam = GameObject.FindWithTag("MainCamera");
         _characterRigidbody = _character.GetComponent<Rigidbody>();
         _thirdPersonUserControl = _character.GetComponent<ThirdPersonUserControl>();
+        _balance = FindObjectOfType<RopeBalance>();
 
     }
     // Update is called once per frame
     void Update()
     {
-
         float characterVelocity = _characterRigidbody.velocity.normalized.magnitude;
-       // Debug.Log(characterVelocity);
-
+        // Change the camera to the 'balancing' position - far out and above
+        if (_balance.isBalancing)
+        {
+            lerpCameraBetweenPos(characterCam.transform, balancingCameraPos.transform, lerpTime);
+        }
         //changes camera to 'travelling' position - far out
-        if (characterVelocity > 0 && characterCam.transform.localPosition != travellingCameraPos.transform.localPosition)
+        else if (characterVelocity > 0 && characterCam.transform.localPosition != travellingCameraPos.transform.localPosition)
         {
             lerpCameraBetweenPos(characterCam.transform, travellingCameraPos.transform, lerpTime);
         }
@@ -50,6 +56,5 @@ public class CameraMovement : MonoBehaviour {
     {
        characterCam.transform.localPosition =  Vector3.Lerp(originalPos.transform.localPosition, newPos.transform.localPosition, Time.deltaTime * time);
        characterCam.transform.localRotation =  Quaternion.Lerp(originalPos.localRotation, newPos.localRotation, Time.deltaTime * time);
- 
     }
 }
