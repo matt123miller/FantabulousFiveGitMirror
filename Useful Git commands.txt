@@ -7,7 +7,15 @@ git rm . -r --cached
 git add .
 git commit -m "fixed untracked files"
 
+Git rebase
+Checkout my feature branch
+Rebase master onto the feature
 
+git checkout branch_name
+git fetch (to update locally what's available)
+git rebase master
+// Check everything works as intended
+git push origin
 
 Advice for deleting branches.
 Found here: http://stackoverflow.com/questions/5330145/when-to-delete-branches-in-git
