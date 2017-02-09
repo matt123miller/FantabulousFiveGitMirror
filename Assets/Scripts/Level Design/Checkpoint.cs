@@ -12,7 +12,7 @@ public class Checkpoint : MonoBehaviour
 
     void Start()
     {
-        checkpoints = GameObject.FindGameObjectsWithTag("Checkpoint");
+         checkpoints = GameObject.FindGameObjectsWithTag("Checkpoint");
         _animator = GetComponent<Animator>();
         _saveLoadsScript = FindObjectOfType<SaveLoad>();
     }
