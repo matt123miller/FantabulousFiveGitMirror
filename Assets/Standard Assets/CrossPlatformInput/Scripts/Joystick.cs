@@ -20,6 +20,9 @@ namespace UnityStandardAssets.CrossPlatformInput
         }
 
 		public int MovementRange = 100;
+        [Tooltip("What is the minimum percentage of x movement required to trigger turning?")]
+        [Range(0.1f,1f)]
+        public float xMoveDeadzone = 0.4f;
 		public AxisOption axesToUse = AxisOption.Both; // The options for the axes that the still will use
 		public string horizontalAxisName = "Horizontal"; // The name given to the horizontal axis for the cross platform input
 		public string verticalAxisName = "Vertical"; // The name given to the vertical axis for the cross platform input
@@ -45,9 +48,16 @@ namespace UnityStandardAssets.CrossPlatformInput
 			var delta = m_StartPos - value;
 			delta.y = -delta.y;
 			delta /= MovementRange;
+
 			if (m_UseX)
 			{
-				m_HorizontalVirtualAxis.Update(-delta.x);
+                var xInput = -delta.x;
+                // Remove some of the finicky turn input.
+                if (xInput < xMoveDeadzone && xInput > -xMoveDeadzone)
+                {
+                    xInput = 0;
+                }
+                m_HorizontalVirtualAxis.Update(xInput);
 			}
 
 			if (m_UseY)
