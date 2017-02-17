@@ -9,6 +9,8 @@ public class MicrophoneInput : MonoBehaviour
     public float loudness = 0;
     public AudioSource audioSource;
     bool started;
+    float counter;
+
     // Use this for initialization
     void Start()
     {
@@ -17,20 +19,30 @@ public class MicrophoneInput : MonoBehaviour
 
     public void StartInput()
     {
+        counter = 0;
         started = true;
         audioSource = GetComponent<AudioSource>();
         audioSource.clip = Microphone.Start(null, true, 1, 44100);
         audioSource.loop = true;
         while (!(Microphone.GetPosition(null) > 0)) { }
         audioSource.Play();
+        
     }
 
     // Update is called once per frame
     void Update()
     {
-        loudness = GetAveragedVolume() * sensitivity;
         if (started)
-            print("LOUDNESS: " + loudness);
+        {
+            if (counter >= 60)
+            {
+                loudness = GetAveragedVolume() * sensitivity;
+                counter = 0;
+            }
+
+            counter++;
+        }
+
     }
 
     float GetAveragedVolume()
