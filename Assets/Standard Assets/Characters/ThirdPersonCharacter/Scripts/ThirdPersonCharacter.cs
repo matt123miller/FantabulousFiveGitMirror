@@ -57,7 +57,7 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 
             m_TurnAmount = isHanging ? 0 : Mathf.Atan2(move.x, move.z);
             m_ForwardAmount = move.z;
-
+            m_Crouching = false;
 
             ApplyExtraTurnRotation();
 
@@ -75,9 +75,12 @@ namespace UnityStandardAssets.Characters.ThirdPerson
                 HandleAirborneMovement();
             }
 
-            ScaleCapsuleForCrouching(crouch);
+            //ScaleCapsuleForCrouching(crouch);
             ScaleCapsuleForJump(jump);
-            PreventStandingInLowHeadroom();
+            
+            
+            // This causes us to crouch randomly under things.
+            //PreventStandingInLowHeadroom();
 
             // send input and other state parameters to the animator
             UpdateAnimator(move);
