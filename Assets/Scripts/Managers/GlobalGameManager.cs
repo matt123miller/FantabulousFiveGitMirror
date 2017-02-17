@@ -85,16 +85,18 @@ public class GlobalGameManager : MonoBehaviour
     {
         _touchCanvas.enabled = setter;
 
+        var joystick = _touchCanvas.gameObject.GetComponentInChildren<Joystick>();
+
+        joystick.enabled = setter;
+
         // If we're turning the UI on....
         if (setter)
         {
             // We need to check if this canvas have a joystick?
-            var joystick = _touchCanvas.gameObject.GetComponentInChildren<Joystick>();
             if (joystick)
             {
                 joystick.SetAxis(joystick.axesToUse);
             }
-
         }
     }
 
