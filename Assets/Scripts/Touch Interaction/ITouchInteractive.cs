@@ -3,7 +3,7 @@ using System.Collections;
 
 
 
-public interface TouchInteractive {
+public interface ITouchInteractive {
 
     void Interact();
 

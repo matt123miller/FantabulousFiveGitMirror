@@ -13,7 +13,7 @@ public class TouchInputManager : MonoBehaviour {
 	private Touch _touch;
 	private Vector3 _touchPosition;
 
-    private List<TouchInteractive> _touchables;
+    private List<ITouchInteractive> _touchables;
 
     // Use this for initialization
     void Start () {
@@ -35,9 +35,9 @@ public class TouchInputManager : MonoBehaviour {
             {
 
                 // Get all my _touchables.
-                _touchables = new List<TouchInteractive>(_hit.transform.GetComponents<TouchInteractive>());
+                _touchables = new List<ITouchInteractive>(_hit.transform.GetComponents<ITouchInteractive>());
 
-                foreach (TouchInteractive touch in _touchables)
+                foreach (ITouchInteractive touch in _touchables)
                 {
                     // Call Interact(vector3) on it.
                     touch.Interact(_hit.transform.position);

@@ -6,7 +6,7 @@ using System;
 // Why should tappable objects require a Rigidbody
 [RequireComponent(typeof(Animator))]
 [RequireComponent(typeof(EventTrigger))]
-public class Tappable : MonoBehaviour , TouchInteractive {
+public class Tappable : MonoBehaviour , ITouchInteractive {
 
 	public Color newColour = new Color(0,1,0);
     private Color _oldColour;

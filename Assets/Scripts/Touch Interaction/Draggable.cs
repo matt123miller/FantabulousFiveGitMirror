@@ -4,7 +4,7 @@ using UnityStandardAssets.CrossPlatformInput;
 using System;
 
 [RequireComponent(typeof(Rigidbody))]
-public class Draggable : MonoBehaviour, TouchInteractive {
+public class Draggable : MonoBehaviour, ITouchInteractive {
 
 	// Can a draggable also be tapped? 
 	// Or should it just do the drag action, for example it would only be dragged a tiiiiny bit
