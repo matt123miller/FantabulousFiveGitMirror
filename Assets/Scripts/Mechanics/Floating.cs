@@ -12,6 +12,8 @@ public class Floating : MonoBehaviour {
     int cooldownLength;
     public float ceilingHeight;
     public float forceModifier;
+    public float maxForce;
+    public float characterHeight;
 	// Use this for initialization
 	void Start () {
         playerObj = GameObject.FindGameObjectWithTag("Player");
@@ -20,7 +22,9 @@ public class Floating : MonoBehaviour {
         cooldownLength = 30;
         canGoHighterCooldown = 0;
         ceilingHeight = 4.5f;
-        forceModifier = 100;
+        forceModifier = 0;
+        maxForce = 100;
+        characterHeight = 0;
 	}
 	
 	// Update is called once per frame
@@ -30,7 +34,10 @@ public class Floating : MonoBehaviour {
         if(isFloating)
         {
             float loudness = microphoneInputScript.loudness;
-            print("Loudness: " + loudness);
+            characterHeight = playerObj.transform.position.y;
+            AdaptForceFromHeight(characterHeight);
+
+            //print("Loudness: " + loudness);
             if (playerRigid.velocity.magnitude < 0f)
             {
                 playerRigid.drag = 15;
@@ -48,7 +55,7 @@ public class Floating : MonoBehaviour {
                 canGoHigher = false;
             }
             
-            if(canGoHigher && canGoHighterCooldown <= 0 && loudness > 1f)
+            if(canGoHigher && canGoHighterCooldown <= 0 && loudness > 1.0f)
             {
                 canGoHigher = false;
                 canGoHighterCooldown = cooldownLength;
@@ -71,5 +78,19 @@ public class Floating : MonoBehaviour {
     {
         isFloating = false;
         microphoneInputScript.StopInput();
+    }
+
+    public void AdaptForceFromHeight(float _characterHeight)
+    {
+        if(characterHeight <= 1)
+        {
+            forceModifier = maxForce;
+        }
+        else
+        {
+            forceModifier = maxForce / characterHeight;
+        }
+
+        print(forceModifier);
     }
 }
