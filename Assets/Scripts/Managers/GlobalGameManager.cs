@@ -87,7 +87,8 @@ public class GlobalGameManager : MonoBehaviour
 
         var joystick = _touchCanvas.gameObject.GetComponentInChildren<Joystick>();
 
-        joystick.enabled = setter;
+        if(joystick)
+            joystick.enabled = setter;
 
         // If we're turning the UI on....
         if (setter)
