@@ -3,31 +3,34 @@ using System.Collections;
 
 public class MovingPortraits : MonoBehaviour
 {
-    private Camera _renderCamera;
+    public Camera _renderCamera;
     private Transform _paintingContents;
     private Transform _player;
     private float _invSqrColliderDistance;
-    //private float sqr
+
+    public Transform pictureTexture;
 
     [Range(0, 5)]
-    public int wScale = 1, hScale = 1;
+    [Header("Edit me!")]
+    public int textureScale = 3;
 
-    [Range(0, 256)]
-    public int width, height;
+    [Header("Not me!")]
+    public int texWidth;
+    public int texHeight;
 
     void Awake()
     {
         // Get my components
         _renderCamera = GetComponentInChildren<Camera>();
-        _invSqrColliderDistance = GetComponent<SphereCollider>().radius; // Get it.
+        _invSqrColliderDistance = GetComponentInChildren<SphereCollider>().radius; // Get the radius.
         _invSqrColliderDistance *= _invSqrColliderDistance; // Square it
         _invSqrColliderDistance = 1 / _invSqrColliderDistance; // Inverse it
         _paintingContents = transform.GetChild(0);
 
         // Create and set the render texture.
-        RenderTexture rTex = new RenderTexture(width, height, 0);
+        RenderTexture rTex = new RenderTexture(texWidth, texHeight, 0);
         _renderCamera.targetTexture = rTex;
-        GetComponent<MeshRenderer>().material.mainTexture = rTex;
+        pictureTexture.GetComponent<MeshRenderer>().material.mainTexture = rTex;
 
     }
 
@@ -48,6 +51,7 @@ public class MovingPortraits : MonoBehaviour
         Vector3 playerToPainting = _player.position - transform.position;
         float sqrDistance = playerToPainting.sqrMagnitude;
 
+        // Some sort of percentage value for affecting the resolution of the image?
         float percentDistance = sqrDistance * _invSqrColliderDistance;
         //print(percentDistance);
 
@@ -58,8 +62,8 @@ public class MovingPortraits : MonoBehaviour
 
     void OnValidate()
     {
-        // Rescale the object to match the given width height
-        transform.localScale = new Vector3(wScale, hScale, 1);
-        
+        texWidth = (int)Mathf.Pow(2, 5 + textureScale);
+        texHeight = (int)Mathf.Pow(2, 5 + textureScale);
+
     }
 }

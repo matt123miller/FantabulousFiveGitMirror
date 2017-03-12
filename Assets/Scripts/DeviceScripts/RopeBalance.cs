@@ -32,6 +32,12 @@ public class RopeBalance : MonoBehaviour
     {
         _character = FindObjectOfType<ThirdPersonUserControl>();
         _joystick = FindObjectOfType<Joystick>();
+
+        if(!_character || !_joystick)
+        {
+            Destroy(this);
+        }
+
         _dial = transform.parent.FindChild("BalanceScreen").gameObject;
         _characterSkeleton = _character.transform;//.FindChild("EthanSkeleton");
 
