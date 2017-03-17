@@ -181,7 +181,7 @@ namespace UnityStandardAssets.Characters.ThirdPerson
         }
 
 
-        void HandleAirborneMovement()
+     public void HandleAirborneMovement()
         {
             // apply extra gravity from multiplier:
             Vector3 extraGravityForce = (Physics.gravity * m_GravityMultiplier) - Physics.gravity;

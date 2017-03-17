@@ -1,11 +1,13 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityStandardAssets.Characters.ThirdPerson;
 
 public class Floating : MonoBehaviour {
 
     GameObject playerObj;
     Rigidbody playerRigid;
     MicrophoneInput microphoneInputScript;
+    ThirdPersonCharacter characterScript;
     bool isFloating = false;
     bool canGoHigher = false;
     int canGoHighterCooldown;
@@ -18,8 +20,9 @@ public class Floating : MonoBehaviour {
 	void Start () {
         playerObj = GameObject.FindGameObjectWithTag("Player");
         playerRigid = playerObj.GetComponent<Rigidbody>();
+        characterScript = playerObj.GetComponent<ThirdPersonCharacter>();
         microphoneInputScript = GameObject.Find("GameManager").GetComponent<MicrophoneInput>();
-        cooldownLength = 30;
+        cooldownLength = 10;
         canGoHighterCooldown = 0;
         ceilingHeight = 4.5f;
         forceModifier = 0;
@@ -37,7 +40,7 @@ public class Floating : MonoBehaviour {
             characterHeight = playerObj.transform.position.y;
             AdaptForceFromHeight(characterHeight);
 
-            //print("Loudness: " + loudness);
+            print("Loudness: " + loudness);
             if (playerRigid.velocity.magnitude < 0f)
             {
                 playerRigid.drag = 15;
@@ -55,14 +58,16 @@ public class Floating : MonoBehaviour {
                 canGoHigher = false;
             }
             
-            if(canGoHigher && canGoHighterCooldown <= 0 && loudness > 1.0f)
+            if(canGoHigher && canGoHighterCooldown <= 0 && loudness > 0.1f)
             {
+                float forceToAdd = loudness * forceModifier;
                 canGoHigher = false;
                 canGoHighterCooldown = cooldownLength;
-                playerRigid.AddRelativeForce(0, loudness * forceModifier, 0);
+                playerRigid.AddForce(playerRigid.velocity.x  * forceToAdd, forceToAdd, playerRigid.velocity.z * forceToAdd);
 
             }
 
+           // characterScript.HandleAirborneMovement();
             canGoHighterCooldown--;
         }
 	}
@@ -91,6 +96,5 @@ public class Floating : MonoBehaviour {
             forceModifier = maxForce / characterHeight;
         }
 
-        print(forceModifier);
     }
 }
