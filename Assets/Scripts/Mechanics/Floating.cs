@@ -63,7 +63,7 @@ public class Floating : MonoBehaviour {
                 float forceToAdd = loudness * forceModifier;
                 canGoHigher = false;
                 canGoHighterCooldown = cooldownLength;
-                playerRigid.AddForce(playerRigid.velocity.x  * forceToAdd, forceToAdd, playerRigid.velocity.z * forceToAdd);
+                playerRigid.AddForce(playerObj.transform.forward.x  * forceToAdd / 2, forceToAdd, playerObj.transform.forward.z * forceToAdd / 2 );
 
             }
 
