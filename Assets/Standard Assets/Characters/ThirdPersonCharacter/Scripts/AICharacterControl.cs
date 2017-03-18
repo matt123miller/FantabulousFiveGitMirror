@@ -10,7 +10,8 @@ namespace UnityStandardAssets.Characters.ThirdPerson
         public NavMeshAgent agent { get; private set; }             // the navmesh agent required for the path finding
         public ThirdPersonCharacter character { get; private set; } // the character we are controlling
         public Transform target;                                    // target to aim for
-
+        public Transform[] waypoints;
+        public int currentWaypoint;
 
         private void Start()
         {
@@ -20,20 +21,35 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 
 	        agent.updateRotation = false;
 	        agent.updatePosition = true;
+            target = waypoints[currentWaypoint];
+
         }
 
 
         private void Update()
         {
-            if (target != null)
-                agent.SetDestination(target.position);
+            //if (target)
+            //    agent.SetDestination(target.position);
 
             if (agent.remainingDistance > agent.stoppingDistance)
                 character.Move(agent.desiredVelocity, false, false, false, Vector3.zero);
             else
                 character.Move(Vector3.zero, false, false, false, Vector3.zero);
+
+            // Waypointing
+            Patrol();
         }
 
+        private void Patrol()
+        {
+            if (agent.remainingDistance < agent.stoppingDistance)
+            {
+                currentWaypoint = (currentWaypoint + 1) % waypoints.Length;
+                target = waypoints[currentWaypoint];
+                agent.SetDestination(target.position);
+                agent.Resume();
+            }
+        }
 
         public void SetTarget(Transform target)
         {
