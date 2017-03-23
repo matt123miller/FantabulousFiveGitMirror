@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityEngine.EventSystems;
-using UnityStandardAssets.Characters.ThirdPerson;
+
 using UnityStandardAssets.CrossPlatformInput;
 
 

@@ -2,7 +2,7 @@
 using System.Collections;
 using UnityEngine.UI;
 using UnityStandardAssets.CrossPlatformInput;
-using UnityStandardAssets.Characters.ThirdPerson;
+
 
 public class WitchKeepStill : MonoBehaviour {
 

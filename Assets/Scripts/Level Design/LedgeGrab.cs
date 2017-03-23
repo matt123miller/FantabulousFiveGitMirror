@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityStandardAssets.CrossPlatformInput;
-using UnityStandardAssets.Characters.ThirdPerson;
+
 
 public class LedgeGrab : MonoBehaviour
 {

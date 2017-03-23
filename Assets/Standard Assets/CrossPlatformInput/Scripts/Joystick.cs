@@ -2,8 +2,6 @@ using System;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-
-
 namespace UnityStandardAssets.CrossPlatformInput
 {
 	public class Joystick : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IDragHandler
