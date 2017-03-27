@@ -6,11 +6,11 @@ using System.Collections;
 public class AISight : MonoBehaviour
 {
     public AICharacterControl aiController;
-    RaycastHit hit;
-    private bool inSight;
-    public float updateTarget = 0.2f;
+    RaycastHit _hit;
+
+    private bool _inSight;
+    public float updateTarget = 0.1f;
     public float updateTimer = 0.0f;
-    Vector3 targetPos;
 
     [SerializeField]
     private Transform eyes;
@@ -33,48 +33,42 @@ public class AISight : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
+            var target = other.transform.position;
+            target.Set(target.x, target.y + 0.3f, target.z);
+            var direction =  target - eyes.position;
+
+            Debug.DrawRay(eyes.position, direction, Color.red, 0.3f);
+
             updateTimer += Time.deltaTime;
             if (updateTimer > updateTarget)
             {
                 updateTimer = 0.0f;
-                Look(other.transform.position);
-                aiController.SetInSight(inSight);
+                _inSight = Look(target, direction);
+                aiController.SetInSight(_inSight);
             }
         }
     }
 
-    public bool Look(Vector3 otherPosition)
+    public bool Look(Vector3 otherPosition, Vector3 direction)
     {
-        Vector3 direction = otherPosition - eyes.position;
+        _hit = new RaycastHit();
+        var spotted = false;
 
-        hit = new RaycastHit();
+        if (Physics.Raycast(eyes.position, direction, out _hit))
+            spotted = _hit.collider.CompareTag("Player");
 
-        Debug.DrawRay(transform.position, direction, Color.green);
-        if (Physics.Raycast(eyes.position, direction, out hit))
-        {
-            if (hit.collider.CompareTag("Player"))
-            {
-                inSight = true;
-                Debug.Log("Player is Sighted, player LKP updated");
-            }
-        }
-        else
-        {
-            inSight = false;
-            Debug.Log("In collider, not in sight");
-        }
-        return inSight;
+        print(spotted ? "Player is sighted" : "In collider, not in sight");
+
+        return spotted;
     }
 
     private void OnTriggerExit(Collider other)
     {
-        if (inSight && other.CompareTag("Player"))
+        if (_inSight && other.CompareTag("Player"))
         {
-            // if this ever occurs and the player IS in sight then there's a problem
-            // if not delete this breakpoint
-            // Breakpoint removed for now, might add it agian later to test.
-            inSight = false;
-            aiController.SetInSight(inSight);
+            // The player ran away further than the AI can see
+            _inSight = false;
+            aiController.SetInSight(_inSight);
         }
     }
 }

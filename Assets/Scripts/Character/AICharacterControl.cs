@@ -27,12 +27,18 @@ public class AICharacterControl : MonoBehaviour
     public Transform[] waypoints;
     public int currentWaypoint;
 
-    private void Start()
+    private void Awake()
     {
         // get the components on the object we need ( should not be null due to require component so no need to check )
         agent = GetComponentInChildren<NavMeshAgent>();
         character = GetComponent<ThirdPersonCharacter>();
         player = FindObjectOfType<ThirdPersonUserControl>();
+        aiSight = GetComponentInChildren<AISight>();
+    }
+
+    private void Start()
+    {
+        aiSight.aiController = this;
 
         agent.updateRotation = false;
         agent.updatePosition = true;
