@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
-
+using UnityEngine.UI;
+using UnityEngine.EventSystems;
 
 public class Floating : MonoBehaviour {
 
@@ -16,18 +17,34 @@ public class Floating : MonoBehaviour {
     public float forceModifier;
     public float maxForce;
     public float characterHeight;
-	// Use this for initialization
-	void Start () {
+    public Text tempTimerText;
+    public float timer;
+    public float timerLength;
+    public float scriptCooldown;
+    public bool isCoolingDown;
+    float scriptCooldownLength;
+    public EventTrigger floatButton;
+
+ 
+
+    // Use this for initialization
+    void Start () {
         playerObj = GameObject.FindGameObjectWithTag("Player");
         playerRigid = playerObj.GetComponent<Rigidbody>();
         characterScript = playerObj.GetComponent<ThirdPersonCharacter>();
         microphoneInputScript = GameObject.Find("GameManager").GetComponent<MicrophoneInput>();
+        tempTimerText = GameObject.Find("Witch Prompt Text").GetComponent<Text>();
+        floatButton = GameObject.Find("FloatButton").GetComponent<EventTrigger>();
         cooldownLength = 10;
         canGoHighterCooldown = 0;
         ceilingHeight = 4.5f;
         forceModifier = 0;
         maxForce = 100;
         characterHeight = 0;
+        timerLength = 20.0f;
+        timer = timerLength;
+        scriptCooldownLength = 30.0f;
+        scriptCooldown = scriptCooldownLength;
 	}
 	
 	// Update is called once per frame
@@ -69,20 +86,50 @@ public class Floating : MonoBehaviour {
 
            // characterScript.HandleAirborneMovement();
             canGoHighterCooldown--;
+            timer -= Time.deltaTime;
+            tempTimerText.text = timer.ToString();
+
+            if(timer <= 0)
+            {
+                TurnOffFloating();
+                tempTimerText.text = "Time's Up";
+                timer = timerLength;
+                isCoolingDown = true;
+            }
+        }//isfloating
+
+        //timers to cooldown mechanic
+        if (isCoolingDown)
+        {
+            isFloating = false;
+            scriptCooldown -= Time.deltaTime;
+            floatButton.enabled = false;
         }
-	}
+
+        if (scriptCooldown <= 0)
+        {
+            isCoolingDown = false;
+            scriptCooldown = scriptCooldownLength;
+            tempTimerText.text = "";
+            floatButton.enabled = true;
+        }
+    }
 
 
     public void FloatingTriggered()
     {
-        isFloating = true;
-        microphoneInputScript.StartInput();
+        if(!isCoolingDown)
+        {
+            isFloating = true;
+            microphoneInputScript.StartInput();
+        }
     }
 
     public void TurnOffFloating()
     {
         isFloating = false;
         microphoneInputScript.StopInput();
+        isCoolingDown = true;
     }
 
     public void AdaptForceFromHeight(float _characterHeight)
