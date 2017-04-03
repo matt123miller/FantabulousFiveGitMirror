@@ -74,7 +74,9 @@ public class Floating : MonoBehaviour {
             {
                 canGoHigher = false;
             }
-            
+            // You can do this
+            //canGoHigher = playerObj.transform.position.y < 4.5f
+
             if(canGoHigher && canGoHighterCooldown <= 0 && loudness > 0.1f)
             {
                 float forceToAdd = loudness * forceModifier;

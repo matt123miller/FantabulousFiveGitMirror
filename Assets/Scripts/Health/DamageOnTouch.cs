@@ -6,13 +6,13 @@ public class DamageOnTouch : MonoBehaviour
     public bool targetAll = false;
     public bool instantKill = false;
 
-    private Vector2 _lastPosition;
+    // private Vector2 _lastPosition;
     private Vector2 _velocity;
 
     public void LateUpdate()
     {
         //_velocity = (_lastPosition - (Vector2)transform.position) / Time.deltaTime;
-        _lastPosition = transform.position;
+        // _lastPosition = transform.position;
     }
 
     public void OnTriggerEnter2D(Collider2D other)

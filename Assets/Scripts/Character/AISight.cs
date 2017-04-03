@@ -25,7 +25,7 @@ public class AISight : MonoBehaviour
 
     private void Start()
     {
-        blockingcollider = aiController.GetComponent<Collider>();
+        blockingcollider = aiController.GetComponent<CapsuleCollider>();
         // Start each agents timer on a semi random time, why not? 
         // Should space out the bigger computations across different frames instead of all agents in 1 frame
         updateTimer = UnityEngine.Random.Range(-0.2f, 0);

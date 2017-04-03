@@ -3,8 +3,8 @@ using System.Collections;
 
 public class MovingPortraits : MonoBehaviour
 {
+    // TODO Maybe turn the render camera off when it's far away from the player for optimisation?
     public Camera _renderCamera;
-    private Transform _paintingContents;
     private Transform _player;
     private float _invSqrColliderDistance;
 
@@ -25,7 +25,6 @@ public class MovingPortraits : MonoBehaviour
         _invSqrColliderDistance = GetComponentInChildren<SphereCollider>().radius; // Get the radius.
         _invSqrColliderDistance *= _invSqrColliderDistance; // Square it
         _invSqrColliderDistance = 1 / _invSqrColliderDistance; // Inverse it
-        _paintingContents = transform.GetChild(0);
 
         // Create and set the render texture.
         RenderTexture rTex = new RenderTexture(texWidth, texHeight, 0);
@@ -36,7 +35,7 @@ public class MovingPortraits : MonoBehaviour
 
     void Start()
     {
-
+        
     }
 
     // Update is called once per frame
@@ -52,7 +51,7 @@ public class MovingPortraits : MonoBehaviour
         float sqrDistance = playerToPainting.sqrMagnitude;
 
         // Some sort of percentage value for affecting the resolution of the image?
-        float percentDistance = sqrDistance * _invSqrColliderDistance;
+        // float percentDistance = sqrDistance * _invSqrColliderDistance;
         //print(percentDistance);
 
         // move the contents of the painting accordingly 

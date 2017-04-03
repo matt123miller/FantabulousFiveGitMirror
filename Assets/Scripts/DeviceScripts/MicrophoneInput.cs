@@ -24,9 +24,10 @@ public class MicrophoneInput : MonoBehaviour
         audioSource = GetComponent<AudioSource>();
         audioSource.clip = Microphone.Start(null, true, 1, 44100);
         audioSource.loop = true;
+        // wtf does this do? What a weird statement
         while (!(Microphone.GetPosition(null) > 0)) { }
         audioSource.Play();
-        
+    
     }
 
     // Update is called once per frame
@@ -54,6 +55,9 @@ public class MicrophoneInput : MonoBehaviour
         {
             a += Mathf.Abs(num);
         }
+
+        //TODO Maybe we change 256 to something lower? The values would seem more meaninfully different to our puny human minds
+        // Would require changing threshhold values throughout the code of course
         return a / 256;
     }
 

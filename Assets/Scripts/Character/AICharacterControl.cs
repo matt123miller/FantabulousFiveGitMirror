@@ -1,6 +1,7 @@
 using System;
 using UnityEngine;
 
+//TODO make floating a character component is probably better.
 [RequireComponent(typeof(NavMeshAgent))]
 [RequireComponent(typeof(ThirdPersonCharacter))]
 public class AICharacterControl : MonoBehaviour
@@ -16,13 +17,14 @@ public class AICharacterControl : MonoBehaviour
     public ThirdPersonCharacter character { get; private set; }     // the character we are controlling
     public ThirdPersonUserControl player { get; private set; }
     private AISight _aiSight;
+    public MicrophoneInput micInput;
 
     [SerializeField]
     private AIState _currentState;
     [SerializeField]
     private bool _inSight = false;
     [SerializeField]
-    private Transform _movementTarget;                                // target to aim for
+    private Transform _movementTarget;                              // target to aim for
     [Range(0.1f, 0.5f)]
     public float walkSpeed = 0.4f;
     [Range(0.5f, 0.8f)]
@@ -34,6 +36,10 @@ public class AICharacterControl : MonoBehaviour
     public float attackDistance = 5f;
     [Tooltip("How far can they see?")]
     public float sightDistance = 15f;
+    [SerializeField] private float braveryScore;
+    [SerializeField] private bool brave = true;
+    [SerializeField] private float braveryCooldownTarget = 2f;
+    private float braveryCooldownTimer;
 
     [Header("Waypointing system")]
     public Transform[] waypoints;
@@ -46,6 +52,7 @@ public class AICharacterControl : MonoBehaviour
         character = GetComponent<ThirdPersonCharacter>();
         player = FindObjectOfType<ThirdPersonUserControl>();
         _aiSight = GetComponentInChildren<AISight>();
+        micInput = GameObject.FindWithTag("GlobalGameManager").GetComponent<MicrophoneInput>();
         _aiSight.aiController = this;
     }
 
@@ -75,29 +82,42 @@ public class AICharacterControl : MonoBehaviour
 
         var targetDistance = (_movementTarget.position - transform.position).magnitude;
 
-        // Perform state logic.
-        switch (_currentState)
+        if(brave)
         {
-            case AIState.Patrol:
-                // Waypointing
-                Patrol(targetDistance);
-                break;
-            case AIState.Chase:
-                Chase(_movementTarget, targetDistance);
-                break;
-            case AIState.Attack:
-                Attack(_movementTarget, targetDistance);
-                break;
-            default:
-                break;
+            // Perform state logic.
+            switch (_currentState)
+            {
+                case AIState.Patrol:
+                    // Waypointing
+                    Patrol(targetDistance);
+                    break;
+                case AIState.Chase:
+                    Chase(_movementTarget, targetDistance);
+                    break;
+                case AIState.Attack:
+                    Attack(_movementTarget, targetDistance);
+                    BeScared();
+                    break;
+                default:
+                    break;
+            }
         }
-
+        else 
+        {
+            braveryCooldownTimer += Time.deltaTime;
+            if (braveryCooldownTimer > braveryCooldownTarget)
+            {
+                brave = true;
+                braveryCooldownTimer = 0;
+            }
+        }
     }
 
     private void EnterPatrol()
     {
         _currentState = AIState.Patrol;
         agent.speed = walkSpeed;
+        SetColour(Color.green);
         SetTarget(waypoints[currentWaypoint]);
         agent.SetDestination(_movementTarget.position);
         agent.Resume();
@@ -107,12 +127,22 @@ public class AICharacterControl : MonoBehaviour
     {
         _currentState = AIState.Chase;
         agent.speed = chaseSpeed;
+        SetColour(Color.yellow);
+        micInput.StopInput();
     }
 
     private void EnterAttack()
     {
         _currentState = AIState.Attack;
         agent.speed = runSpeed;
+        SetColour(Color.red);
+        // Make sure the mic is accepting micInput
+        micInput.StartInput();
+    }
+
+    private void SetColour(Color colour)
+    {
+        transform.GetChild(0).GetComponent<Renderer>().material.color = colour;
     }
 
     private void Patrol(float targetdistance)
@@ -171,7 +201,7 @@ public class AICharacterControl : MonoBehaviour
         // Is the player running away? But I definitely can see them
         else if (targetdistance > attackDistance)
         {
-            _currentState = AIState.Chase;
+            EnterChase();
         }
         // If everything is good them lets get 'em!
         else
@@ -182,6 +212,21 @@ public class AICharacterControl : MonoBehaviour
         }
     }
 
+    public void BeScared() 
+    {
+        // Check the mic volume
+        float volume = micInput.loudness;
+        print(volume);
+        // Is it enough to be scared?
+        if (volume >= braveryScore)
+        {
+            // Run away. Pick a location behind you maybe and navmesh there?    
+            // Maybe we need a scared timer and/or a boolean to stop the AI being scared and then next frame spotting the player and entering attack state.
+            // This would wrap the switch to prevent other input while it's cooling down
+        }
+            
+    }
+    
     public void SetTarget(Transform target)
     {
         this._movementTarget = target;
