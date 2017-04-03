@@ -13,8 +13,8 @@ public class RopeBalance : MonoBehaviour
     private ThirdPersonUserControl _character;
     private Joystick _joystick;
     private GameObject _dial;
-    private Transform _characterSkeleton;
-    private Quaternion _negatePhoneRotation;
+    // private Transform _characterSkeleton;
+    // private Quaternion _negatePhoneRotation;
 
     private float _enterZAngle;
     private float _currentZAngle;
@@ -39,7 +39,7 @@ public class RopeBalance : MonoBehaviour
         }
 
         _dial = transform.parent.FindChild("BalanceScreen").gameObject;
-        _characterSkeleton = _character.transform;//.FindChild("EthanSkeleton");
+        // _characterSkeleton = _character.transform;//.FindChild("EthanSkeleton");
 
         _inverseAngleThreshold = angleThreshold * -1;
     }
@@ -87,7 +87,7 @@ public class RopeBalance : MonoBehaviour
         _moveTowards = otherEnd.position;
 
         _enterZAngle = DeviceRotation.GetRotation().eulerAngles.z;
-        _negatePhoneRotation = Quaternion.Inverse(DeviceRotation.GetRotation());
+        // _negatePhoneRotation = Quaternion.Inverse(DeviceRotation.GetRotation());
 
         GlobalGameManager.Instance.ToggleUI(false);
     }
