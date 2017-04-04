@@ -82,6 +82,8 @@ namespace UnityStandardAssets.CrossPlatformInput
                 {
                     playerRigid.drag = 5;
                 }
+                // playerRigid.drag = playerRigid.velocity.magnitude < 0f ? 15 : 5;
+                
                 if (playerObj.transform.position.y < 4.5f)
                 {
                     canGoHigher = true;
@@ -156,13 +158,13 @@ namespace UnityStandardAssets.CrossPlatformInput
 
         public void AdaptForceFromHeight(float _characterHeight)
         {
-            if (characterHeight <= 1)
+            if (_characterHeight <= 1)
             {
                 forceModifier = maxForce;
             }
             else
             {
-                forceModifier = maxForce / characterHeight;
+                forceModifier = maxForce / _characterHeight;
             }
 
         }

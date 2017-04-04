@@ -226,15 +226,17 @@ public class AICharacterControl : MonoBehaviour
             print("RUN AWAY!");
             brave = false;
             // Run away. Pick a location behind you maybe and navmesh there?
-            Vector3 newTarget;
-            Vector3 behind = transform.forward*-1;
-            behind *= 10; // Move 10 units away
-            newTarget = transform.position + behind;
+            Vector3 newTarget = transform.position + transform.forward * -10;
             print("I am at " + transform.position);
             print("Behind me is " + newTarget);
             SetTarget(newTarget);
+            // navmesh bits
             agent.SetDestination(newTarget);
             agent.Resume();
+
+            // Add to the witch noise mechanic.
+            // Make sure the values are in line with the noise made from moving objects.
+            // How can we avoid being found by AI while staying still from the witch.
         }
     }
     
