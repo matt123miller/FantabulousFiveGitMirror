@@ -24,7 +24,8 @@ public class AICharacterControl : MonoBehaviour
     [SerializeField]
     private bool _inSight = false;
     [SerializeField]
-    private Transform _movementTarget;                              // target to aim for
+    private Vector3 _movementTarget;                              // target to aim for
+
     [Range(0.1f, 0.5f)]
     public float walkSpeed = 0.4f;
     [Range(0.5f, 0.8f)]
@@ -62,7 +63,7 @@ public class AICharacterControl : MonoBehaviour
         agent.speed = walkSpeed;
 
         _currentState = AIState.Patrol;
-        _movementTarget = waypoints[currentWaypoint];
+        _movementTarget = waypoints[currentWaypoint].position;
 
         // Give the agent a path before anything else happens
         EnterPatrol();
@@ -78,7 +79,7 @@ public class AICharacterControl : MonoBehaviour
             character.Move(Vector3.zero, false, false, false, Vector3.zero);
         
 
-        var targetDistance = (_movementTarget.position - transform.position).magnitude;
+        var targetDistance = (_movementTarget - transform.position).magnitude;
 
         if(brave)
         {
@@ -118,8 +119,8 @@ public class AICharacterControl : MonoBehaviour
         _currentState = AIState.Patrol;
         agent.speed = walkSpeed;
         SetColour(Color.green);
-        SetTarget(waypoints[currentWaypoint]);
-        agent.SetDestination(_movementTarget.position);
+        SetTarget(waypoints[currentWaypoint].position);
+        agent.SetDestination(_movementTarget);
         agent.Resume();
     }
 
@@ -159,18 +160,18 @@ public class AICharacterControl : MonoBehaviour
         else if (agent.remainingDistance < agent.stoppingDistance)
         {
             currentWaypoint = (currentWaypoint + 1) % waypoints.Length;
-            _movementTarget = waypoints[currentWaypoint];
-            agent.SetDestination(_movementTarget.position);
+            _movementTarget = waypoints[currentWaypoint].position;
+            agent.SetDestination(_movementTarget);
             agent.Resume();
         }
     }
 
-    public void Chase(Transform target, float targetdistance)
+    public void Chase(Vector3 target, float targetdistance)
     {
         if (_inSight && targetdistance > attackDistance)
         {
             // Chase the player
-            agent.SetDestination(_movementTarget.position);
+            agent.SetDestination(_movementTarget);
             agent.Resume();
             print("Chasing!");
         }
@@ -191,7 +192,7 @@ public class AICharacterControl : MonoBehaviour
         //TODO create a timer for being in chase but not seeing the player, maybe I should introduce the last known position from my stealth game?
     }
 
-    public void Attack(Transform target, float targetdistance)
+    public void Attack(Vector3 target, float targetdistance)
     {
         // Can we see the player?
         if (!_inSight)
@@ -224,13 +225,20 @@ public class AICharacterControl : MonoBehaviour
         {
             print("RUN AWAY!");
             brave = false;
-            // Run away. Pick a location behind you maybe and navmesh there?    
-            // Maybe we need a scared timer and/or a boolean to stop the AI being scared and then next frame spotting the player and entering attack state.
-            // This would wrap the switch to prevent other input while it's cooling down
+            // Run away. Pick a location behind you maybe and navmesh there?
+            Vector3 newTarget;
+            Vector3 behind = transform.forward*-1;
+            behind *= 10; // Move 10 units away
+            newTarget = transform.position + behind;
+            print("I am at " + transform.position);
+            print("Behind me is " + newTarget);
+            SetTarget(newTarget);
+            agent.SetDestination(newTarget);
+            agent.Resume();
         }
     }
     
-    public void SetTarget(Transform target)
+    public void SetTarget(Vector3 target)
     {
         this._movementTarget = target;
     }
@@ -240,7 +248,7 @@ public class AICharacterControl : MonoBehaviour
         _inSight = value;
         if (value)
         {
-            SetTarget(target);
+            SetTarget(target.position);
         }
         else
         {
