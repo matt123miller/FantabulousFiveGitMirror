@@ -29,14 +29,12 @@ public class AICharacterControl : MonoBehaviour
     public float walkSpeed = 0.4f;
     [Range(0.5f, 0.8f)]
     public float chaseSpeed = 0.5f;
-    [Tooltip("Max value of 1 is advised")]
-    [Range(1,1)]
     public float runSpeed = 1;
     [Tooltip("How close until the AI attacks?")]
     public float attackDistance = 5f;
     [Tooltip("How far can they see?")]
     public float sightDistance = 15f;
-    [SerializeField] private float braveryScore;
+    [SerializeField] private float braveryScore = 1f;
     [SerializeField] private bool brave = true;
     [SerializeField] private float braveryCooldownTarget = 2f;
     private float braveryCooldownTimer;
@@ -104,9 +102,11 @@ public class AICharacterControl : MonoBehaviour
         }
         else 
         {
+            print("I am not brave");
             braveryCooldownTimer += Time.deltaTime;
             if (braveryCooldownTimer > braveryCooldownTarget)
             {
+                print("I BECAME BRAVE!");
                 brave = true;
                 braveryCooldownTimer = 0;
             }
@@ -187,6 +187,8 @@ public class AICharacterControl : MonoBehaviour
             print("The player escaped! Changing to Patrol!");
             EnterPatrol();
         }
+
+        //TODO create a timer for being in chase but not seeing the player, maybe I should introduce the last known position from my stealth game?
     }
 
     public void Attack(Transform target, float targetdistance)
@@ -220,11 +222,12 @@ public class AICharacterControl : MonoBehaviour
         // Is it enough to be scared?
         if (volume >= braveryScore)
         {
+            print("RUN AWAY!");
+            brave = false;
             // Run away. Pick a location behind you maybe and navmesh there?    
             // Maybe we need a scared timer and/or a boolean to stop the AI being scared and then next frame spotting the player and entering attack state.
             // This would wrap the switch to prevent other input while it's cooling down
         }
-            
     }
     
     public void SetTarget(Transform target)
@@ -241,7 +244,7 @@ public class AICharacterControl : MonoBehaviour
         }
         else
         {
-            EnterPatrol();
+            //EnterPatrol();
         }
     }
 }
