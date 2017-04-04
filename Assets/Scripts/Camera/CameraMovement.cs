@@ -35,12 +35,12 @@ public class CameraMovement : MonoBehaviour {
             lerpCameraBetweenPos(characterCam.transform, balancingCameraPos.transform, lerpTime);
         }
         //changes camera to 'travelling' position - far out
-        else if (characterVelocity > 0 && characterCam.transform.localPosition != travellingCameraPos.transform.localPosition)
+        else if (characterVelocity > 0.1 && characterCam.transform.localPosition != travellingCameraPos.transform.localPosition)
         {
             lerpCameraBetweenPos(characterCam.transform, travellingCameraPos.transform, lerpTime);
         }
         //changed camera to 'idle' position - close up
-        else if (characterVelocity <= 0 && characterCam.transform.localPosition != idleCameraPos.transform.localPosition && !_thirdPersonUserControl.isHanging)
+        else if (characterVelocity <= 0.1 && characterCam.transform.localPosition != idleCameraPos.transform.localPosition && !_thirdPersonUserControl.isHanging)
         {
             lerpCameraBetweenPos(characterCam.transform, idleCameraPos.transform, lerpTime);
         }

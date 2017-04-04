@@ -3,147 +3,176 @@ using System.Collections;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
-public class Floating : MonoBehaviour {
+namespace UnityStandardAssets.CrossPlatformInput
+{
+    public class Floating : MonoBehaviour
+    {
+        [SerializeField]
+        string floatString;
 
-    GameObject playerObj;
-    Rigidbody playerRigid;
-    MicrophoneInput microphoneInputScript;
-    ThirdPersonCharacter characterScript;
-    bool isFloating = false;
-    bool canGoHigher = false;
-    int canGoHighterCooldown;
-    int cooldownLength;
-    public float ceilingHeight;
-    public float forceModifier;
-    public float maxForce;
-    public float characterHeight;
-    public Text tempTimerText;
-    public float timer;
-    public float timerLength;
-    public float scriptCooldown;
-    public bool isCoolingDown;
-    float scriptCooldownLength;
-    public EventTrigger floatButton;
+        GameObject playerObj;
+        Rigidbody playerRigid;
+        MicrophoneInput microphoneInputScript;
+        ThirdPersonCharacter characterScript;
+        public bool isFloating = false;
+        bool canGoHigher = false;
+        int canGoHighterCooldown;
+        int cooldownLength;
+        public float ceilingHeight;
+        public float forceModifier;
+        float maxForce;
+        public float maxForceValue;
+        public float characterHeight;
+        public Text tempTimerText;
+        public float timer;
+        public float timerLength;
+        public float scriptCooldown;
+        public bool isCoolingDown;
+        float scriptCooldownLength;
+        public EventTrigger floatButton;
 
- 
 
-    // Use this for initialization
-    void Start () {
-        playerObj = GameObject.FindGameObjectWithTag("Player");
-        playerRigid = playerObj.GetComponent<Rigidbody>();
-        characterScript = playerObj.GetComponent<ThirdPersonCharacter>();
-        microphoneInputScript = GameObject.Find("GameManager").GetComponent<MicrophoneInput>();
-        tempTimerText = GameObject.Find("Witch Prompt Text").GetComponent<Text>();
-        floatButton = GameObject.Find("FloatButton").GetComponent<EventTrigger>();
-        cooldownLength = 10;
-        canGoHighterCooldown = 0;
-        ceilingHeight = 4.5f;
-        forceModifier = 0;
-        maxForce = 100;
-        characterHeight = 0;
-        timerLength = 20.0f;
-        timer = timerLength;
-        scriptCooldownLength = 30.0f;
-        scriptCooldown = scriptCooldownLength;
-	}
-	
-	// Update is called once per frame
-	void Update () {
 
- 
-        if(isFloating)
+        // Use this for initialization
+        void Start()
         {
-            float loudness = microphoneInputScript.loudness;
-            characterHeight = playerObj.transform.position.y;
-            AdaptForceFromHeight(characterHeight);
+            playerObj = GameObject.FindGameObjectWithTag("Player");
+            playerRigid = playerObj.GetComponent<Rigidbody>();
+            characterScript = playerObj.GetComponent<ThirdPersonCharacter>();
+            microphoneInputScript = GameObject.Find("GameManager").GetComponent<MicrophoneInput>();
+            tempTimerText = GameObject.Find("Witch Prompt Text").GetComponent<Text>();
+            floatButton = GameObject.Find("FloatButton").GetComponent<EventTrigger>();
+            cooldownLength = 10;
+            canGoHighterCooldown = 0;
+            ceilingHeight = 4.5f;
+            forceModifier = 0;
+            maxForceValue = 100;
+            maxForce = maxForceValue;
+            characterHeight = 0;
+            timerLength = 20.0f;
+            timer = timerLength;
+            scriptCooldownLength = 30.0f;
+            scriptCooldown = scriptCooldownLength;
+        }
 
-            print("Loudness: " + loudness);
-            if (playerRigid.velocity.magnitude < 0f)
-            {
-                playerRigid.drag = 15;
-            }
-            else
-            {
-                playerRigid.drag = 5;
-            }
-            if (playerObj.transform.position.y < 4.5f)
-            {
-                canGoHigher = true;
-            }
-            else
-            {
-                canGoHigher = false;
-            }
-            // You can do this
-            //canGoHigher = playerObj.transform.position.y < 4.5f
+        // Update is called once per frame
+        void Update()
+        {
 
-            if(canGoHigher && canGoHighterCooldown <= 0 && loudness > 0.1f)
+            if (CrossPlatformInputManager.GetButton(floatString))
             {
-                float forceToAdd = loudness * forceModifier;
-                canGoHigher = false;
-                canGoHighterCooldown = cooldownLength;
-                playerRigid.AddForce(playerObj.transform.forward.x  * forceToAdd / 2, forceToAdd, playerObj.transform.forward.z * forceToAdd / 2 );
-
+                FloatingTriggered();
             }
-
-           // characterScript.HandleAirborneMovement();
-            canGoHighterCooldown--;
-            timer -= Time.deltaTime;
-            tempTimerText.text = timer.ToString();
-
-            if(timer <= 0)
+            else if (CrossPlatformInputManager.GetButtonUp(floatString))
             {
                 TurnOffFloating();
-                tempTimerText.text = "Time's Up";
-                timer = timerLength;
+            }
+            if (isFloating)
+            {
+                float loudness = microphoneInputScript.loudness;
+                characterHeight = playerObj.transform.position.y;
+                AdaptForceFromHeight(characterHeight);
+
+                print("Loudness: " + loudness);
+                if (playerRigid.velocity.magnitude < 0f)
+                {
+                    playerRigid.drag = 15;
+                }
+                else
+                {
+                    playerRigid.drag = 5;
+                }
+                if (playerObj.transform.position.y < 4.5f)
+                {
+                    canGoHigher = true;
+                }
+                else
+                {
+                    canGoHigher = false;
+                }
+                // You can do this
+                //canGoHigher = playerObj.transform.position.y < 4.5f
+
+                if (canGoHigher && canGoHighterCooldown <= 0 && loudness > 0.1f)
+                {
+                    float forceToAdd = loudness * forceModifier;
+                    canGoHigher = false;
+                    canGoHighterCooldown = cooldownLength;
+                    playerRigid.AddForce(playerObj.transform.forward.x * forceToAdd / 2, forceToAdd, playerObj.transform.forward.z * forceToAdd / 2);
+
+                }
+
+                // characterScript.HandleAirborneMovement();
+                canGoHighterCooldown--;
+                timer -= Time.deltaTime;
+                tempTimerText.text = timer.ToString();
+
+                if (timer <= 0)
+                {
+                    TurnOffFloating();
+                    tempTimerText.text = "Time's Up";
+                    isCoolingDown = true;
+                }
+            }//isfloating
+
+            //timers to cooldown mechanic
+            if (isCoolingDown)
+            {
+                isFloating = false;
+                scriptCooldown -= Time.deltaTime;
+                TurnOffFloating();
+                //  floatButton.enabled = false;
+            }
+
+            if (scriptCooldown <= 0)
+            {
+                isCoolingDown = false;
+                tempTimerText.text = "";
+                Reset();
+                //floatButton.enabled = true;
+            }
+        }
+
+
+        public void FloatingTriggered()
+        {
+            if (!isCoolingDown && !isFloating)
+            {
+                isFloating = true;
+                microphoneInputScript.StartInput();
+            }
+        }
+
+        public void TurnOffFloating()
+        {
+            if (isFloating)
+            {
+                isFloating = false;
+                microphoneInputScript.StopInput();
                 isCoolingDown = true;
             }
-        }//isfloating
 
-        //timers to cooldown mechanic
-        if (isCoolingDown)
-        {
-            isFloating = false;
-            scriptCooldown -= Time.deltaTime;
-            floatButton.enabled = false;
         }
 
-        if (scriptCooldown <= 0)
+        public void AdaptForceFromHeight(float _characterHeight)
         {
-            isCoolingDown = false;
+            if (characterHeight <= 1)
+            {
+                forceModifier = maxForce;
+            }
+            else
+            {
+                forceModifier = maxForce / characterHeight;
+            }
+
+        }
+        public void Reset()
+        {
+            timer = timerLength;
             scriptCooldown = scriptCooldownLength;
-            tempTimerText.text = "";
-            floatButton.enabled = true;
+            maxForce = maxForceValue;
+            characterHeight = 0;
+            forceModifier = 0;
         }
-    }
-
-
-    public void FloatingTriggered()
-    {
-        if(!isCoolingDown)
-        {
-            isFloating = true;
-            microphoneInputScript.StartInput();
-        }
-    }
-
-    public void TurnOffFloating()
-    {
-        isFloating = false;
-        microphoneInputScript.StopInput();
-        isCoolingDown = true;
-    }
-
-    public void AdaptForceFromHeight(float _characterHeight)
-    {
-        if(characterHeight <= 1)
-        {
-            forceModifier = maxForce;
-        }
-        else
-        {
-            forceModifier = maxForce / characterHeight;
-        }
-
     }
 }
