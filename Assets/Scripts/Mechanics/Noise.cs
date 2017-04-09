@@ -29,6 +29,7 @@ public class Noise : MonoBehaviour
 
     public void AddToNoise(float moreNoise)
     {
+        print("Noise increasing by " + moreNoise);
         currentNoise += moreNoise;
         SetNoiseBar(CalculateNoiseVal(currentNoise));
         if (currentNoise >= 100) // Should this be maxNoise?
@@ -42,14 +43,13 @@ public class Noise : MonoBehaviour
     public void SetNoiseBar(float noiseVal)
     {
         //noiseBar needs to be a value between 0 - 1
-        noiseBar.value = noiseVal;  //transform.localScale = new Vector3(noiseVal, noiseBar.transform.localScale.y, noiseBar.transform.localScale.z);
+        noiseBar.value = noiseVal;
     }
 
     //makes sure that noise value is between 0 - 1 for noiseBar
     public float CalculateNoiseVal(float currentNoiseVal)
     {
-        float calculatedNoise = currentNoiseVal / maxNoise;
-        return calculatedNoise;
+        return currentNoiseVal / maxNoise;
     }
 
     public void TriggerWitch()
@@ -60,6 +60,7 @@ public class Noise : MonoBehaviour
     public void ResetNoiseBar()
     {
         currentNoise = 0;
-        noiseBar.transform.localScale = new Vector3(0, noiseBar.transform.localScale.y, noiseBar.transform.localScale.z);
+        //noiseBar.transform.localScale = new Vector3(0, noiseBar.transform.localScale.y, noiseBar.transform.localScale.z);
+        SetNoiseBar(currentNoise);
     }
 }

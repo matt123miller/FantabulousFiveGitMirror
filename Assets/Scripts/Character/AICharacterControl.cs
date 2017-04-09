@@ -18,6 +18,7 @@ public class AICharacterControl : MonoBehaviour
     public ThirdPersonUserControl player { get; private set; }
     private AISight _aiSight;
     public MicrophoneInput micInput;
+    private Noise _noiseScript;
 
     [SerializeField]
     private AIState _currentState;
@@ -35,7 +36,7 @@ public class AICharacterControl : MonoBehaviour
     public float attackDistance = 5f;
     [Tooltip("How far can they see?")]
     public float sightDistance = 15f;
-    [SerializeField] private float braveryScore = 1f;
+    [SerializeField] [Range(1,10)]private float braveryScore = 1f;
     [SerializeField] private bool brave = true;
     [SerializeField] private float braveryCooldownTarget = 2f;
     private float braveryCooldownTimer;
@@ -52,6 +53,8 @@ public class AICharacterControl : MonoBehaviour
         player = FindObjectOfType<ThirdPersonUserControl>();
         _aiSight = GetComponentInChildren<AISight>();
         micInput = GameObject.FindWithTag("GlobalGameManager").GetComponent<MicrophoneInput>();
+        _noiseScript = GameObject.FindGameObjectWithTag("NoiseBar").GetComponent<Noise>();
+
         _aiSight.aiController = this;
     }
 
@@ -95,7 +98,7 @@ public class AICharacterControl : MonoBehaviour
                     break;
                 case AIState.Attack:
                     Attack(_movementTarget, targetDistance);
-                    BeScared();
+                    AssessFearLevel();
                     break;
                 default:
                     break;
@@ -146,6 +149,7 @@ public class AICharacterControl : MonoBehaviour
         transform.GetChild(0).GetComponent<Renderer>().material.color = colour;
     }
 
+
     private void Patrol(float targetdistance)
     {
         // Should we exit patrol state into chasing?
@@ -166,7 +170,7 @@ public class AICharacterControl : MonoBehaviour
         }
     }
 
-    public void Chase(Vector3 target, float targetdistance)
+    private void Chase(Vector3 target, float targetdistance)
     {
         if (_inSight && targetdistance > attackDistance)
         {
@@ -192,7 +196,7 @@ public class AICharacterControl : MonoBehaviour
         //TODO create a timer for being in chase but not seeing the player, maybe I should introduce the last known position from my stealth game?
     }
 
-    public void Attack(Vector3 target, float targetdistance)
+    private void Attack(Vector3 target, float targetdistance)
     {
         // Can we see the player?
         if (!_inSight)
@@ -215,7 +219,7 @@ public class AICharacterControl : MonoBehaviour
         }
     }
 
-    public void BeScared() 
+    private void AssessFearLevel() 
     {
         // Check the mic volume
         float volume = micInput.loudness;
@@ -223,23 +227,30 @@ public class AICharacterControl : MonoBehaviour
         // Is it enough to be scared?
         if (volume >= braveryScore)
         {
-            print("RUN AWAY!");
-            brave = false;
-            // Run away. Pick a location behind you maybe and navmesh there?
-            Vector3 newTarget = transform.position + transform.forward * -10;
-            print("I am at " + transform.position);
-            print("Behind me is " + newTarget);
-            SetTarget(newTarget);
-            // navmesh bits
-            agent.SetDestination(newTarget);
-            agent.Resume();
+            BecomeScared();
 
             // Add to the witch noise mechanic.
             // Make sure the values are in line with the noise made from moving objects.
+            _noiseScript.AddToNoise(volume);
+
             // How can we avoid being found by AI while staying still from the witch.
         }
     }
-    
+
+    private void BecomeScared()
+    {
+        print("RUN AWAY!");
+        brave = false;
+        // Run away. Pick a location behind you maybe and navmesh there?
+        Vector3 newTarget = transform.position + transform.forward * -10;
+        print("I am at " + transform.position);
+        print("Behind me is " + newTarget);
+        SetTarget(newTarget);
+        // navmesh bits
+        agent.SetDestination(newTarget);
+        agent.Resume();
+    }
+
     public void SetTarget(Vector3 target)
     {
         this._movementTarget = target;
@@ -251,10 +262,6 @@ public class AICharacterControl : MonoBehaviour
         if (value)
         {
             SetTarget(target.position);
-        }
-        else
-        {
-            //EnterPatrol();
         }
     }
 }

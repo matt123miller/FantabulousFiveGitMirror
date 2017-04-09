@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+[RequireComponent(typeof(Rigidbody))]
 public class ObjNoise : MonoBehaviour {
 
     private float _weightOfObj;
@@ -41,7 +42,7 @@ public class ObjNoise : MonoBehaviour {
     public void GetImpactVelocity(Collision collision)
     {
         _impactVelocity = collision.relativeVelocity.magnitude;
-        Debug.Log("IMPACT VELOCITY" + _impactVelocity + " " + gameObject.name + " " +  collision.collider.name);
+        //Debug.Log("IMPACT VELOCITY" + _impactVelocity + " " + gameObject.name + " " +  collision.collider.name);
     }
 
     public void calcNoise(float weight, float impactVel)
