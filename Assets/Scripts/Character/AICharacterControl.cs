@@ -10,7 +10,8 @@ public class AICharacterControl : MonoBehaviour
     {
         Patrol = 0,
         Chase = 1,
-        Attack = 2
+        Attack = 2,
+        Hide = 3
     }
 
     public NavMeshAgent agent { get; private set; }                 // the navmesh agent required for the path finding
@@ -99,6 +100,9 @@ public class AICharacterControl : MonoBehaviour
                 case AIState.Attack:
                     Attack(_movementTarget, targetDistance);
                     AssessFearLevel();
+                    break;
+                case AIState.Hide:
+                    // Do nothing!
                     break;
                 default:
                     break;
@@ -249,6 +253,19 @@ public class AICharacterControl : MonoBehaviour
         // navmesh bits
         agent.SetDestination(newTarget);
         agent.Resume();
+    }
+
+    // connect these to the witch with events
+    public void HideFromWitch()
+    {
+        _aiSight.gameObject.SetActive(true);
+        BecomeScared();
+    }
+
+    public void WitchHasLeft()
+    {
+        _aiSight.gameObject.SetActive(false);
+        EnterPatrol();
     }
 
     public void SetTarget(Vector3 target)
