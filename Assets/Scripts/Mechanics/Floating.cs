@@ -51,7 +51,7 @@ namespace UnityStandardAssets.CrossPlatformInput
             characterHeight = 0;
             timerLength = 20.0f;
             timer = timerLength;
-            scriptCooldownLength = 30.0f;
+            scriptCooldownLength = 15.0f;
             scriptCooldown = scriptCooldownLength;
         }
 
@@ -122,6 +122,7 @@ namespace UnityStandardAssets.CrossPlatformInput
             {
                 isFloating = false;
                 scriptCooldown -= Time.deltaTime;
+                tempTimerText.text = "Cooldown: " + scriptCooldown + "s";
                 TurnOffFloating();
                 //  floatButton.enabled = false;
             }
@@ -129,6 +130,7 @@ namespace UnityStandardAssets.CrossPlatformInput
             if (scriptCooldown <= 0)
             {
                 isCoolingDown = false;
+                scriptCooldown = scriptCooldownLength;
                 tempTimerText.text = "";
                 Reset();
                 //floatButton.enabled = true;
@@ -151,6 +153,7 @@ namespace UnityStandardAssets.CrossPlatformInput
             {
                 isFloating = false;
                 microphoneInputScript.StopInput();
+                Reset();
                 isCoolingDown = true;
             }
 
@@ -171,10 +174,10 @@ namespace UnityStandardAssets.CrossPlatformInput
         public void Reset()
         {
             timer = timerLength;
-            scriptCooldown = scriptCooldownLength;
             maxForce = maxForceValue;
             characterHeight = 0;
             forceModifier = 0;
+            playerRigid.drag = 0;
         }
     }
 }
