@@ -42,6 +42,7 @@ namespace UnityStandardAssets.CrossPlatformInput
             microphoneInputScript = GameObject.Find("GameManager").GetComponent<MicrophoneInput>();
             tempTimerText = GameObject.Find("Witch Prompt Text").GetComponent<Text>();
             floatButton = GameObject.Find("FloatButton").GetComponent<EventTrigger>();
+            floatButton.gameObject.SetActive(false);
             cooldownLength = 10;
             canGoHighterCooldown = 0;
             ceilingHeight = 4.5f;

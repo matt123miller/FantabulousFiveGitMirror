@@ -8,7 +8,7 @@ public class PickupUmbrella : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
         floatButton = GameObject.Find("FloatButton");
-        floatButton.SetActive(false);
+
 	}
 	
 	// Update is called once per frame
@@ -26,7 +26,7 @@ public class PickupUmbrella : MonoBehaviour {
             {
                 if (bone.name == "EthanRightHand")
                 {
-                    hand = GameObject.Find("EthanRightHand");
+                    hand = bone.gameObject;
                 }
             }
 
