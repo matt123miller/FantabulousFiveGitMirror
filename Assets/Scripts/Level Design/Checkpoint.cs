@@ -41,6 +41,22 @@ public class Checkpoint : MonoBehaviour
         // We activated this instance of the checkpoint, which would be the one just hit
         activated = true;
         //_animator.SetBool("Active", true);
+        DisablePriorCheckPoints(gameObject);
+    }
+    
+    private void DisablePriorCheckPoints(GameObject _checkPoint)
+    {
+        foreach(GameObject cp in checkpoints)
+        {
+            if (cp.name == _checkPoint.name)
+            {
+                break;
+            }
+            else
+            {
+                cp.SetActive(false);
+            }
+        }
     }
 
     public static Vector3 GetActiveCheckpointPosition()
