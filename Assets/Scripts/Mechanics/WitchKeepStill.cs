@@ -4,7 +4,13 @@ using UnityEngine.UI;
 using UnityStandardAssets.CrossPlatformInput;
 
 
-public class WitchKeepStill : MonoBehaviour {
+public class WitchKeepStill : MonoBehaviour
+{
+
+    public delegate void WitchArrivingDelegate();
+    public event WitchArrivingDelegate witchArriveEvent;
+    public delegate void WitchLeaveDelegate();
+    public event WitchLeaveDelegate witchLeaveEvent;
 
     private DeviceTilt _deviceTilt;
     private Vector3 _accelerometerTiltVal;
@@ -40,6 +46,9 @@ public class WitchKeepStill : MonoBehaviour {
         keepStillTriggered = true;
         initialDeviceRotation = DeviceRotation.GetRotation().eulerAngles;
 
+        // Notify the AI that they need to run away and whatnot
+        if (witchArriveEvent != null) witchArriveEvent();
+
         for (int i = 10; i >= 1; i--)
         {
             //if we moved, stop the timer
@@ -63,6 +72,7 @@ public class WitchKeepStill : MonoBehaviour {
         }
 
         witchPromptText.text = " ";
+        if (witchLeaveEvent != null) witchLeaveEvent();
         reset();
     }
 

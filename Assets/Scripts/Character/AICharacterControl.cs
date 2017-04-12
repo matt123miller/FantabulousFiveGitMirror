@@ -20,6 +20,7 @@ public class AICharacterControl : MonoBehaviour
     private AISight _aiSight;
     public MicrophoneInput micInput;
     private Noise _noiseScript;
+    private WitchKeepStill _witchScript;
 
     [SerializeField]
     private AIState _currentState;
@@ -32,15 +33,17 @@ public class AICharacterControl : MonoBehaviour
     public float walkSpeed = 0.4f;
     [Range(0.5f, 0.8f)]
     public float chaseSpeed = 0.5f;
+    [Range(0.8f, 1.2f)]
     public float runSpeed = 1;
     [Tooltip("How close until the AI attacks?")]
     public float attackDistance = 5f;
     [Tooltip("How far can they see?")]
     public float sightDistance = 15f;
-    [SerializeField] [Range(1,10)]private float braveryScore = 1f;
+    [SerializeField] [Range(1,10)]private float braveryScore = 2.5f;
     [SerializeField] private bool brave = true;
     [SerializeField] private float braveryCooldownTarget = 2f;
     private float braveryCooldownTimer;
+    private bool hidingFromWitch = false;
 
     [Header("Waypointing system")]
     public Transform[] waypoints;
@@ -55,12 +58,15 @@ public class AICharacterControl : MonoBehaviour
         _aiSight = GetComponentInChildren<AISight>();
         micInput = GameObject.FindWithTag("GlobalGameManager").GetComponent<MicrophoneInput>();
         _noiseScript = GameObject.FindGameObjectWithTag("NoiseBar").GetComponent<Noise>();
+        _witchScript = GameObject.FindWithTag("MechanicsObject").GetComponent<WitchKeepStill>();
 
         _aiSight.aiController = this;
     }
 
     private void Start()
     {
+        _witchScript.witchArriveEvent += WitchHasArrived;
+        _witchScript.witchLeaveEvent += WitchHasLeft;
 
         agent.updateRotation = false;
         agent.updatePosition = true;
@@ -81,7 +87,9 @@ public class AICharacterControl : MonoBehaviour
             character.Move(agent.desiredVelocity, false, false, false, Vector3.zero);
         else
             character.Move(Vector3.zero, false, false, false, Vector3.zero);
-        
+
+        if (hidingFromWitch)
+            return;
 
         var targetDistance = (_movementTarget - transform.position).magnitude;
 
@@ -108,7 +116,7 @@ public class AICharacterControl : MonoBehaviour
                     break;
             }
         }
-        else 
+        else
         {
             print("I am not brave");
             braveryCooldownTimer += Time.deltaTime;
@@ -148,6 +156,11 @@ public class AICharacterControl : MonoBehaviour
         micInput.StartInput();
     }
 
+    private void EnterHide()
+    {
+        _currentState = AIState.Hide;
+    }
+
     private void SetColour(Color colour)
     {
         transform.GetChild(0).GetComponent<Renderer>().material.color = colour;
@@ -162,7 +175,7 @@ public class AICharacterControl : MonoBehaviour
             // Close enough to chase
             EnterChase();
             // Do we stop? Don't know
-            print("Close enough ot Chase! Changing state!");
+            print("Close enough to Chase! Changing state!");
         }
         // If not lets just patrol more
         else if (agent.remainingDistance < agent.stoppingDistance)
@@ -231,20 +244,19 @@ public class AICharacterControl : MonoBehaviour
         // Is it enough to be scared?
         if (volume >= braveryScore)
         {
-            BecomeScared();
+            RunAway();
+            // I became scared;
+            brave = false;
 
             // Add to the witch noise mechanic.
             // Make sure the values are in line with the noise made from moving objects.
             _noiseScript.AddToNoise(volume);
-
-            // How can we avoid being found by AI while staying still from the witch.
         }
     }
 
-    private void BecomeScared()
+    private void RunAway()
     {
         print("RUN AWAY!");
-        brave = false;
         // Run away. Pick a location behind you maybe and navmesh there?
         Vector3 newTarget = transform.position + transform.forward * -10;
         print("I am at " + transform.position);
@@ -256,21 +268,27 @@ public class AICharacterControl : MonoBehaviour
     }
 
     // connect these to the witch with events
-    public void HideFromWitch()
+    public void WitchHasArrived()
     {
-        _aiSight.gameObject.SetActive(true);
-        BecomeScared();
+        print("Witch arrived! AHHH!");
+        _aiSight.gameObject.SetActive(false);
+        RunAway();
+
+        hidingFromWitch = true;
     }
 
     public void WitchHasLeft()
     {
-        _aiSight.gameObject.SetActive(false);
+        print("Witch left! We're safe now");
+        _aiSight.gameObject.SetActive(true);
         EnterPatrol();
+        hidingFromWitch = false;
+        brave = true;
     }
 
     public void SetTarget(Vector3 target)
     {
-        this._movementTarget = target;
+        _movementTarget = target;
     }
 
     public void SetInSight(bool value, Transform target)
@@ -280,6 +298,16 @@ public class AICharacterControl : MonoBehaviour
         {
             SetTarget(target.position);
         }
+    }
+
+    void OnDestroy() // The destructor is called whenever the object is destroyed
+    {
+        // We make sure to unsubscribe our event listeners when this object is destroyed
+        // If this isn't done and the event is invoked the pointer to our WitchHasArrived and WitchHasLeft
+        // methods won't be pointing to anything and there'll be a problem.
+        // Events are awesome, you just have to do a little tidying up here and there to safely use them.
+        _witchScript.witchArriveEvent -= WitchHasArrived;
+        _witchScript.witchLeaveEvent -= WitchHasLeft;
     }
 }
 

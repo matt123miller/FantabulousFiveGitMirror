@@ -10,7 +10,7 @@ public class AISight : MonoBehaviour
 
     [SerializeField]
     private bool _inSight;
-    public float updateTarget = 0.1f;
+    public float updateTarget = 0.05f;
     public float updateTimer = 0.0f;
     public Collider blockingcollider;
 
@@ -33,7 +33,7 @@ public class AISight : MonoBehaviour
 
     private void Update()
     {
-        if(updateTimer < 0) 
+        if(updateTimer < 0) // Trust me
             Debug.DrawRay(eyes.position, (transform.position - eyes.position) * 2, Color.green);
     }
     
@@ -44,7 +44,7 @@ public class AISight : MonoBehaviour
             var target = other.transform;
             var targetPos = target.position;
 
-            targetPos.Set(targetPos.x, targetPos.y/* + 0.3f*/, targetPos.z); // I think I'm adding 0.3 to make sure I hit the players body? Probably unnecessary.
+            targetPos.Set(targetPos.x, targetPos.y, targetPos.z); // I was adding 0.3 to y to ensure I hit the players body? Probably unnecessary.
             var direction = targetPos - eyes.position;
 
             Debug.DrawRay(eyes.position, direction, Color.red);
@@ -82,7 +82,7 @@ public class AISight : MonoBehaviour
             // The player ran away further than the AI can see
             _inSight = false;
             aiController.SetInSight(_inSight, other.transform);
-            updateTimer = UnityEngine.Random.Range(-0.2f, 0); ;
+            updateTimer = UnityEngine.Random.Range(-0.1f, 0); ;
         }
     }
 }
