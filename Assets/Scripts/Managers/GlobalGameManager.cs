@@ -14,6 +14,7 @@ public class GlobalGameManager : MonoBehaviour
     private GameObject _pauseScreen;
     private GameObject _fadeScreen;
 
+
     private bool _paused = false;
 
 
@@ -119,8 +120,10 @@ public class GlobalGameManager : MonoBehaviour
     /// </summary>
     public void ReturnToMenu()
     {
+
         // Do we need to tidy up any variables or state?
         _pauseScreen.SetActive(false);
+        PauseGame();
         SceneTransitionManager.Instance.LoadTargetLevel(0);
     }
 
@@ -131,6 +134,10 @@ public class GlobalGameManager : MonoBehaviour
     {
         // Does anything need to happen? Save data to playerprefs or whatever?
 
+        if(SceneManager.GetActiveScene().buildIndex != 0)
+        {
+            PauseGame();
+        }
         Application.Quit();
     }
 }
