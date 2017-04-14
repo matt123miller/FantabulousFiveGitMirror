@@ -55,7 +55,8 @@ public class GlobalGameManager : MonoBehaviour
         _pauseScreen = transform.FindChild("PauseScreen").gameObject;
         _fadeScreen = transform.FindChild("FadeScreen").gameObject;
 
-        _pauseScreen.SetActive(false);
+        //PAUSE SCREEN TURNED OFF VIA MENU MANAGER
+       // _pauseScreen.SetActive(false);
         _fadeScreen.SetActive(true);
 
     }

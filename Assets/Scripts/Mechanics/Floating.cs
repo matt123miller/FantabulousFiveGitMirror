@@ -39,7 +39,7 @@ namespace UnityStandardAssets.CrossPlatformInput
             playerObj = GameObject.FindGameObjectWithTag("Player");
             playerRigid = playerObj.GetComponent<Rigidbody>();
             characterScript = playerObj.GetComponent<ThirdPersonCharacter>();
-            microphoneInputScript = GameObject.Find("GameManager").GetComponent<MicrophoneInput>();
+            microphoneInputScript = GameObject.Find("MechanicsScripts").GetComponent<MicrophoneInput>();
             tempTimerText = GameObject.Find("Witch Prompt Text").GetComponent<Text>();
             floatButton = GameObject.Find("FloatButton").GetComponent<EventTrigger>();
             floatButton.gameObject.SetActive(false);

@@ -31,11 +31,15 @@ public class CharacterInstantiate : MonoBehaviour
         if (data == null)
         {
             _characterSelected = PlayerPrefs.GetString("CharacterSelected");
+            SoundManager.Instance.MusicOn = SoundManager.Instance.convertSoundStrToBool(PlayerPrefs.GetString("MusicOn"));
+            SoundManager.Instance.SfxOn = SoundManager.Instance.convertSoundStrToBool(PlayerPrefs.GetString("SFXOn"));
         }
         else
         {
             _characterSelected = data.CharacterSelected;
             checkPoint = data.convertCheckPointToVector(data.CheckPoint);
+            SoundManager.Instance.MusicOn = SoundManager.Instance.convertSoundStrToBool(data.MusicOnBool);
+            SoundManager.Instance.SfxOn = SoundManager.Instance.convertSoundStrToBool(data.SfxOnBool);
         }
 
         resourcesString += _characterSelected;
