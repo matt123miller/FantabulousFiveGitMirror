@@ -127,6 +127,13 @@ public class GlobalGameManager : MonoBehaviour
         SceneTransitionManager.Instance.LoadTargetLevel(0);
     }
 
+    public void ReloadToCheckpoint()
+    {
+        _pauseScreen.SetActive(false);
+        PauseGame();
+        SceneTransitionManager.Instance.ReloadCurrentLevel();
+    }
+
     /// <summary>
     /// Closes the game
     /// </summary>
