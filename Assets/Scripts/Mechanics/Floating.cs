@@ -7,6 +7,8 @@ namespace UnityStandardAssets.CrossPlatformInput
 {
     public class Floating : MonoBehaviour
     {
+        // Maybe we can use an animation curve and make the players y value be set by passing the volume through that curve? 
+        // Would be smoother than adding force here and there, probably feels more magical?
         [SerializeField]
         string floatString;
 

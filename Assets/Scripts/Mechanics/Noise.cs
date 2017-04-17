@@ -32,7 +32,7 @@ public class Noise : MonoBehaviour
         print("Noise increasing by " + moreNoise);
         currentNoise += moreNoise;
         SetNoiseBar(CalculateNoiseVal(currentNoise));
-        if (currentNoise >= 100) // Should this be maxNoise?
+        if (currentNoise >= maxNoise) // Should this be maxNoise?
         {
             TriggerWitch();
             ResetNoiseBar();
