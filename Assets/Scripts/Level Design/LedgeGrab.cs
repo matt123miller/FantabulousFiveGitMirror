@@ -63,9 +63,12 @@ public class LedgeGrab : MonoBehaviour
 
     void OnTriggerExit(Collider collider)
     {
-        ResetCharacter();
-        _onLedge = false;
-        _thirdPersonUserControl.isHanging = false;
+        if(collider.CompareTag("Player"))
+        {
+            ResetCharacter();
+            _onLedge = false;
+            _thirdPersonUserControl.isHanging = false;
+        }
     }
 
 
