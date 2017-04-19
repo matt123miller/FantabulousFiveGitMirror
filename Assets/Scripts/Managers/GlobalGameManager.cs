@@ -100,6 +100,11 @@ public class GlobalGameManager : MonoBehaviour
             {
                 joystick.SetAxis(joystick.axesToUse);
             }
+
+            Noise noiseScript = _touchCanvas.gameObject.GetComponentInChildren<Noise>();
+            noiseScript.ResetNoiseBar();
+
+
         }
     }
 
