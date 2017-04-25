@@ -55,7 +55,8 @@ public class GlobalGameManager : MonoBehaviour
         _pauseScreen = transform.FindChild("PauseScreen").gameObject;
         _fadeScreen = transform.FindChild("FadeScreen").gameObject;
 
-        _pauseScreen.SetActive(false);
+        //PAUSE SCREEN TURNED OFF VIA MENU MANAGER
+       // _pauseScreen.SetActive(false);
         _fadeScreen.SetActive(true);
 
     }
@@ -99,6 +100,11 @@ public class GlobalGameManager : MonoBehaviour
             {
                 joystick.SetAxis(joystick.axesToUse);
             }
+
+            Noise noiseScript = _touchCanvas.gameObject.GetComponentInChildren<Noise>();
+            noiseScript.ResetNoiseBar();
+
+
         }
     }
 
@@ -125,6 +131,13 @@ public class GlobalGameManager : MonoBehaviour
         _pauseScreen.SetActive(false);
         PauseGame();
         SceneTransitionManager.Instance.LoadTargetLevel(0);
+    }
+
+    public void ReloadToCheckpoint()
+    {
+        _pauseScreen.SetActive(false);
+        PauseGame();
+        SceneTransitionManager.Instance.ReloadCurrentLevel();
     }
 
     /// <summary>

@@ -7,27 +7,31 @@ using UnityEngine.SceneManagement;
 [Serializable]
 public class PlayerData {
 
-    private string _characterSelected;
-    private string _checkPoint;
-    private int _sceneToLoad;
+    private string characterSelected;
+    private string checkPoint;
+    private int sceneToLoad;
+    private string musicOnBool;
+    private string sfxOnBool;
 
-    public PlayerData(string characterSelected, string checkPoint, int sceneToLoad)
+    public PlayerData(string _characterSelected, string _checkPoint, int _sceneToLoad, string _musicOn, string _sfxOn)
     {
-        CharacterSelected = characterSelected;
-        CheckPoint = checkPoint;
-        SceneToLoad = sceneToLoad;
+        CharacterSelected = _characterSelected;
+        CheckPoint = _checkPoint;
+        SceneToLoad = _sceneToLoad;
+        MusicOnBool = _musicOn;
+        SfxOnBool = _sfxOn;
     }
 
     public string CharacterSelected
     {
         get
         {
-            return _characterSelected;
+            return characterSelected;
         }
 
         set
         {
-            _characterSelected = value;
+            characterSelected = value;
         }
     }
 
@@ -35,12 +39,12 @@ public class PlayerData {
     {
         get
         {
-            return _checkPoint;
+            return checkPoint;
         }
 
         set
         {
-            _checkPoint = value;
+            checkPoint = value;
         }
     }
 
@@ -48,25 +52,51 @@ public class PlayerData {
     {
         get
         {
-            return _sceneToLoad;
+            return sceneToLoad;
         }
 
         set
         {
-            _sceneToLoad = value;
+            sceneToLoad = value;
         }
     }
 
-    public Vector3 convertCheckPointToVector(string checkpointString)
+    public string MusicOnBool
+    {
+        get
+        {
+            return musicOnBool;
+        }
+
+        set
+        {
+            musicOnBool = value;
+        }
+    }
+
+    public string SfxOnBool
+    {
+        get
+        {
+            return sfxOnBool;
+        }
+
+        set
+        {
+            sfxOnBool = value;
+        }
+    }
+
+    public Vector3 convertCheckPointToVector(string _checkpointString)
     {
         // Remove the parentheses
-        if (checkpointString.StartsWith("(") && checkpointString.EndsWith(")"))
+        if (_checkpointString.StartsWith("(") && _checkpointString.EndsWith(")"))
         {
-            checkpointString = checkpointString.Substring(1, checkpointString.Length - 2);
+            _checkpointString = _checkpointString.Substring(1, _checkpointString.Length - 2);
         }
 
         // split the items
-        string[] sArray = checkpointString.Split(',');
+        string[] sArray = _checkpointString.Split(',');
 
         // store as a Vector3
         Vector3 result = new Vector3(
@@ -76,4 +106,6 @@ public class PlayerData {
 
         return result;
     }
+
+   
 }

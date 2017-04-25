@@ -15,8 +15,10 @@ public class SaveLoad : MonoBehaviour {
         string characterSelected = PlayerPrefs.GetString("CharacterSelected");
         GameObject[] checkPoints = GameObject.FindGameObjectsWithTag("Checkpoint");
         int sceneToLoad = SceneManager.GetActiveScene().buildIndex;
+        string musicOn = SoundManager.Instance.MusicOn.ToString();
+        string sfxOn = SoundManager.Instance.SfxOn.ToString();
 
-        PlayerData data = new PlayerData(characterSelected, _checkPoint.ToString(), sceneToLoad);
+        PlayerData data = new PlayerData(characterSelected, _checkPoint.ToString(), sceneToLoad, musicOn, sfxOn);
 
         bf.Serialize(file, data);
         file.Close();
