@@ -1,13 +1,15 @@
 A collection of useful Git commands for the Terminal. Use with caution, it's a scary place.
 
-I changed the gitignore to exclude a folder that folder was still showing as new in my working copy.
+I changed the gitignore to exclude a folder but that folder was still showing as new in my working copy.
 I ran the following 3 lines in terminal, pressing enter once terminal stops doing loads of things to execute the third line. 
 Found here: http://stackoverflow.com/questions/11451535/gitignore-not-working
 git rm . -r --cached
 git add .
 git commit -m "fixed untracked files"
 
-Git rebase
+
+
+Git rebase:
 Checkout my feature branch
 Rebase master onto the feature
 
@@ -16,6 +18,8 @@ git fetch (to update locally what's available)
 git rebase master
 // Check everything works as intended
 git push origin
+
+
 
 Advice for deleting branches.
 Found here: http://stackoverflow.com/questions/5330145/when-to-delete-branches-in-git
