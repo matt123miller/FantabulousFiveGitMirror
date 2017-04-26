@@ -4,14 +4,15 @@ using System.Collections.Generic;
 using System;
 using UnityEngine.SceneManagement;
 
-[Serializable]
-public class PlayerData {
+
+public class PlayerData : MonoBehaviour {
 
     private string characterSelected;
     private string checkPoint;
     private int sceneToLoad;
     private string musicOnBool;
     private string sfxOnBool;
+    private SaveLoad saveLoadScript;
 
     public PlayerData(string _characterSelected, string _checkPoint, int _sceneToLoad, string _musicOn, string _sfxOn)
     {
@@ -20,6 +21,22 @@ public class PlayerData {
         SceneToLoad = _sceneToLoad;
         MusicOnBool = _musicOn;
         SfxOnBool = _sfxOn;
+    }
+
+    void Start()
+    {
+        GameObject.DontDestroyOnLoad(gameObject);
+        saveLoadScript = GameObject.Find("GameManager").GetComponent<SaveLoad>();
+        if(SceneManager.GetActiveScene().buildIndex == 0)
+        {
+            saveLoadScript.Load();
+        }
+
+        CharacterSelected = "Not Selected";
+        CheckPoint = "None";
+        SceneToLoad = -1;
+        musicOnBool = true.ToString();
+        sfxOnBool = true.ToString();
     }
 
     public string CharacterSelected
@@ -87,25 +104,32 @@ public class PlayerData {
         }
     }
 
-    public Vector3 convertCheckPointToVector(string _checkpointString)
+    public Vector3 ConvertCheckPointToVector(string _checkpointString)
     {
-        // Remove the parentheses
-        if (_checkpointString.StartsWith("(") && _checkpointString.EndsWith(")"))
+        if (_checkpointString != null && _checkpointString != "None")
         {
-            _checkpointString = _checkpointString.Substring(1, _checkpointString.Length - 2);
+            // Remove the parentheses
+            if (_checkpointString.StartsWith("(") && _checkpointString.EndsWith(")"))
+            {
+                _checkpointString = _checkpointString.Substring(1, _checkpointString.Length - 2);
+            }
+
+            // split the items
+            string[] sArray = _checkpointString.Split(',');
+
+            // store as a Vector3
+            Vector3 result = new Vector3(
+                float.Parse(sArray[0]),
+                float.Parse(sArray[1]),
+                float.Parse(sArray[2]));
+
+            return result;
         }
 
-        // split the items
-        string[] sArray = _checkpointString.Split(',');
-
-        // store as a Vector3
-        Vector3 result = new Vector3(
-            float.Parse(sArray[0]),
-            float.Parse(sArray[1]),
-            float.Parse(sArray[2]));
-
-        return result;
+        return new Vector3(0,0,0);
     }
 
    
 }
+
+

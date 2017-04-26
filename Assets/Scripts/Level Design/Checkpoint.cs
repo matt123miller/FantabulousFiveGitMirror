@@ -1,18 +1,21 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityEngine.Analytics;
+using UnityEngine.SceneManagement;
 
 [RequireComponent(typeof(Animator))]
 public class Checkpoint : MonoBehaviour
 {
     public bool activated = false;
     public static GameObject[] checkpoints;
+    private PlayerData playerData;
     private Animator _animator;
     private SaveLoad _saveLoadsScript;
 
     void Start()
     {
          checkpoints = GameObject.FindGameObjectsWithTag("Checkpoint");
+        playerData = GameObject.Find("PlayerData").GetComponent<PlayerData>();
         _animator = GetComponent<Animator>();
         _saveLoadsScript = FindObjectOfType<SaveLoad>();
     }
@@ -23,7 +26,9 @@ public class Checkpoint : MonoBehaviour
         if (other.tag == "Player")
         {
             ActivateCheckPoint();
-            _saveLoadsScript.Save(gameObject.transform.position);
+            playerData.CheckPoint = gameObject.transform.position.ToString();
+            playerData.SceneToLoad = SceneManager.GetActiveScene().buildIndex;
+            _saveLoadsScript.Save();
             Debug.Log("Saved!");
             
         }

@@ -50,7 +50,6 @@ public class GlobalGameManager : MonoBehaviour
     void Awake()
     {
         _instance = this;
-
         _touchCanvas = GameObject.FindWithTag("UICanvas").GetComponent<Canvas>();
         _pauseScreen = transform.FindChild("PauseScreen").gameObject;
         _fadeScreen = transform.FindChild("FadeScreen").gameObject;
@@ -78,6 +77,7 @@ public class GlobalGameManager : MonoBehaviour
     {
 
     }
+
 
     /// <summary>
     /// Turns the stored Canvases off or on. Also handles the Joystick

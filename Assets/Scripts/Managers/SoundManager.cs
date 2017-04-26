@@ -18,6 +18,7 @@ public class SoundManager : MonoBehaviour {
     private static SoundManager instance;
     private bool musicOn;
     private bool sfxOn;
+    private PlayerData playerData;
     public AudioMixerGroup musicAudioChannel;
     public AudioMixerGroup sfxMusicChannel;
 
@@ -64,7 +65,7 @@ public class SoundManager : MonoBehaviour {
 
     // Use this for initialization
     void Start () {
-	
+        playerData = GameObject.Find("PlayerData").GetComponent<PlayerData>();
 	}
 	
 	// Update is called once per frame
@@ -85,7 +86,8 @@ public class SoundManager : MonoBehaviour {
         {
             MusicOn = true;
         }
-        
+
+        playerData.MusicOnBool = MusicOn.ToString();
     }
 
     public void ChangeMusicVol()
@@ -123,6 +125,8 @@ public class SoundManager : MonoBehaviour {
         {
             sfxMusicChannel.audioMixer.SetFloat("SFX", -80.0f);
         }
+
+        playerData.SfxOnBool = SfxOn.ToString();
     }
 
     public void saveTempSettings()

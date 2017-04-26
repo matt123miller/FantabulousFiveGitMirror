@@ -10,7 +10,7 @@ public class CharacterInstantiate : MonoBehaviour
     private string _characterSelected;
     private GameObject _spawnPoint;
     private Scene _scene;
-    private PlayerData data;
+    private PlayerData playerData;
     private string resourcesString;
     private Vector3? checkPoint;
 
@@ -20,7 +20,7 @@ public class CharacterInstantiate : MonoBehaviour
     void Awake()
     {
         _scene = SceneManager.GetActiveScene();
-        data = GameObject.Find("GameManager").GetComponent<SaveLoad>().Load();
+        playerData = GameObject.Find("PlayerData").GetComponent<PlayerData>();
         resourcesString = "Prefabs/Scene Requirements/Character/";
         _spawnPoint = GameObject.FindWithTag("SpawnPoint");
         InstantiateCharacter();
@@ -28,7 +28,7 @@ public class CharacterInstantiate : MonoBehaviour
 
     public void InstantiateCharacter()
     {
-        if (data == null)
+        if (playerData == null)
         {
             _characterSelected = PlayerPrefs.GetString("CharacterSelected");
             SoundManager.Instance.MusicOn = SoundManager.Instance.convertSoundStrToBool(PlayerPrefs.GetString("MusicOn"));
@@ -36,10 +36,10 @@ public class CharacterInstantiate : MonoBehaviour
         }
         else
         {
-            _characterSelected = data.CharacterSelected;
-            checkPoint = data.convertCheckPointToVector(data.CheckPoint);
-            SoundManager.Instance.MusicOn = SoundManager.Instance.convertSoundStrToBool(data.MusicOnBool);
-            SoundManager.Instance.SfxOn = SoundManager.Instance.convertSoundStrToBool(data.SfxOnBool);
+            _characterSelected = playerData.CharacterSelected;
+            checkPoint = playerData.ConvertCheckPointToVector(playerData.CheckPoint);
+            SoundManager.Instance.MusicOn = SoundManager.Instance.convertSoundStrToBool(playerData.MusicOnBool);
+            SoundManager.Instance.SfxOn = SoundManager.Instance.convertSoundStrToBool(playerData.SfxOnBool);
         }
 
         resourcesString += _characterSelected;
@@ -49,7 +49,7 @@ public class CharacterInstantiate : MonoBehaviour
         {
             _playerPrefab = (GameObject)Resources.Load(resourcesString, typeof(GameObject));
 
-            if(checkPoint != null)
+            if(checkPoint != new Vector3(0,0,0))
             {
                 _player = Instantiate(_playerPrefab, checkPoint.Value, _spawnPoint.transform.rotation) as GameObject;
             }
