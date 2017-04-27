@@ -73,7 +73,6 @@ public class SoundManager : MonoBehaviour {
 
         ChangeMusicVol();
         ChangeSFXVol();
-	
 	}
 
     public void ToggleMusic()

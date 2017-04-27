@@ -9,7 +9,7 @@ public class SaveLoad : MonoBehaviour {
 
     private PlayerData playerData;
 
-    void Start()
+    void Awake()
     {
         playerData = GameObject.Find("PlayerData").GetComponent<PlayerData>();
     }
@@ -25,7 +25,7 @@ public class SaveLoad : MonoBehaviour {
         //string musicOn = SoundManager.Instance.MusicOn.ToString();
         //string sfxOn = SoundManager.Instance.SfxOn.ToString();
 
-        Data data = new Data(playerData.CharacterSelected, playerData.CheckPoint, playerData.SceneToLoad, playerData.MusicOnBool, playerData.SfxOnBool);
+        Data data = new Data(playerData.CharacterSelected, playerData.CheckPoint, playerData.SceneToLoad, playerData.MusicOnBool, playerData.SfxOnBool, playerData.NoiseAmount);
 
         bf.Serialize(file, data);
         file.Close();
@@ -47,6 +47,7 @@ public class SaveLoad : MonoBehaviour {
                 playerData.SceneToLoad = savedData.sceneToLoad;
                 playerData.MusicOnBool = savedData.musicOnBool;
                 playerData.SfxOnBool = savedData.sfxOnBool;
+                playerData.NoiseAmount = savedData.noiseAmount;
             }
          
         }
@@ -58,6 +59,8 @@ public class SaveLoad : MonoBehaviour {
         {
             File.Delete(Application.persistentDataPath + "/playerInfo.dat");
         }
+
+        playerData.ResetValues();
     }
 
     [System.Serializable]
@@ -69,14 +72,16 @@ public class SaveLoad : MonoBehaviour {
         public int sceneToLoad;
         public string musicOnBool;
         public string sfxOnBool;
+        public float noiseAmount;
 
-        public Data(string _characterSelected, string _checkPoint, int _sceneToLoad, string _musicOn, string _sfxOn)
+        public Data(string _characterSelected, string _checkPoint, int _sceneToLoad, string _musicOn, string _sfxOn, float _noiseAmount)
         {
             characterSelected = _characterSelected;
             checkPoint = _checkPoint;
             sceneToLoad = _sceneToLoad;
             musicOnBool = _musicOn;
             sfxOnBool = _sfxOn;
+            noiseAmount = _noiseAmount;
         }
     }
 }

@@ -11,6 +11,7 @@ public class Checkpoint : MonoBehaviour
     private PlayerData playerData;
     private Animator _animator;
     private SaveLoad _saveLoadsScript;
+    private Noise noiseScript;
 
     void Start()
     {
@@ -18,18 +19,20 @@ public class Checkpoint : MonoBehaviour
         playerData = GameObject.Find("PlayerData").GetComponent<PlayerData>();
         _animator = GetComponent<Animator>();
         _saveLoadsScript = FindObjectOfType<SaveLoad>();
+        noiseScript = GameObject.Find("NoiseBar").GetComponent<Noise>();
     }
 
     void OnTriggerEnter(Collider other)
     {
         // If the player passes through the checkpoint, we activate it
-        if (other.tag == "Player")
+        if (other.tag == "Player" && gameObject.transform.position.ToString() != playerData.CheckPoint)
         {
             ActivateCheckPoint();
             playerData.CheckPoint = gameObject.transform.position.ToString();
             playerData.SceneToLoad = SceneManager.GetActiveScene().buildIndex;
+            playerData.NoiseAmount = noiseScript.currentNoise;
             _saveLoadsScript.Save();
-            Debug.Log("Saved!");
+            Debug.Log("Saved Noise:" + playerData.NoiseAmount);
             
         }
     }

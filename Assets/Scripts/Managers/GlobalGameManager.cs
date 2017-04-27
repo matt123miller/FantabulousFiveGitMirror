@@ -13,7 +13,7 @@ public class GlobalGameManager : MonoBehaviour
     private Canvas _touchCanvas;
     private GameObject _pauseScreen;
     private GameObject _fadeScreen;
-
+    private PlayerData _playerData;
 
     private bool _paused = false;
 
@@ -53,6 +53,7 @@ public class GlobalGameManager : MonoBehaviour
         _touchCanvas = GameObject.FindWithTag("UICanvas").GetComponent<Canvas>();
         _pauseScreen = transform.FindChild("PauseScreen").gameObject;
         _fadeScreen = transform.FindChild("FadeScreen").gameObject;
+        _playerData = GameObject.Find("PlayerData").GetComponent<PlayerData>();
 
         //PAUSE SCREEN TURNED OFF VIA MENU MANAGER
        // _pauseScreen.SetActive(false);
@@ -103,8 +104,8 @@ public class GlobalGameManager : MonoBehaviour
 
             Noise noiseScript = _touchCanvas.gameObject.GetComponentInChildren<Noise>();
             noiseScript.ResetNoiseBar();
-
-
+            noiseScript.SetNoiseBar(noiseScript.CalculateNoiseVal(_playerData.NoiseAmount));
+            print(_playerData.NoiseAmount);
         }
     }
 

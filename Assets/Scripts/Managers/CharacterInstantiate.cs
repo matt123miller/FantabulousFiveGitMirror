@@ -13,6 +13,7 @@ public class CharacterInstantiate : MonoBehaviour
     private PlayerData playerData;
     private string resourcesString;
     private Vector3? checkPoint;
+    private Noise noiseScript;
 
 
 
@@ -24,6 +25,11 @@ public class CharacterInstantiate : MonoBehaviour
         resourcesString = "Prefabs/Scene Requirements/Character/";
         _spawnPoint = GameObject.FindWithTag("SpawnPoint");
         InstantiateCharacter();
+    }
+
+    void Start()
+    {
+    
     }
 
     public void InstantiateCharacter()
