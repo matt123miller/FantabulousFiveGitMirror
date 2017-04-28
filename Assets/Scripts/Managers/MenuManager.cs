@@ -66,6 +66,8 @@ public class MenuManager : MonoBehaviour
         musicOnText = GameObject.Find("MusicText").GetComponent<Text>();
         sfxOnText = GameObject.Find("SFXText").GetComponent<Text>();
         optionsMenuPanel.SetActive(false);
+        // Maybe make sure the pause screen is off, instead of relying on the rpfab to be setup correct
+        // this is Matt's fault, blame him!
     }
 
     void SetUpPauseMenu()
