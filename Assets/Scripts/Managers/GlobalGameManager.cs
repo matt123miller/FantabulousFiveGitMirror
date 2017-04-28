@@ -38,7 +38,7 @@ public class GlobalGameManager : MonoBehaviour
         {
             if (!_playerTransform)
             {
-                _playerTransform = GameObject.FindWithTag("Player").transform; 
+                _playerTransform = GameObject.FindWithTag("Player").transform;
             }
             return _playerTransform;
         }
@@ -56,7 +56,7 @@ public class GlobalGameManager : MonoBehaviour
         _playerData = GameObject.Find("PlayerData").GetComponent<PlayerData>();
 
         //PAUSE SCREEN TURNED OFF VIA MENU MANAGER
-       // _pauseScreen.SetActive(false);
+        // _pauseScreen.SetActive(false);
         _fadeScreen.SetActive(true);
 
     }
@@ -90,7 +90,7 @@ public class GlobalGameManager : MonoBehaviour
 
         var joystick = _touchCanvas.gameObject.GetComponentInChildren<Joystick>();
 
-        if(joystick)
+        if (joystick)
             joystick.enabled = setter;
 
         // If we're turning the UI on....
@@ -103,9 +103,13 @@ public class GlobalGameManager : MonoBehaviour
             }
 
             Noise noiseScript = _touchCanvas.gameObject.GetComponentInChildren<Noise>();
-            noiseScript.ResetNoiseBar();
-            noiseScript.SetNoiseBar(noiseScript.CalculateNoiseVal(_playerData.NoiseAmount));
-            print(_playerData.NoiseAmount);
+            if (noiseScript != null)
+            {
+                noiseScript.ResetNoiseBar();
+                noiseScript.SetNoiseBar(noiseScript.CalculateNoiseVal(_playerData.NoiseAmount));
+                print(_playerData.NoiseAmount);
+
+            }
         }
     }
 
@@ -148,7 +152,7 @@ public class GlobalGameManager : MonoBehaviour
     {
         // Does anything need to happen? Save data to playerprefs or whatever?
 
-        if(SceneManager.GetActiveScene().buildIndex != 0)
+        if (SceneManager.GetActiveScene().buildIndex != 0)
         {
             PauseGame();
         }

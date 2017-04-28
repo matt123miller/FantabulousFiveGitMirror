@@ -59,7 +59,7 @@ public class AICharacterControl : MonoBehaviour
         _aiSight = GetComponentInChildren<AISight>();
 
         _noiseScript = GameObject.FindGameObjectWithTag("NoiseBar").GetComponent<Noise>();
-        var mechanicsObj = GameObject.FindWithTag("MechanicsScripts");
+        var mechanicsObj = GameObject.FindWithTag("MechanicsObject");
         micInput = mechanicsObj.GetComponent<MicrophoneInput>();
         _hideFromWitchCooldownTarget = mechanicsObj.GetComponent<WitchKeepStill>().keepStillDuration;
         _witchScript = mechanicsObj.GetComponent<WitchKeepStill>();

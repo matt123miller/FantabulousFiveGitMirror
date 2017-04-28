@@ -39,6 +39,11 @@ namespace UnityStandardAssets.CrossPlatformInput
         void Start()
         {
             playerObj = GameObject.FindGameObjectWithTag("Player");
+            if (playerObj == null)
+            {
+                gameObject.SetActive(false);
+                return;
+            }
             playerRigid = playerObj.GetComponent<Rigidbody>();
             characterScript = playerObj.GetComponent<ThirdPersonCharacter>();
             microphoneInputScript = GameObject.Find("MechanicsScripts").GetComponent<MicrophoneInput>();

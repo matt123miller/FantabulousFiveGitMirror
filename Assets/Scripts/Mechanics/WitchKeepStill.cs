@@ -27,6 +27,11 @@ public class WitchKeepStill : MonoBehaviour
 	// Use this for initialization
 	void Start () {
         witchPromptText = GameObject.Find("Witch Prompt Text").GetComponent<Text>();
+        if (witchPromptText == null)
+        {
+            gameObject.SetActive(false);
+            return;
+        }
         _deviceTilt = GameObject.Find("MechanicsScripts").GetComponent<DeviceTilt>();
         thirdPersonUserControl = GameObject.FindGameObjectWithTag("Player").GetComponent<ThirdPersonUserControl>();
         loadLevelScript = GameObject.Find("GameManager").GetComponent<LoadLevel>();
