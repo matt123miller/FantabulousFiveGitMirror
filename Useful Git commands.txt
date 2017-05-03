@@ -36,4 +36,4 @@ which reads as "push nothing into branch_name at origin".
 
 
 Store git history in csv file
-git log --pretty=format:%h,%an,%ae,%s > "/your/file/path/gitlog.csv"
+git log --pretty=format:%h,%an,%ae,%ai,%s > "/drive/your/file/path/gitlog.csv"
