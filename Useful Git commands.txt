@@ -33,3 +33,7 @@ or the old syntax
 git push origin :branch_name
 
 which reads as "push nothing into branch_name at origin".
+
+
+Store git history in csv file
+git log --pretty=format:%h,%an,%ae,%s > "/your/file/path/gitlog.csv"
