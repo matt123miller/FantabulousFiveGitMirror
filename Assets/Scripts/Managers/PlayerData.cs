@@ -34,8 +34,8 @@ public class PlayerData : MonoBehaviour {
         saveLoadScript = GameObject.Find("GameManager").GetComponent<SaveLoad>();
 
         ResetValues();
-        musicOnBool = true.ToString();
-        sfxOnBool = true.ToString();
+        MusicOnBool = true.ToString();
+        SfxOnBool = true.ToString();
 
         if (SceneManager.GetActiveScene().buildIndex == 0)
         {
