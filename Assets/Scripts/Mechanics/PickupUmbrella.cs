@@ -3,11 +3,11 @@ using System.Collections;
 
 public class PickupUmbrella : MonoBehaviour {
 
-    GameObject floatButton;
+    public GameObject floatButton;
 
 	// Use this for initialization
 	void Start () {
-        floatButton = GameObject.Find("FloatButton");
+        //floatButton = GameObject.Find("FloatButton");
 
 	}
 	
