@@ -13,7 +13,7 @@ public class ObjNoise : MonoBehaviour {
     public void Start()
     {
         _weightOfObj = GetComponent<Rigidbody>().mass;
-        _noiseScript = GameObject.FindGameObjectWithTag("NoiseBar").GetComponent<Noise>();
+        _noiseScript = GameObject.FindWithTag("NoiseBar").GetComponent<Noise>();
     }
 
     public void OnCollisionEnter(Collision collision)

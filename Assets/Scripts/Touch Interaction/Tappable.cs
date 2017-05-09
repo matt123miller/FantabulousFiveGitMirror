@@ -20,7 +20,8 @@ public class Tappable : MonoBehaviour , ITouchInteractive {
 
         _oldColour = GetComponent<MeshRenderer>().material.color;
         animator = GetComponent<Animator>();
-        
+        if(GetComponent<SphereCollider>())
+            GetComponent<SphereCollider>().radius = 1;
 	}
 
     private void OnTriggerEnter(Collider other)
