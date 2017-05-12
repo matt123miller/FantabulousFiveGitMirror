@@ -41,20 +41,20 @@ public class MovingPortraits : MonoBehaviour
     // Update is called once per frame
     void OnTriggerStay(Collider collider)
     {
-        if (!collider.CompareTag("Player"))
-            return;
+    //    if (!collider.CompareTag("Player"))
+    //        return;
 
-        _player = collider.transform;
+    //    _player = collider.transform;
 
-        // _player in relation to painting
-        Vector3 playerToPainting = _player.position - transform.position;
-        float sqrDistance = playerToPainting.sqrMagnitude;
+    //    // _player in relation to painting
+    //    Vector3 playerToPainting = _player.position - transform.position;
+    //    float sqrDistance = playerToPainting.sqrMagnitude;
 
-        // Some sort of percentage value for affecting the resolution of the image?
-        // float percentDistance = sqrDistance * _invSqrColliderDistance;
-        //print(percentDistance);
+    //    // Some sort of percentage value for affecting the resolution of the image?
+    //    // float percentDistance = sqrDistance * _invSqrColliderDistance;
+    //    //print(percentDistance);
 
-        // move the contents of the painting accordingly 
+    //    // move the contents of the painting accordingly 
 
 
     }
