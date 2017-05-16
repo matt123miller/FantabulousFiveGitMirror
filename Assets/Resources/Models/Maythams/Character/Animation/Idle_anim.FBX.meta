@@ -1,0 +1,421 @@
+fileFormatVersion: 2
+guid: 9d4483fb2fa1fe94ba14e72dcf2aace7
+timeCreated: 1494908975
+licenseType: Free
+ModelImporter:
+  serializedVersion: 19
+  fileIDToRecycleName:
+    100000: Bone001
+    100002: Bone002
+    100004: Bone003
+    100006: Bone004
+    100008: Character
+    100010: EthanSpine
+    100012: EthanSpine 1
+    100014: EthanSpine 2
+    100016: EthanSpine 3
+    100018: EthanSpine1
+    100020: EthanSpine2
+    100022: //RootNode
+    100024: LeftArm
+    100026: LeftFoot
+    100028: LeftForeArm
+    100030: LeftHand
+    100032: LeftHand 1
+    100034: LeftHand 2
+    100036: LeftHand 3
+    100038: LeftHandIndex1
+    100040: LeftHandIndex2
+    100042: LeftHandIndex3
+    100044: LeftHandMiddle1
+    100046: LeftHandMiddle1 1
+    100048: LeftHandMiddle1 2
+    100050: LeftHandPinky1
+    100052: LeftHandPinky2
+    100054: LeftHandPinky3
+    100056: LeftHandRing1
+    100058: LeftHandRing2
+    100060: LeftHandRing3
+    100062: LeftHandThumb1
+    100064: LeftHandThumb2
+    100066: LeftHandThumb3
+    100068: LeftHandThumb4
+    100070: LeftLeg
+    100072: LeftShoulder
+    100074: LefttHand
+    100076: LeftToe1
+    100078: LeftToe2
+    100080: LeftUpLeg
+    100082: Neck
+    100084: RightArm
+    100086: RightFoot
+    100088: RightForeArm
+    100090: RightHand
+    100092: RightHand 1
+    100094: RightHand 2
+    100096: RightHand 3
+    100098: RightHand 4
+    100100: RightHandIndex1
+    100102: RightHandIndex2
+    100104: RightHandIndex3
+    100106: RightHandMiddle1
+    100108: RightHandMiddle2
+    100110: RightHandMiddle3
+    100112: RightHandPinky1
+    100114: RightHandPinky2
+    100116: RightHandPinky3
+    100118: RightHandRing1
+    100120: RightHandRing2
+    100122: RightHandRing3
+    100124: RightHandThumb1
+    100126: RightHandThumb2
+    100128: RightHandThumb3
+    100130: RightHandThumb4
+    100132: RightLeg
+    100134: RightShoulder
+    100136: RightToe004
+    100138: RightToe1
+    100140: RightToe2
+    100142: RightUpLeg
+    400000: Bone001
+    400002: Bone002
+    400004: Bone003
+    400006: Bone004
+    400008: Character
+    400010: EthanSpine
+    400012: EthanSpine 1
+    400014: EthanSpine 2
+    400016: EthanSpine 3
+    400018: EthanSpine1
+    400020: EthanSpine2
+    400022: //RootNode
+    400024: LeftArm
+    400026: LeftFoot
+    400028: LeftForeArm
+    400030: LeftHand
+    400032: LeftHand 1
+    400034: LeftHand 2
+    400036: LeftHand 3
+    400038: LeftHandIndex1
+    400040: LeftHandIndex2
+    400042: LeftHandIndex3
+    400044: LeftHandMiddle1
+    400046: LeftHandMiddle1 1
+    400048: LeftHandMiddle1 2
+    400050: LeftHandPinky1
+    400052: LeftHandPinky2
+    400054: LeftHandPinky3
+    400056: LeftHandRing1
+    400058: LeftHandRing2
+    400060: LeftHandRing3
+    400062: LeftHandThumb1
+    400064: LeftHandThumb2
+    400066: LeftHandThumb3
+    400068: LeftHandThumb4
+    400070: LeftLeg
+    400072: LeftShoulder
+    400074: LefttHand
+    400076: LeftToe1
+    400078: LeftToe2
+    400080: LeftUpLeg
+    400082: Neck
+    400084: RightArm
+    400086: RightFoot
+    400088: RightForeArm
+    400090: RightHand
+    400092: RightHand 1
+    400094: RightHand 2
+    400096: RightHand 3
+    400098: RightHand 4
+    400100: RightHandIndex1
+    400102: RightHandIndex2
+    400104: RightHandIndex3
+    400106: RightHandMiddle1
+    400108: RightHandMiddle2
+    400110: RightHandMiddle3
+    400112: RightHandPinky1
+    400114: RightHandPinky2
+    400116: RightHandPinky3
+    400118: RightHandRing1
+    400120: RightHandRing2
+    400122: RightHandRing3
+    400124: RightHandThumb1
+    400126: RightHandThumb2
+    400128: RightHandThumb3
+    400130: RightHandThumb4
+    400132: RightLeg
+    400134: RightShoulder
+    400136: RightToe004
+    400138: RightToe1
+    400140: RightToe2
+    400142: RightUpLeg
+    4300000: Character
+    7400000: Idle_Anim
+    9500000: //RootNode
+    11100000: //RootNode
+    13700000: Character
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 2
+    extraExposedTransformPaths: []
+    clipAnimations:
+    - serializedVersion: 16
+      name: Idle_Anim
+      takeName: Take 001
+      firstFrame: 100
+      lastFrame: 300
+      wrapMode: 2
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 1
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: Character
+        weight: 1
+      - path: EthanSpine
+        weight: 1
+      - path: EthanSpine/EthanSpine 1
+        weight: 1
+      - path: EthanSpine/EthanSpine 1/EthanSpine1
+        weight: 1
+      - path: EthanSpine/EthanSpine 1/EthanSpine1/EthanSpine2
+        weight: 1
+      - path: EthanSpine/EthanSpine 1/EthanSpine1/EthanSpine2/LeftShoulder
+        weight: 1
+      - path: EthanSpine/EthanSpine 1/EthanSpine1/EthanSpine2/LeftShoulder/LeftArm
+        weight: 1
+      - path: EthanSpine/EthanSpine 1/EthanSpine1/EthanSpine2/LeftShoulder/LeftArm/LeftForeArm
+        weight: 1
+      - path: EthanSpine/EthanSpine 1/EthanSpine1/EthanSpine2/LeftShoulder/LeftArm/LeftForeArm/Bone003
+        weight: 1
+      - path: EthanSpine/EthanSpine 1/EthanSpine1/EthanSpine2/LeftShoulder/LeftArm/LeftForeArm/Bone003/LeftHand
+        weight: 1
+      - path: EthanSpine/EthanSpine 1/EthanSpine1/EthanSpine2/LeftShoulder/LeftArm/LeftForeArm/Bone003/LeftHand/LeftHandIndex1
+        weight: 1
+      - path: EthanSpine/EthanSpine 1/EthanSpine1/EthanSpine2/LeftShoulder/LeftArm/LeftForeArm/Bone003/LeftHand/LeftHandIndex1/LeftHandIndex2
+        weight: 1
+      - path: EthanSpine/EthanSpine 1/EthanSpine1/EthanSpine2/LeftShoulder/LeftArm/LeftForeArm/Bone003/LeftHand/LeftHandIndex1/LeftHandIndex2/LeftHandIndex3
+        weight: 1
+      - path: EthanSpine/EthanSpine 1/EthanSpine1/EthanSpine2/LeftShoulder/LeftArm/LeftForeArm/Bone003/LeftHand
+          1
+        weight: 1
+      - path: EthanSpine/EthanSpine 1/EthanSpine1/EthanSpine2/LeftShoulder/LeftArm/LeftForeArm/Bone003/LeftHand
+          1/LeftHandPinky1
+        weight: 1
+      - path: EthanSpine/EthanSpine 1/EthanSpine1/EthanSpine2/LeftShoulder/LeftArm/LeftForeArm/Bone003/LeftHand
+          1/LeftHandPinky1/LeftHandPinky2
+        weight: 1
+      - path: EthanSpine/EthanSpine 1/EthanSpine1/EthanSpine2/LeftShoulder/LeftArm/LeftForeArm/Bone003/LeftHand
+          1/LeftHandPinky1/LeftHandPinky2/LeftHandPinky3
+        weight: 1
+      - path: EthanSpine/EthanSpine 1/EthanSpine1/EthanSpine2/LeftShoulder/LeftArm/LeftForeArm/Bone003/LeftHand
+          2
+        weight: 1
+      - path: EthanSpine/EthanSpine 1/EthanSpine1/EthanSpine2/LeftShoulder/LeftArm/LeftForeArm/Bone003/LeftHand
+          2/LeftHandRing1
+        weight: 1
+      - path: EthanSpine/EthanSpine 1/EthanSpine1/EthanSpine2/LeftShoulder/LeftArm/LeftForeArm/Bone003/LeftHand
+          2/LeftHandRing1/LeftHandRing2
+        weight: 1
+      - path: EthanSpine/EthanSpine 1/EthanSpine1/EthanSpine2/LeftShoulder/LeftArm/LeftForeArm/Bone003/LeftHand
+          2/LeftHandRing1/LeftHandRing2/LeftHandRing3
+        weight: 1
+      - path: EthanSpine/EthanSpine 1/EthanSpine1/EthanSpine2/LeftShoulder/LeftArm/LeftForeArm/Bone003/LeftHand
+          3
+        weight: 1
+      - path: EthanSpine/EthanSpine 1/EthanSpine1/EthanSpine2/LeftShoulder/LeftArm/LeftForeArm/Bone003/LeftHand
+          3/LeftHandMiddle1
+        weight: 1
+      - path: EthanSpine/EthanSpine 1/EthanSpine1/EthanSpine2/LeftShoulder/LeftArm/LeftForeArm/Bone003/LeftHand
+          3/LeftHandMiddle1/LeftHandMiddle1 1
+        weight: 1
+      - path: EthanSpine/EthanSpine 1/EthanSpine1/EthanSpine2/LeftShoulder/LeftArm/LeftForeArm/Bone003/LeftHand
+          3/LeftHandMiddle1/LeftHandMiddle1 1/LeftHandMiddle1 2
+        weight: 1
+      - path: EthanSpine/EthanSpine 1/EthanSpine1/EthanSpine2/LeftShoulder/LeftArm/LeftForeArm/Bone003/LefttHand
+        weight: 1
+      - path: EthanSpine/EthanSpine 1/EthanSpine1/EthanSpine2/LeftShoulder/LeftArm/LeftForeArm/Bone003/LefttHand/LeftHandThumb1
+        weight: 1
+      - path: EthanSpine/EthanSpine 1/EthanSpine1/EthanSpine2/LeftShoulder/LeftArm/LeftForeArm/Bone003/LefttHand/LeftHandThumb1/LeftHandThumb2
+        weight: 1
+      - path: EthanSpine/EthanSpine 1/EthanSpine1/EthanSpine2/LeftShoulder/LeftArm/LeftForeArm/Bone003/LefttHand/LeftHandThumb1/LeftHandThumb2/LeftHandThumb3
+        weight: 1
+      - path: EthanSpine/EthanSpine 1/EthanSpine1/EthanSpine2/LeftShoulder/LeftArm/LeftForeArm/Bone003/LefttHand/LeftHandThumb1/LeftHandThumb2/LeftHandThumb3/LeftHandThumb4
+        weight: 1
+      - path: EthanSpine/EthanSpine 1/EthanSpine1/EthanSpine2/Neck
+        weight: 1
+      - path: EthanSpine/EthanSpine 1/EthanSpine1/EthanSpine2/Neck/Bone001
+        weight: 1
+      - path: EthanSpine/EthanSpine 1/EthanSpine1/EthanSpine2/Neck/Bone001/Bone002
+        weight: 1
+      - path: EthanSpine/EthanSpine 1/EthanSpine1/EthanSpine2/RightShoulder
+        weight: 1
+      - path: EthanSpine/EthanSpine 1/EthanSpine1/EthanSpine2/RightShoulder/RightArm
+        weight: 1
+      - path: EthanSpine/EthanSpine 1/EthanSpine1/EthanSpine2/RightShoulder/RightArm/RightForeArm
+        weight: 1
+      - path: EthanSpine/EthanSpine 1/EthanSpine1/EthanSpine2/RightShoulder/RightArm/RightForeArm/Bone004
+        weight: 1
+      - path: EthanSpine/EthanSpine 1/EthanSpine1/EthanSpine2/RightShoulder/RightArm/RightForeArm/Bone004/RightHand
+        weight: 1
+      - path: EthanSpine/EthanSpine 1/EthanSpine1/EthanSpine2/RightShoulder/RightArm/RightForeArm/Bone004/RightHand/RightHandRing1
+        weight: 1
+      - path: EthanSpine/EthanSpine 1/EthanSpine1/EthanSpine2/RightShoulder/RightArm/RightForeArm/Bone004/RightHand/RightHandRing1/RightHandRing2
+        weight: 1
+      - path: EthanSpine/EthanSpine 1/EthanSpine1/EthanSpine2/RightShoulder/RightArm/RightForeArm/Bone004/RightHand/RightHandRing1/RightHandRing2/RightHandRing3
+        weight: 1
+      - path: EthanSpine/EthanSpine 1/EthanSpine1/EthanSpine2/RightShoulder/RightArm/RightForeArm/Bone004/RightHand
+          1
+        weight: 1
+      - path: EthanSpine/EthanSpine 1/EthanSpine1/EthanSpine2/RightShoulder/RightArm/RightForeArm/Bone004/RightHand
+          1/RightHandMiddle1
+        weight: 1
+      - path: EthanSpine/EthanSpine 1/EthanSpine1/EthanSpine2/RightShoulder/RightArm/RightForeArm/Bone004/RightHand
+          1/RightHandMiddle1/RightHandMiddle2
+        weight: 1
+      - path: EthanSpine/EthanSpine 1/EthanSpine1/EthanSpine2/RightShoulder/RightArm/RightForeArm/Bone004/RightHand
+          1/RightHandMiddle1/RightHandMiddle2/RightHandMiddle3
+        weight: 1
+      - path: EthanSpine/EthanSpine 1/EthanSpine1/EthanSpine2/RightShoulder/RightArm/RightForeArm/Bone004/RightHand
+          2
+        weight: 1
+      - path: EthanSpine/EthanSpine 1/EthanSpine1/EthanSpine2/RightShoulder/RightArm/RightForeArm/Bone004/RightHand
+          2/RightHandIndex1
+        weight: 1
+      - path: EthanSpine/EthanSpine 1/EthanSpine1/EthanSpine2/RightShoulder/RightArm/RightForeArm/Bone004/RightHand
+          2/RightHandIndex1/RightHandIndex2
+        weight: 1
+      - path: EthanSpine/EthanSpine 1/EthanSpine1/EthanSpine2/RightShoulder/RightArm/RightForeArm/Bone004/RightHand
+          2/RightHandIndex1/RightHandIndex2/RightHandIndex3
+        weight: 1
+      - path: EthanSpine/EthanSpine 1/EthanSpine1/EthanSpine2/RightShoulder/RightArm/RightForeArm/Bone004/RightHand
+          3
+        weight: 1
+      - path: EthanSpine/EthanSpine 1/EthanSpine1/EthanSpine2/RightShoulder/RightArm/RightForeArm/Bone004/RightHand
+          3/RightHandThumb1
+        weight: 1
+      - path: EthanSpine/EthanSpine 1/EthanSpine1/EthanSpine2/RightShoulder/RightArm/RightForeArm/Bone004/RightHand
+          3/RightHandThumb1/RightHandThumb2
+        weight: 1
+      - path: EthanSpine/EthanSpine 1/EthanSpine1/EthanSpine2/RightShoulder/RightArm/RightForeArm/Bone004/RightHand
+          3/RightHandThumb1/RightHandThumb2/RightHandThumb3
+        weight: 1
+      - path: EthanSpine/EthanSpine 1/EthanSpine1/EthanSpine2/RightShoulder/RightArm/RightForeArm/Bone004/RightHand
+          3/RightHandThumb1/RightHandThumb2/RightHandThumb3/RightHandThumb4
+        weight: 1
+      - path: EthanSpine/EthanSpine 1/EthanSpine1/EthanSpine2/RightShoulder/RightArm/RightForeArm/Bone004/RightHand
+          4
+        weight: 1
+      - path: EthanSpine/EthanSpine 1/EthanSpine1/EthanSpine2/RightShoulder/RightArm/RightForeArm/Bone004/RightHand
+          4/RightHandPinky1
+        weight: 1
+      - path: EthanSpine/EthanSpine 1/EthanSpine1/EthanSpine2/RightShoulder/RightArm/RightForeArm/Bone004/RightHand
+          4/RightHandPinky1/RightHandPinky2
+        weight: 1
+      - path: EthanSpine/EthanSpine 1/EthanSpine1/EthanSpine2/RightShoulder/RightArm/RightForeArm/Bone004/RightHand
+          4/RightHandPinky1/RightHandPinky2/RightHandPinky3
+        weight: 1
+      - path: EthanSpine/EthanSpine 2
+        weight: 1
+      - path: EthanSpine/EthanSpine 2/LeftUpLeg
+        weight: 1
+      - path: EthanSpine/EthanSpine 2/LeftUpLeg/LeftLeg
+        weight: 1
+      - path: EthanSpine/EthanSpine 2/LeftUpLeg/LeftLeg/LeftFoot
+        weight: 1
+      - path: EthanSpine/EthanSpine 2/LeftUpLeg/LeftLeg/LeftFoot/LeftToe1
+        weight: 1
+      - path: EthanSpine/EthanSpine 2/LeftUpLeg/LeftLeg/LeftFoot/LeftToe1/LeftToe2
+        weight: 1
+      - path: EthanSpine/EthanSpine 3
+        weight: 1
+      - path: EthanSpine/EthanSpine 3/RightUpLeg
+        weight: 1
+      - path: EthanSpine/EthanSpine 3/RightUpLeg/RightLeg
+        weight: 1
+      - path: EthanSpine/EthanSpine 3/RightUpLeg/RightLeg/RightFoot
+        weight: 1
+      - path: EthanSpine/EthanSpine 3/RightUpLeg/RightLeg/RightFoot/RightToe1
+        weight: 1
+      - path: EthanSpine/EthanSpine 3/RightUpLeg/RightLeg/RightFoot/RightToe1/RightToe2
+        weight: 1
+      - path: RightToe004
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 100
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    importBlendShapes: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    hasTranslationDoF: 0
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 1
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
