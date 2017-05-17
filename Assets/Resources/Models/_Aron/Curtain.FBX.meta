@@ -1,6 +1,6 @@
 fileFormatVersion: 2
-guid: 75efd9c48532e2a499882df68785dc66
-timeCreated: 1494972435
+guid: 61a382205443b50429ab0edb3150fa9a
+timeCreated: 1495042791
 licenseType: Free
 ModelImporter:
   serializedVersion: 19
@@ -13,7 +13,7 @@ ModelImporter:
     9500000: //RootNode
   materials:
     importMaterials: 1
-    materialName: 0
+    materialName: 2
     materialSearch: 1
   animations:
     legacyGenerateAnimations: 4
