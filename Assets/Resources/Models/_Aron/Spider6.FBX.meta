@@ -137,7 +137,131 @@ ModelImporter:
     animationScaleError: 0.5
     animationWrapMode: 0
     extraExposedTransformPaths: []
-    clipAnimations: []
+    clipAnimations:
+    - serializedVersion: 16
+      name: Take 001
+      takeName: Take 001
+      firstFrame: 10
+      lastFrame: 40
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 1
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: Bone001
+        weight: 1
+      - path: Bone001/Bone002
+        weight: 1
+      - path: Bone001/Bone002/Bone003
+        weight: 1
+      - path: Bone001/Bone002/Bone003/Bone040
+        weight: 1
+      - path: Bone001/Bone002/Bone003/Bone040/Bone004
+        weight: 1
+      - path: Bone001/Bone002/Bone003/Bone040/Bone004/Bone005
+        weight: 1
+      - path: Bone001/Bone002/Bone006
+        weight: 1
+      - path: Bone001/Bone002/Bone006/Bone041
+        weight: 1
+      - path: Bone001/Bone002/Bone006/Bone041/Bone007
+        weight: 1
+      - path: Bone001/Bone002/Bone006/Bone041/Bone007/Bone008
+        weight: 1
+      - path: Bone001/Bone002/Bone009
+        weight: 1
+      - path: Bone001/Bone002/Bone009/Bone042
+        weight: 1
+      - path: Bone001/Bone002/Bone009/Bone042/Bone010
+        weight: 1
+      - path: Bone001/Bone002/Bone009/Bone042/Bone010/Bone011
+        weight: 1
+      - path: Bone001/Bone002/Bone012
+        weight: 1
+      - path: Bone001/Bone002/Bone012/Bone013
+        weight: 1
+      - path: Bone001/Bone002/Bone012/Bone013/Bone014
+        weight: 1
+      - path: Bone001/Bone002/Bone012/Bone013/Bone014/Bone015
+        weight: 1
+      - path: Bone001/Bone002/Bone016
+        weight: 1
+      - path: Bone001/Bone002/Bone016/Bone037
+        weight: 1
+      - path: Bone001/Bone002/Bone016/Bone037/Bone017
+        weight: 1
+      - path: Bone001/Bone002/Bone016/Bone037/Bone017/Bone018
+        weight: 1
+      - path: Bone001/Bone002/Bone019
+        weight: 1
+      - path: Bone001/Bone002/Bone019/Bone038
+        weight: 1
+      - path: Bone001/Bone002/Bone019/Bone038/Bone020
+        weight: 1
+      - path: Bone001/Bone002/Bone019/Bone038/Bone020/Bone021
+        weight: 1
+      - path: Bone001/Bone002/Bone022
+        weight: 1
+      - path: Bone001/Bone002/Bone022/Bone039
+        weight: 1
+      - path: Bone001/Bone002/Bone022/Bone039/Bone023
+        weight: 1
+      - path: Bone001/Bone002/Bone022/Bone039/Bone023/Bone024
+        weight: 1
+      - path: Bone001/Bone002/Bone025
+        weight: 1
+      - path: Bone001/Bone002/Bone025/Bone026
+        weight: 1
+      - path: Bone001/Bone002/Bone025/Bone026/Bone027
+        weight: 1
+      - path: Bone001/Bone002/Bone025/Bone026/Bone027/Bone028
+        weight: 1
+      - path: Bone001/Bone002/Bone029
+        weight: 1
+      - path: Bone001/Bone002/Bone029/Bone030
+        weight: 1
+      - path: Bone001/Bone002/Bone029/Bone030/Bone031
+        weight: 1
+      - path: Bone001/Bone002/Bone029/Bone030/Bone031/Bone032
+        weight: 1
+      - path: Bone001/Bone002/Bone029/Bone030/Bone031/Bone032/Bone033
+        weight: 1
+      - path: Bone001/Bone002/Bone029/Bone030/Bone034
+        weight: 1
+      - path: Bone001/Bone002/Bone029/Bone030/Bone034/Bone035
+        weight: 1
+      - path: Bone001/Bone002/Bone029/Bone030/Bone034/Bone035/Bone036
+        weight: 1
+      - path: Sphere001
+        weight: 1
+      - path: Sphere004
+        weight: 1
+      - path: Sphere005
+        weight: 1
+      - path: Sphere006
+        weight: 1
+      - path: Sphere007
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
     isReadable: 1
   meshes:
     lODScreenPercentages: []
