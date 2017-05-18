@@ -116,6 +116,38 @@ ModelImporter:
     100216: Particle View 001
     100218: Particle View 0011
     100220: //RootNode
+    100222: mixamorig:LeftHandIndex1
+    100224: mixamorig:LeftHandIndex2
+    100226: mixamorig:LeftHandIndex3
+    100228: mixamorig:LeftHandIndex4
+    100230: mixamorig:LeftHandMiddle1
+    100232: mixamorig:LeftHandMiddle2
+    100234: mixamorig:LeftHandMiddle3
+    100236: mixamorig:LeftHandMiddle4
+    100238: mixamorig:LeftHandRing1
+    100240: mixamorig:LeftHandRing2
+    100242: mixamorig:LeftHandRing3
+    100244: mixamorig:LeftHandRing4
+    100246: mixamorig:LeftHandThumb1
+    100248: mixamorig:LeftHandThumb2
+    100250: mixamorig:LeftHandThumb3
+    100252: mixamorig:LeftHandThumb4
+    100254: mixamorig:RightHandIndex1
+    100256: mixamorig:RightHandIndex2
+    100258: mixamorig:RightHandIndex3
+    100260: mixamorig:RightHandIndex4
+    100262: mixamorig:RightHandMiddle1
+    100264: mixamorig:RightHandMiddle2
+    100266: mixamorig:RightHandMiddle3
+    100268: mixamorig:RightHandMiddle4
+    100270: mixamorig:RightHandRing1
+    100272: mixamorig:RightHandRing2
+    100274: mixamorig:RightHandRing3
+    100276: mixamorig:RightHandRing4
+    100278: mixamorig:RightHandThumb1
+    100280: mixamorig:RightHandThumb2
+    100282: mixamorig:RightHandThumb3
+    100284: mixamorig:RightHandThumb4
     400000: Bone002
     400002: Bone003
     400004: Bone004
@@ -227,6 +259,38 @@ ModelImporter:
     400216: Particle View 001
     400218: Particle View 0011
     400220: //RootNode
+    400222: mixamorig:LeftHandIndex1
+    400224: mixamorig:LeftHandIndex2
+    400226: mixamorig:LeftHandIndex3
+    400228: mixamorig:LeftHandIndex4
+    400230: mixamorig:LeftHandMiddle1
+    400232: mixamorig:LeftHandMiddle2
+    400234: mixamorig:LeftHandMiddle3
+    400236: mixamorig:LeftHandMiddle4
+    400238: mixamorig:LeftHandRing1
+    400240: mixamorig:LeftHandRing2
+    400242: mixamorig:LeftHandRing3
+    400244: mixamorig:LeftHandRing4
+    400246: mixamorig:LeftHandThumb1
+    400248: mixamorig:LeftHandThumb2
+    400250: mixamorig:LeftHandThumb3
+    400252: mixamorig:LeftHandThumb4
+    400254: mixamorig:RightHandIndex1
+    400256: mixamorig:RightHandIndex2
+    400258: mixamorig:RightHandIndex3
+    400260: mixamorig:RightHandIndex4
+    400262: mixamorig:RightHandMiddle1
+    400264: mixamorig:RightHandMiddle2
+    400266: mixamorig:RightHandMiddle3
+    400268: mixamorig:RightHandMiddle4
+    400270: mixamorig:RightHandRing1
+    400272: mixamorig:RightHandRing2
+    400274: mixamorig:RightHandRing3
+    400276: mixamorig:RightHandRing4
+    400278: mixamorig:RightHandThumb1
+    400280: mixamorig:RightHandThumb2
+    400282: mixamorig:RightHandThumb3
+    400284: mixamorig:RightHandThumb4
     4300000: Cylinder001
     7400000: Take 001
     7400002: mixamo.com
