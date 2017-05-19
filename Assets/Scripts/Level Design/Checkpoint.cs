@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Linq;
 using UnityEngine.Analytics;
 using UnityEngine.SceneManagement;
 
@@ -14,8 +15,8 @@ public class Checkpoint : MonoBehaviour
     private Noise noiseScript;
 
     void Start()
-    {
-         checkpoints = GameObject.FindGameObjectsWithTag("Checkpoint");
+    { 
+        checkpoints = GameObject.FindGameObjectsWithTag("Checkpoint").OrderBy(go => go.name).ToArray();
         playerData = GameObject.Find("PlayerData").GetComponent<PlayerData>();
         _animator = GetComponent<Animator>();
         _saveLoadsScript = FindObjectOfType<SaveLoad>();
@@ -110,4 +111,5 @@ public class Checkpoint : MonoBehaviour
 
         return playerprefValue;
     }
+
 }
