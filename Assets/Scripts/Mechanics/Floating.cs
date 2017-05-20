@@ -7,6 +7,8 @@ namespace UnityStandardAssets.CrossPlatformInput
 {
     public class Floating : MonoBehaviour
     {
+        // Maybe we can use an animation curve and make the players y value be set by passing the volume through that curve? 
+        // Would be smoother than adding force here and there, probably feels more magical?
         [SerializeField]
         string floatString;
 
@@ -37,9 +39,14 @@ namespace UnityStandardAssets.CrossPlatformInput
         void Start()
         {
             playerObj = GameObject.FindGameObjectWithTag("Player");
+            if (playerObj == null)
+            {
+                gameObject.SetActive(false);
+                return;
+            }
             playerRigid = playerObj.GetComponent<Rigidbody>();
             characterScript = playerObj.GetComponent<ThirdPersonCharacter>();
-            microphoneInputScript = GameObject.Find("GameManager").GetComponent<MicrophoneInput>();
+            microphoneInputScript = GameObject.Find("MechanicsScripts").GetComponent<MicrophoneInput>();
             tempTimerText = GameObject.Find("Witch Prompt Text").GetComponent<Text>();
             floatButton = GameObject.Find("FloatButton").GetComponent<EventTrigger>();
             floatButton.gameObject.SetActive(false);

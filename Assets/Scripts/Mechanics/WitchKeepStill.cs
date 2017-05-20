@@ -15,6 +15,7 @@ public class WitchKeepStill : MonoBehaviour
     private DeviceTilt _deviceTilt;
     private Vector3 _accelerometerTiltVal;
     private bool keepStillTriggered = false;
+    public float keepStillDuration = 10f;
     private bool isStill = true;
     private Text witchPromptText;
     private Vector3 initialDeviceRotation;
@@ -26,6 +27,11 @@ public class WitchKeepStill : MonoBehaviour
 	// Use this for initialization
 	void Start () {
         witchPromptText = GameObject.Find("Witch Prompt Text").GetComponent<Text>();
+        if (witchPromptText == null)
+        {
+            gameObject.SetActive(false);
+            return;
+        }
         _deviceTilt = GameObject.Find("MechanicsScripts").GetComponent<DeviceTilt>();
         thirdPersonUserControl = GameObject.FindGameObjectWithTag("Player").GetComponent<ThirdPersonUserControl>();
         loadLevelScript = GameObject.Find("GameManager").GetComponent<LoadLevel>();
@@ -49,7 +55,7 @@ public class WitchKeepStill : MonoBehaviour
         // Notify the AI that they need to run away and whatnot
         if (witchArriveEvent != null) witchArriveEvent();
 
-        for (int i = 10; i >= 1; i--)
+        for (int i = (int)keepStillDuration; i >= 1; i--)
         {
             //if we moved, stop the timer
             if(!isStill)

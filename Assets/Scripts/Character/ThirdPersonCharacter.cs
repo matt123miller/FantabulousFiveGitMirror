@@ -232,7 +232,6 @@ using UnityEngine;
 
         //TODO Does this cause any problems when the character is on the Defualt layer, because our 2 player characters were set to Ignore Raycast
         // I tested it and I can't spot any problems, but beware.
-
         // Raycasts the ground to check if we're grounded.
 		void CheckGroundStatus()
 		{

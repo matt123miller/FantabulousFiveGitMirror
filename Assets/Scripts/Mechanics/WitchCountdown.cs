@@ -9,7 +9,13 @@ public class WitchCountdown : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-        _witchPromptText = GameObject.Find("Witch Prompt Text").GetComponent<Text>();
+        var textPromtGo = GameObject.Find("Witch Prompt Text");
+        if(textPromtGo == null)
+        {
+            gameObject.SetActive(false);
+            return;
+        }
+        _witchPromptText = textPromtGo.GetComponent<Text>();
         _witchPromptText.text = " ";
         _keepStillScript = GameObject.Find("MechanicsScripts").GetComponent<WitchKeepStill>();
 	}

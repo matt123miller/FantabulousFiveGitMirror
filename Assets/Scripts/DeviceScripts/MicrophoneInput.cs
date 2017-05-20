@@ -35,13 +35,13 @@ public class MicrophoneInput : MonoBehaviour
     {
         if (started)
         {
-            if (counter >= 60)
+            if (counter >= 1) // Seconds
             {
                 loudness = GetAveragedVolume() * sensitivity;
                 counter = 0;
             }
 
-            counter++;
+            counter += Time.deltaTime;
         }
 
     }

@@ -13,6 +13,7 @@ public class GlobalGameManager : MonoBehaviour
     private Canvas _touchCanvas;
     private GameObject _pauseScreen;
     private GameObject _fadeScreen;
+    private PlayerData _playerData;
 
     private bool _paused = false;
 
@@ -37,7 +38,7 @@ public class GlobalGameManager : MonoBehaviour
         {
             if (!_playerTransform)
             {
-                _playerTransform = GameObject.FindWithTag("Player").transform; 
+                _playerTransform = GameObject.FindWithTag("Player").transform;
             }
             return _playerTransform;
         }
@@ -49,12 +50,13 @@ public class GlobalGameManager : MonoBehaviour
     void Awake()
     {
         _instance = this;
-
         _touchCanvas = GameObject.FindWithTag("UICanvas").GetComponent<Canvas>();
         _pauseScreen = transform.FindChild("PauseScreen").gameObject;
         _fadeScreen = transform.FindChild("FadeScreen").gameObject;
+        _playerData = GameObject.Find("PlayerData").GetComponent<PlayerData>();
 
-        _pauseScreen.SetActive(false);
+        //PAUSE SCREEN TURNED OFF VIA MENU MANAGER
+        // _pauseScreen.SetActive(false);
         _fadeScreen.SetActive(true);
 
     }
@@ -77,6 +79,7 @@ public class GlobalGameManager : MonoBehaviour
 
     }
 
+
     /// <summary>
     /// Turns the stored Canvases off or on. Also handles the Joystick
     /// </summary>
@@ -87,7 +90,7 @@ public class GlobalGameManager : MonoBehaviour
 
         var joystick = _touchCanvas.gameObject.GetComponentInChildren<Joystick>();
 
-        if(joystick)
+        if (joystick)
             joystick.enabled = setter;
 
         // If we're turning the UI on....
@@ -97,6 +100,15 @@ public class GlobalGameManager : MonoBehaviour
             if (joystick)
             {
                 joystick.SetAxis(joystick.axesToUse);
+            }
+
+            Noise noiseScript = _touchCanvas.gameObject.GetComponentInChildren<Noise>();
+            if (noiseScript != null)
+            {
+                noiseScript.ResetNoiseBar();
+                noiseScript.SetNoiseBar(noiseScript.CalculateNoiseVal(_playerData.NoiseAmount));
+                print(_playerData.NoiseAmount);
+
             }
         }
     }
@@ -119,9 +131,18 @@ public class GlobalGameManager : MonoBehaviour
     /// </summary>
     public void ReturnToMenu()
     {
+
         // Do we need to tidy up any variables or state?
         _pauseScreen.SetActive(false);
+        PauseGame();
         SceneTransitionManager.Instance.LoadTargetLevel(0);
+    }
+
+    public void ReloadToCheckpoint()
+    {
+        _pauseScreen.SetActive(false);
+        PauseGame();
+        SceneTransitionManager.Instance.ReloadCurrentLevel();
     }
 
     /// <summary>
@@ -131,6 +152,10 @@ public class GlobalGameManager : MonoBehaviour
     {
         // Does anything need to happen? Save data to playerprefs or whatever?
 
+        if (SceneManager.GetActiveScene().buildIndex != 0)
+        {
+            PauseGame();
+        }
         Application.Quit();
     }
 }

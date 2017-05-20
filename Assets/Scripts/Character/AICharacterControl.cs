@@ -1,7 +1,6 @@
 using System;
 using UnityEngine;
 
-//TODO make floating a character component is probably better.
 [RequireComponent(typeof(NavMeshAgent))]
 [RequireComponent(typeof(ThirdPersonCharacter))]
 public class AICharacterControl : MonoBehaviour
@@ -39,11 +38,13 @@ public class AICharacterControl : MonoBehaviour
     public float attackDistance = 5f;
     [Tooltip("How far can they see?")]
     public float sightDistance = 15f;
-    [SerializeField] [Range(1,10)]private float braveryScore = 2.5f;
-    [SerializeField] private bool brave = true;
-    [SerializeField] private float braveryCooldownTarget = 2f;
-    private float braveryCooldownTimer;
-    private bool hidingFromWitch = false;
+    [SerializeField] [Range(1,10)]private float _braveryThreshold = 2.5f;
+    [SerializeField] private bool _brave = true;
+    [SerializeField] private float _braveryCooldownTarget = 4f;
+    private float _hideFromWitchCooldownTarget = 10f;
+    private float _selectedCooldownTarget;
+    private float _hideTimer;
+    private bool _hidingFromWitch = false;
 
     [Header("Waypointing system")]
     public Transform[] waypoints;
@@ -56,10 +57,13 @@ public class AICharacterControl : MonoBehaviour
         character = GetComponent<ThirdPersonCharacter>();
         player = FindObjectOfType<ThirdPersonUserControl>();
         _aiSight = GetComponentInChildren<AISight>();
-        micInput = GameObject.FindWithTag("GlobalGameManager").GetComponent<MicrophoneInput>();
-        _noiseScript = GameObject.FindGameObjectWithTag("NoiseBar").GetComponent<Noise>();
-        _witchScript = GameObject.FindWithTag("MechanicsObject").GetComponent<WitchKeepStill>();
 
+        _noiseScript = GameObject.FindGameObjectWithTag("NoiseBar").GetComponent<Noise>();
+        var mechanicsObj = GameObject.FindWithTag("MechanicsObject");
+        micInput = mechanicsObj.GetComponent<MicrophoneInput>();
+        _hideFromWitchCooldownTarget = mechanicsObj.GetComponent<WitchKeepStill>().keepStillDuration;
+        _witchScript = mechanicsObj.GetComponent<WitchKeepStill>();
+       
         _aiSight.aiController = this;
     }
 
@@ -88,13 +92,13 @@ public class AICharacterControl : MonoBehaviour
         else
             character.Move(Vector3.zero, false, false, false, Vector3.zero);
 
-        if (hidingFromWitch)
-            return;
+        //if (_hidingFromWitch)
+        //    return;
 
         var targetDistance = (_movementTarget - transform.position).magnitude;
 
-        if(brave)
-        {
+        //if(_brave)
+        //{
             // Perform state logic.
             switch (_currentState)
             {
@@ -110,23 +114,17 @@ public class AICharacterControl : MonoBehaviour
                     AssessFearLevel();
                     break;
                 case AIState.Hide:
-                    // Do nothing!
+                    Hide(); // Counts down to become brave again
                     break;
                 default:
                     break;
             }
-        }
-        else
-        {
-            print("I am not brave");
-            braveryCooldownTimer += Time.deltaTime;
-            if (braveryCooldownTimer > braveryCooldownTarget)
-            {
-                print("I BECAME BRAVE!");
-                brave = true;
-                braveryCooldownTimer = 0;
-            }
-        }
+        //}
+        //else
+        //{
+        //    print("I am not brave");
+            
+        //}
     }
 
     private void EnterPatrol()
@@ -156,9 +154,14 @@ public class AICharacterControl : MonoBehaviour
         micInput.StartInput();
     }
 
-    private void EnterHide()
+    private void EnterHide(float hideFor)
     {
         _currentState = AIState.Hide;
+        agent.speed = runSpeed;
+        SetColour(Color.black);
+        // I became scared;
+        //_brave = false;
+        _selectedCooldownTarget = hideFor;
     }
 
     private void SetColour(Color colour)
@@ -175,7 +178,6 @@ public class AICharacterControl : MonoBehaviour
             // Close enough to chase
             EnterChase();
             // Do we stop? Don't know
-            print("Close enough to Chase! Changing state!");
         }
         // If not lets just patrol more
         else if (agent.remainingDistance < agent.stoppingDistance)
@@ -194,23 +196,16 @@ public class AICharacterControl : MonoBehaviour
             // Chase the player
             agent.SetDestination(_movementTarget);
             agent.Resume();
-            print("Chasing!");
         }
         else if (_inSight && targetdistance < attackDistance)
         {
             // Close enough to attack
             EnterAttack();
-            // Do we stop? Don't know
-            print("Close enough to Attack! Changing state!");
-
         }
         else
         {
-            print("The player escaped! Changing to Patrol!");
             EnterPatrol();
         }
-
-        //TODO create a timer for being in chase but not seeing the player, maybe I should introduce the last known position from my stealth game?
     }
 
     private void Attack(Vector3 target, float targetdistance)
@@ -230,7 +225,6 @@ public class AICharacterControl : MonoBehaviour
         // If everything is good them lets get 'em!
         else
         {
-            print("Attacking");
             agent.Stop(); // Stop so we can do some attack animations?
             // Now what?
         }
@@ -242,23 +236,24 @@ public class AICharacterControl : MonoBehaviour
         float volume = micInput.loudness;
         print(volume);
         // Is it enough to be scared?
-        if (volume >= braveryScore)
+        if (volume >= _braveryThreshold)
         {
-            RunAway();
-            // I became scared;
-            brave = false;
+            EnterHide(hideFor: _braveryCooldownTarget);
 
+            RunAway(fromthewitch: false);
             // Add to the witch noise mechanic.
             // Make sure the values are in line with the noise made from moving objects.
-            _noiseScript.AddToNoise(volume);
+            _noiseScript.AddToNoise(volume * 10);
         }
     }
 
-    private void RunAway()
+    private void RunAway(bool fromthewitch)
     {
         print("RUN AWAY!");
         // Run away. Pick a location behind you maybe and navmesh there?
-        Vector3 newTarget = transform.position + transform.forward * -10;
+
+        var direction = fromthewitch ? transform.right  * 10 : transform.forward * -10;
+        Vector3 newTarget = transform.position + direction;
         print("I am at " + transform.position);
         print("Behind me is " + newTarget);
         SetTarget(newTarget);
@@ -267,14 +262,29 @@ public class AICharacterControl : MonoBehaviour
         agent.Resume();
     }
 
+    private void Hide()
+    {
+        if (agent.remainingDistance <= 0.1f) // Ai has stopped moving to cower in fear
+        {
+            _hideTimer += Time.deltaTime;
+            if (_hideTimer > _selectedCooldownTarget)
+            {
+                print("I BECAME BRAVE!");
+                EnterPatrol();
+                
+                _hideTimer = 0;
+            }
+        }
+    }
+
     // connect these to the witch with events
     public void WitchHasArrived()
     {
         print("Witch arrived! AHHH!");
         _aiSight.gameObject.SetActive(false);
-        RunAway();
-
-        hidingFromWitch = true;
+        EnterHide(hideFor: _hideFromWitchCooldownTarget);
+        RunAway(fromthewitch: true);
+        //_hidingFromWitch = true;
     }
 
     public void WitchHasLeft()
@@ -282,8 +292,8 @@ public class AICharacterControl : MonoBehaviour
         print("Witch left! We're safe now");
         _aiSight.gameObject.SetActive(true);
         EnterPatrol();
-        hidingFromWitch = false;
-        brave = true;
+        //_hidingFromWitch = false;
+        //_brave = true;
     }
 
     public void SetTarget(Vector3 target)

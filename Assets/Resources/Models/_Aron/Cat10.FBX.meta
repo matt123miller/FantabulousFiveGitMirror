@@ -1,0 +1,167 @@
+fileFormatVersion: 2
+guid: ccb7bf8f1bd16d440bd0c9f3e7afd340
+timeCreated: 1495058572
+licenseType: Free
+ModelImporter:
+  serializedVersion: 19
+  fileIDToRecycleName:
+    100000: Bone012
+    100002: Bone013
+    100004: Bone014
+    100006: Bone015
+    100008: Bone016
+    100010: Bone017
+    100012: Bone018
+    100014: Bone019
+    100016: Bone020
+    100018: Bone021
+    100020: Bone022
+    100022: Bone023
+    100024: Bone024
+    100026: Bone025
+    100028: Bone026
+    100030: Bone027
+    100032: Bone028
+    100034: Bone029
+    100036: Bone036
+    100038: Bone037
+    100040: Bone038
+    100042: Bone039
+    100044: Bone040
+    100046: Bone041
+    100048: Bone042
+    100050: Bone043
+    100052: Bone044
+    100054: Bone045
+    100056: Bone046
+    100058: Bone047
+    100060: Bone048
+    100062: Bone049
+    100064: Bone050
+    100066: Bone051
+    100068: Bone052
+    100070: Bone053
+    100072: Bone054
+    100074: Bone055
+    100076: Bone056
+    100078: Box001
+    100080: //RootNode
+    100082: connectBone001
+    100084: IK Chain001
+    100086: IK Chain002
+    100088: IK Chain003
+    100090: IK Chain004
+    400000: Bone012
+    400002: Bone013
+    400004: Bone014
+    400006: Bone015
+    400008: Bone016
+    400010: Bone017
+    400012: Bone018
+    400014: Bone019
+    400016: Bone020
+    400018: Bone021
+    400020: Bone022
+    400022: Bone023
+    400024: Bone024
+    400026: Bone025
+    400028: Bone026
+    400030: Bone027
+    400032: Bone028
+    400034: Bone029
+    400036: Bone036
+    400038: Bone037
+    400040: Bone038
+    400042: Bone039
+    400044: Bone040
+    400046: Bone041
+    400048: Bone042
+    400050: Bone043
+    400052: Bone044
+    400054: Bone045
+    400056: Bone046
+    400058: Bone047
+    400060: Bone048
+    400062: Bone049
+    400064: Bone050
+    400066: Bone051
+    400068: Bone052
+    400070: Bone053
+    400072: Bone054
+    400074: Bone055
+    400076: Bone056
+    400078: Box001
+    400080: //RootNode
+    400082: connectBone001
+    400084: IK Chain001
+    400086: IK Chain002
+    400088: IK Chain003
+    400090: IK Chain004
+    4300000: Box001
+    7400000: Take 001
+    9500000: //RootNode
+    13700000: Box001
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    importBlendShapes: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    hasTranslationDoF: 0
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 2
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
