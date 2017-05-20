@@ -49,6 +49,8 @@ public class CameraMovement : MonoBehaviour {
         {
             lerpCameraBetweenPos(characterCam.transform, travellingCameraPos.transform, lerpTime);
         }
+
+        print("Velocity:" + characterVelocity);
     }
 
     void lerpCameraBetweenPos(Transform originalPos, Transform newPos, float time)

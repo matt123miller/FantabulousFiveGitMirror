@@ -3,11 +3,11 @@ using System.Collections;
 
 public class PickupUmbrella : MonoBehaviour {
 
-    GameObject floatButton;
+    public GameObject floatButton;
 
 	// Use this for initialization
 	void Start () {
-        floatButton = GameObject.Find("FloatButton");
+        //floatButton = GameObject.Find("FloatButton");
 
 	}
 	
@@ -24,9 +24,10 @@ public class PickupUmbrella : MonoBehaviour {
             Transform[] characterBones = _other.GetComponentsInChildren<Transform>();
             foreach (Transform bone in characterBones)
             {
-                if (bone.name == "EthanRightHand")
+                if (bone.name.Contains("RightHand"))
                 {
                     hand = bone.gameObject;
+                    break;
                 }
             }
 

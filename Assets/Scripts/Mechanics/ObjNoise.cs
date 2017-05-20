@@ -13,7 +13,7 @@ public class ObjNoise : MonoBehaviour {
     public void Start()
     {
         _weightOfObj = GetComponent<Rigidbody>().mass;
-        _noiseScript = GameObject.FindGameObjectWithTag("NoiseBar").GetComponent<Noise>();
+        _noiseScript = GameObject.FindWithTag("NoiseBar").GetComponent<Noise>();
     }
 
     public void OnCollisionEnter(Collision collision)
@@ -24,13 +24,16 @@ public class ObjNoise : MonoBehaviour {
 
     public void OnCollisionStay(Collision collision)
     {
-        _pushTimer += Time.deltaTime;
-
-        if(_pushTimer >= 1)
+        if (collision.gameObject.CompareTag("Player"))
         {
-            GetImpactVelocity(collision);
-            calcNoise(_weightOfObj, _impactVelocity);
-            _pushTimer = 0;
+            _pushTimer += Time.deltaTime;
+
+            if (_pushTimer >= 1)
+            {
+                GetImpactVelocity(collision);
+                calcNoise(_weightOfObj, _impactVelocity);
+                _pushTimer = 0;
+            }
         }
     }
 
