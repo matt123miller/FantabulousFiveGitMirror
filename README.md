@@ -1,6 +1,6 @@
 # Fantabulous Five Mirror
 
-### I'm updating my Github Pages!
+[Please view the Github Pages version of this README](https://matt123miller.github.io/FantabulousFiveGitMirror/)
 
 This is a mirror of a group project I'm working on. 
 
@@ -9,4 +9,7 @@ You play as a doll bought to life by the magic of an evil witch, who is now tryi
 * Targeting Android
 * Third person persepctive
 * Using many features native to mobile devices such as the gyroscope and microphone for interesting interactions
+
+Please click to view youtube videos.
+
 [![This is an "embedded" Youtube video.](https://img.youtube.com/vi/IfZ12YtiasI/0.jpg)](https://www.youtube.com/watch?v=IfZ12YtiasI)
