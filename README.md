@@ -9,3 +9,4 @@ You play as a doll bought to life by the magic of an evil witch, who is now tryi
 * Targeting Android
 * Third person persepctive
 * Using many features native to mobile devices such as the gyroscope and microphone for interesting interactions
+[![This is an "embedded" Youtube video.](https://img.youtube.com/vi/IfZ12YtiasI/0.jpg)](https://www.youtube.com/watch?v=IfZ12YtiasI)
