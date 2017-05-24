@@ -2,8 +2,6 @@
 # Fantabulous Five - Prototype Mobile Game
 
 
-This page will include links to Youtube videos, accessible by clicking the thumbnail like the one shown below.
-
 ```
 [![Put a little welcome video here.](https://img.youtube.com/vi/VIDEO ID/0.jpg)](https://www.youtube.com/watch?v=VIDEO ID)
 ```
@@ -19,6 +17,9 @@ This project tasked our team with collaborating on the design, development of a 
 
 This page will document the designs and planned outcome of the project, followed by an evaluation of the prototype and my role in its creation. I fulfilled the roles of programmer and game designer, this page evaluates the project from those perspectives.
 
+This page will include links to Youtube videos, accessible by clicking the thumbnail like the one shown below.
+
+[![welcome video here.](https://img.youtube.com/vi/rVGuKL1mfjE/0.jpg)](https://www.youtube.com/watch?v=rVGuKL1mfjE)
 
 First, the programming team.
 * Myself, Matt 
@@ -29,7 +30,7 @@ The art team, responsible for creating, and texturing all our 3D models. Also, w
 * Maytham
 * Aron 
 
-Before we began brainstroming ideas for the project, we knew we wanted to achieve certain goals.
+Before we began brainstorming ideas for the project, we knew we wanted to achieve certain goals.
 
 * Developed in Unity using C#
 * Targeting Android phones, as we each had access to Android devices
@@ -38,20 +39,28 @@ Before we began brainstroming ideas for the project, we knew we wanted to achiev
 
 We quickly settled on the following idea.
 
-The game is set in the house of the (presumably evil) Witch. Bought to life by some unknown sorcery, players embark on a journey to escape the house without arousing the suspicion of the Witch. Each level takes place in a different room, each a different part of the house. The level developed for this early prototype is the Witch's study, a centre for her magical work.
+The game is set in the house of the (presumably evil) Witch. Bought to life by some unknown sorcery, players embark on a journey to escape the house without arousing the suspicion of the Witch. Each level takes place in a different room, each a different part of the house. The level developed for this early prototype is the Witch's study, a centre for her magical work. 
+
+The following video was recorded by Tish and gives a quick overview of the game and each mechanic created.
+
+[![Overview video.](https://img.youtube.com/vi/G2uLNMtMSz0/0.jpg)](https://www.youtube.com/watch?v=G2uLNMtMSz0)
 
 ## Technical Project Management
 
+* Unity
 * Git source control
 * Train everyone in using Git and SourceTree
 * Cloud Build
 * Setup the project structure, build settings etc.
-* Be on hand to all team members for technical support
+* Be on hand to all team members for technical support regarding Git and SourceTree
+ 
+[![Overview video.](https://img.youtube.com/vi/l7lVipuXxNo/0.jpg)](https://www.youtube.com/watch?v=l7lVipuXxNo)
+
+## Code Quality and Style
+
 * Try to maintian good code practices and patterns and SRP etc.
 
 Video goes here
-
-## Code Quality and Style
 
 ## Manager Objects
 
