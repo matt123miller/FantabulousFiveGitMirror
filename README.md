@@ -2,23 +2,29 @@
 # Fantabulous Five - Prototype Mobile Game
 
 
-This project tasked our team with collaborating on the design, development of a theoretically release worthy prototype in eight months. Working together within a multidisciplinary team, we possessed a range of skills including 3d modelling and animation, programming and game design, supporting each other throughout the process. 
-
-This page will document the designs and planned outcome of the project, followed by an evaluation of the prototype and my role in its creation. I fulfilled the roles of programmer and game designer, this page evaluates the project from those perspectives.
-
 This page will include links to Youtube videos, accessible by clicking the thumbnail like the one shown below.
 
 ```
 [![Put a little welcome video here.](https://img.youtube.com/vi/VIDEO ID/0.jpg)](https://www.youtube.com/watch?v=VIDEO ID)
 ```
 
+# Contents
+
+Here will be links to each section I hope
+
+
 ## Introduction
+
+This project tasked our team with collaborating on the design, development of a theoretically release worthy prototype in eight months. Working together within a multidisciplinary team, we possessed a range of skills including 3d modelling and animation, programming and game design, supporting each other throughout the process. 
+
+This page will document the designs and planned outcome of the project, followed by an evaluation of the prototype and my role in its creation. I fulfilled the roles of programmer and game designer, this page evaluates the project from those perspectives.
+
 
 First, the programming team.
 * Myself, Matt 
 * Tish, also our Producer
 
-The Art team, responsible for creating, and texturing all our 3D models. Also, where appropriate, animating and rigging them.
+The art team, responsible for creating, and texturing all our 3D models. Also, where appropriate, animating and rigging them.
 * Ana
 * Maytham
 * Aron 
@@ -34,6 +40,39 @@ We quickly settled on the following idea.
 
 The game is set in the house of the (presumably evil) Witch. Bought to life by some unknown sorcery, players embark on a journey to escape the house without arousing the suspicion of the Witch. Each level takes place in a different room, each a different part of the house. The level developed for this early prototype is the Witch's study, a centre for her magical work.
 
+## Technical Project Management
+
+* Git source control
+* Train everyone in using Git and SourceTree
+* Cloud Build
+* Setup the project structure, build settings etc.
+* Be on hand to all team members for technical support
+* Try to maintian good code practices and patterns and SRP etc.
+
+Video goes here
+
+## Code Quality and Style
+
+## Manager Objects
+
+
+## Asynchronous Scene Loading
+
+### Fading Screen
+
+## User Interface
+
+Focus on easy to use, extendable UI.
+
+Panel all the things
+
+Multiple screen resolutions considered
+
+### Main Menu
+
+### Game HUD
+
+## Gyroscope
 
 
 
@@ -80,10 +119,40 @@ public static class DeviceRotation
     {
         return new Quaternion(0.5f, 0.5f, -0.5f, 0.5f) * Input.gyro.attitude * new Quaternion(0, 0, 1, 0);
     }
-
-
 }
 ```
+
+### Free Rotating Camera
+
+### Balance Beam
+
+## Immersive Environmental Interaction
+
+### Magical Portrait System
+
+Just like Harry Potter
+```
+Find image of the portraits
+```
+
+### Tapping Objects
+
+## Artificial Intelligence
+
+Lots to say here
+Started with what we wanted the AI to achieve
+Different states
+Balance of an FSM vs a single class. Added complexity, FSM doesn't scale well
+Method based
+Interacts with noise
+Scare the AI away
+Editor configurable
+
+
+
+## Known Problems
+
+
 
 ## Sources used
 
