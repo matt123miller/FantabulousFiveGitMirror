@@ -3,6 +3,9 @@ using System.Collections;
 using UnityEngine;
 using UnityStandardAssets.CrossPlatformInput;
 
+/// <summary>
+/// This is provided by Unity in their standard assets package. I did now write this.
+/// </summary>
 public class DragRigidbody : MonoBehaviour
 {
     private const float _spring = 50.0f;

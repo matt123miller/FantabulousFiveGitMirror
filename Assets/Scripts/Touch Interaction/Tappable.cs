@@ -3,7 +3,8 @@ using UnityEngine.EventSystems;
 using System.Collections;
 using System;
 
-// Why should tappable objects require a Rigidbody
+// This ensures that whatever object this class is attached to has an Animator and EventTrigger.
+// This is useful to reduce the knowledge and memory requirements for others.
 [RequireComponent(typeof(Animator))]
 [RequireComponent(typeof(EventTrigger))]
 public class Tappable : MonoBehaviour , ITouchInteractive {
