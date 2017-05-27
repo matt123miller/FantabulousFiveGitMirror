@@ -22,9 +22,6 @@ public class MovingPortraits : MonoBehaviour
     {
         // Get my components
         _renderCamera = GetComponentInChildren<Camera>();
-        _invSqrColliderDistance = GetComponentInChildren<SphereCollider>().radius; // Get the radius.
-        _invSqrColliderDistance *= _invSqrColliderDistance; // Square it
-        _invSqrColliderDistance = 1 / _invSqrColliderDistance; // Inverse it
 
         // Create and set the render texture.
         RenderTexture rTex = new RenderTexture(texWidth, texHeight, 0);
@@ -37,28 +34,9 @@ public class MovingPortraits : MonoBehaviour
     {
         
     }
-
-    // Update is called once per frame
-    void OnTriggerStay(Collider collider)
-    {
-    //    if (!collider.CompareTag("Player"))
-    //        return;
-
-    //    _player = collider.transform;
-
-    //    // _player in relation to painting
-    //    Vector3 playerToPainting = _player.position - transform.position;
-    //    float sqrDistance = playerToPainting.sqrMagnitude;
-
-    //    // Some sort of percentage value for affecting the resolution of the image?
-    //    // float percentDistance = sqrDistance * _invSqrColliderDistance;
-    //    //print(percentDistance);
-
-    //    // move the contents of the painting accordingly 
-
-
-    }
-
+    
+    // This is called whenever you change a value in the inspector
+    // Therefore it's used to alter the resolution width and height as users change the slider value.
     void OnValidate()
     {
         texWidth = (int)Mathf.Pow(2, 5 + textureScale);

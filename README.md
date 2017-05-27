@@ -13,11 +13,11 @@ Here will be links to each section I hope
 
 ## Introduction
 
-This project tasked our team with collaborating on the design, development of a theoretically release worthy prototype in eight months. Working together within a multidisciplinary team, we possessed a range of skills including 3d modelling and animation, programming and game design, supporting each other throughout the process. 
+This project tasked our team with collaborating on the design and development of a theoretically release worthy prototype in eight months. Working together within a multidisciplinary team, we possessed a range of skills including 3d modelling and animation, programming and game design, supporting each other throughout the process. 
 
 This page will document the designs and planned outcome of the project, followed by an evaluation of the prototype and my role in its creation. I fulfilled the roles of programmer and game designer, this page evaluates the project from those perspectives. Where relevant I have included code snippets of interesting parts. You're more than welcome to browse the code in full by [checking the repo here.](https://github.com/matt123miller/FantabulousFiveGitMirror/tree/master/Assets/Scripts)
 
-This page will include links to Youtube videos, accessible by clicking the thumbnail like the one shown below.
+This page will include links to Youtube videos, accessible by clicking the thumbnail like the one shown below. Please click that now!
 
 [![welcome video here.](https://img.youtube.com/vi/rVGuKL1mfjE/0.jpg)](https://www.youtube.com/watch?v=rVGuKL1mfjE)
 
@@ -64,14 +64,191 @@ Video goes here
 
 ## Manager Objects
 ## What about them MATT????!?!?!?1
+Talk about patterns, singletons pro cons, we could've used DontDestroyOnLoad() but didn't because we had a lot of things relying on start() etc. In hindsight I would've hooked into the sceneLoaded event https://docs.unity3d.com/ScriptReference/SceneManagement.SceneManager-sceneLoaded.html
 
+I'm making a whole video about events later 
 ## Asynchronous Scene Loading
 
-This also includes a discussion on the screen fading in and out that I created.
+This is on of the first systems I created. Finishing a foundational part of the experience early on allowed me to focus development time on other mechanics as they arose. Finishing this early also meant that I could create a solid foundation to build upon, allowing other systems to hook into this as necessary. It was intentionally written to only expose the minimum methods required to hook into the scene loading functionality.Thef ollowing video discusses the  process in detail and includes a discussion of the related system I wrote for fading the screen to and from black (though and colour could be used)
 
 [![Overview video.](https://img.youtube.com/vi/SaFemLB8ilM/0.jpg)](https://www.youtube.com/watch?v=SaFemLB8ilM)
 
-## A discussion of multithreading and coroutines
+```csharp
+https://github.com/matt123miller/FantabulousFiveGitMirror/blob/master/Assets/Scripts/Managers/SceneTransitionManager.cs
+
+public class SceneTransitionManager : MonoBehaviour
+{
+    /*
+    ...
+    ...
+    ...
+    */
+
+    /// <summary>
+    /// Asynchronously begins loading the chosen level in the build settings
+    /// Assumes that the class calling the method knows which scene it wants to go to.
+    /// </summary>
+    /// <param name="targetScene"></param>
+    public void LoadTargetLevel(int targetScene)
+    {
+        if (targetScene >= SceneManager.sceneCountInBuildSettings)
+        {
+            // returns to main menu.
+            StartCoroutine(AsyncLoadLevel(0));
+        }
+        else
+        {
+            StartCoroutine(AsyncLoadLevel(targetScene));
+        }
+    }
+
+    /// <summary>
+    /// Asynchronously begins loading the next level in the build settings, assuming there are levels left to load.
+    /// </summary>
+    public void LoadNextLevel()
+    {
+        int targetScene = SceneManager.GetActiveScene().buildIndex + 1;
+        
+        if (targetScene >= SceneManager.sceneCountInBuildSettings)
+        {
+            // There are no scenes left. Maybe return to main menu?
+            // Handle this error however you like.
+            StartCoroutine(AsyncLoadLevel(0)); // returns to the main menu
+
+        }
+        else 
+        {
+            StartCoroutine(AsyncLoadLevel(targetScene));
+        }
+    }
+
+    public void ReloadCurrentLevel()
+    {
+        int targetScene = SceneManager.GetActiveScene().buildIndex;
+        StartCoroutine(AsyncLoadLevel(targetScene));
+    }
+
+    private IEnumerator AsyncLoadLevel(int targetScene)
+    {
+        fader.BeginFadeToBlack(false);
+
+        while (fader.fadeProgress < 0.95)
+        {
+            yield return null;
+        }
+                
+        fader.ToggleLoadingUIOn(true);
+        
+        AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(targetScene);
+
+        while (!asyncLoad.isDone)
+        {
+            // Here you put your loading screen code.
+            fader.UpdateSlider(asyncLoad.progress);
+
+            yield return null;
+        }
+        
+        // You don't need to turn the text and slider back off or call BeginFadeToClear() here as the old scene will now be destroyed.
+        // The new scene that was just loaded asynchonously will replace it and should have a SceneManager object in it to handle fading etc.
+    }
+}
+```
+```csharp
+https://github.com/matt123miller/FantabulousFiveGitMirror/blob/master/Assets/Scripts/Camera/ScreenFade.cs
+
+public class ScreenFade : MonoBehaviour
+{
+    /*
+    ...
+    ...
+    ...
+    */
+
+    void Start()
+    {
+        // Performed in Start to allow all variables to be cached first.
+        ToggleLoadingUIOn(false);
+        BeginFadeToClear();
+        SceneTransitionManager.Instance.fader = this;
+    }
+
+    public void ToggleLoadingUIOn(bool set)
+    {
+        _loadingText.gameObject.SetActive(set);
+        _loadingText.enabled = set;
+        _loadingSlider.gameObject.SetActive(set);
+        _loadingSlider.enabled = set;
+        _loadingSliderImage.gameObject.SetActive(set);
+        _loadingSliderImage.enabled = set;
+    }
+
+    public void UpdateSlider(float progress)
+    {
+        _loadingSlider.value = progress;
+        _loadingText.color = new Color(_loadingText.color.r, _loadingText.color.g, _loadingText.color.b, Mathf.PingPong(Time.time, 1));
+    }
+
+    public void BeginFadeToBlack(bool fadeToClearFlag)
+    {
+        GlobalGameManager.Instance.ToggleUI(false);
+        StartCoroutine(FadeToBlack(_fadeStartTime, fadeToClearFlag));
+    }
+
+    public void BeginFadeToClear()
+    {
+        StartCoroutine(FadeToClear(_fadeStartTime));
+    }
+
+    private IEnumerator FadeToClear(float fadeStartTime)
+    {
+        _fadingImage.enabled = true;
+        fadeStartTime += 1;
+
+        for (float f = fadeStartTime; f >= 0; f -= ((0.1f * _fadeMultiplier) * Time.deltaTime))
+        {
+            fadeProgress = f;
+            Color c = _fadingImage.color;
+            c.a = f;
+            _fadingImage.color = c;
+            yield return null;
+        }
+
+        _fadingImage.enabled = false;
+
+
+        if (turnUIOnAfter)
+        {
+            GlobalGameManager.Instance.ToggleUI(true);
+        }
+    }
+
+    private IEnumerator FadeToBlack(float fadeStartTime, bool fadeToClearFlag)
+    {
+        _fadingImage.enabled = true;
+        fadeStartTime += 1;
+
+        for (float f = 0f; f <= fadeStartTime; f += ((0.1f * _fadeMultiplier) * Time.deltaTime))
+        {
+            fadeProgress = f;
+            Color c = _fadingImage.color;
+            c.a = f;
+            _fadingImage.color = c;
+            yield return null;
+        }
+        // Included in the unlikely event that scenes will fade to black only. 
+        if (fadeToClearFlag)
+        {
+            BeginFadeToClear();
+        }
+        else
+        {
+
+        }
+    }
+}
+```
+## A discussion of multithreading versus coroutines
 
 [![Overview video.](https://img.youtube.com/vi/P0kKQ6deo-I/0.jpg)](https://www.youtube.com/watch?v=P0kKQ6deo-I)
 
@@ -85,9 +262,13 @@ This includes the in game HUD, the main menu and strategies for creating and mai
 [![Overview video.](https://img.youtube.com/vi/_euQi67Bq6A/0.jpg)](https://www.youtube.com/watch?v=_euQi67Bq6A)
 
 
-## Gyroscope
+## Gyroscope Functionality
 
 
+This video discusses quaternions and rotating the camera with the users phone, one of my favourite mechanics for both it's mechnical utility and novelty.
+
+
+[![Rotating the phone.](https://img.youtube.com/vi/eXCnm6KLY2w/0.jpg)](https://www.youtube.com/watch?v=eXCnm6KLY2w)
 
 ```csharp
 // found at the rest of this class at
@@ -107,10 +288,6 @@ public static class DeviceRotation
     }
 }
 ```
-
-[![Rotating the phone.](https://img.youtube.com/vi/eXCnm6KLY2w/0.jpg)](https://www.youtube.com/watch?v=eXCnm6KLY2w)
-
-This video above discussed quaternions and rotating the camera with the users phone, one of my favourite mechanics for both it's mechnical utility and novelty.
 
 ## Free Rotating Camera
 
@@ -226,7 +403,9 @@ This video above discussed quaternions and rotating the camera with the users ph
 ```
 
 
-In the video above discussing quaternions and phonew rotation I don't describe the benefits of [animation curves](https://docs.unity3d.com/ScriptReference/AnimationCurve.html). Animation curves can be utilised for all manner of things that require changing a float value over time.
+In the video above discussing quaternions and phone rotation I don't describe the benefits of [animation curves](https://docs.unity3d.com/ScriptReference/AnimationCurve.html). Animation curves can be utilised for all manner of things that require changing a float value over time.
+
+![Alt text](https://gyazo.com/b12ed89ba2d704cb963b50ccf8f486cd "Animation Curve Example")
 
 # Write more about animation curves
 

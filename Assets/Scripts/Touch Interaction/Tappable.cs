@@ -28,9 +28,7 @@ public class Tappable : MonoBehaviour , ITouchInteractive {
     private void OnTriggerEnter(Collider other)
     {
         if (!other.CompareTag("Player"))
-        {
             return;
-        }
 
         withinRange = true;
     }
@@ -38,9 +36,7 @@ public class Tappable : MonoBehaviour , ITouchInteractive {
     private void OnTriggerExit(Collider other)
     {
         if (!other.CompareTag("Player"))
-        {
             return;
-        }
 
         withinRange = false;
     }
