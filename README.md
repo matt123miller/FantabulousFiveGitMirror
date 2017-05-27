@@ -248,6 +248,10 @@ public class ScreenFade : MonoBehaviour
     }
 }
 ```
+
+I also created a simple prefab that will load the next level when players come into contact with it. It's bright pink to aid testing but the final version would of course be invisible, relying only on the trigger box.
+
+[![https://gyazo.com/8c4fd1075ec9c0f68fc44ff6ce0730cb](https://i.gyazo.com/8c4fd1075ec9c0f68fc44ff6ce0730cb.png)](https://gyazo.com/8c4fd1075ec9c0f68fc44ff6ce0730cb)
 ## A discussion of multithreading versus coroutines
 
 [![Overview video.](https://img.youtube.com/vi/P0kKQ6deo-I/0.jpg)](https://www.youtube.com/watch?v=P0kKQ6deo-I)
@@ -405,7 +409,7 @@ public static class DeviceRotation
 
 In the video above discussing quaternions and phone rotation I don't describe the benefits of [animation curves](https://docs.unity3d.com/ScriptReference/AnimationCurve.html). Animation curves can be utilised for all manner of things that require changing a float value over time.
 
-![Alt text](https://gyazo.com/b12ed89ba2d704cb963b50ccf8f486cd "Animation Curve Example")
+[![https://gyazo.com/b12ed89ba2d704cb963b50ccf8f486cd](https://i.gyazo.com/b12ed89ba2d704cb963b50ccf8f486cd.png)](https://gyazo.com/b12ed89ba2d704cb963b50ccf8f486cd)
 
 # Write more about animation curves
 
