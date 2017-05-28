@@ -58,15 +58,36 @@ The following video was recorded by Tish and gives a quick overview of the game 
 
 ## Code Quality and Style
 
-* Try to maintian good code practices and patterns and SRP etc.
+* Try to maintian good code practices and patterns
+* SOLID programming
+* Discussed the Singleton pattern and Liskov Substituion Principle, which is fairly close the to Strategy pattern.
 
-Video goes here
+[![Overview video.](https://img.youtube.com/vi/V30I5yyePi0/0.jpg)](https://www.youtube.com/watch?v=V30I5yyePi0)
 
-## Manager Objects
-## What about them MATT????!?!?!?1
-Talk about patterns, singletons pro cons, we could've used DontDestroyOnLoad() but didn't because we had a lot of things relying on start() etc. In hindsight I would've hooked into the sceneLoaded event https://docs.unity3d.com/ScriptReference/SceneManagement.SceneManager-sceneLoaded.html
+In hindsight we should've used ```DontDestroyOnLoad()``` and hooked into the [sceneLoaded event](https://docs.unity3d.com/ScriptReference/SceneManagement.SceneManager-sceneLoaded.html) instead of relying on Singleton objects and their Awake() or Start() methods. This would have simplified some of our design and implementation.
 
-I'm making a whole video about events later 
+### How To Implement A Singleton
+
+```csharp
+public class GlobalGameManager : MonoBehaviour
+{
+    private static GlobalGameManager _instance;
+
+    // Singleton object, access this via GlobalGameManager.Instance whenever you need it.
+    public static GlobalGameManager Instance
+    {
+        get
+        {
+            if (_instance == null)
+            {
+                _instance = GameObject.FindWithTag("GlobalGameManager").GetComponent<GlobalGameManager>();
+            }
+            return _instance;
+        }
+    }
+}
+```
+
 ## Asynchronous Scene Loading
 
 This is on of the first systems I created. Finishing a foundational part of the experience early on allowed me to focus development time on other mechanics as they arose. Finishing this early also meant that I could create a solid foundation to build upon, allowing other systems to hook into this as necessary. It was intentionally written to only expose the minimum methods required to hook into the scene loading functionality.Thef ollowing video discusses the  process in detail and includes a discussion of the related system I wrote for fading the screen to and from black (though and colour could be used)
@@ -252,6 +273,7 @@ public class ScreenFade : MonoBehaviour
 I also created a simple prefab that will load the next level when players come into contact with it. It's bright pink to aid testing but the final version would of course be invisible, relying only on the trigger box.
 
 [![https://gyazo.com/8c4fd1075ec9c0f68fc44ff6ce0730cb](https://i.gyazo.com/8c4fd1075ec9c0f68fc44ff6ce0730cb.png)](https://gyazo.com/8c4fd1075ec9c0f68fc44ff6ce0730cb)
+
 ## A discussion of multithreading versus coroutines
 
 [![Overview video.](https://img.youtube.com/vi/P0kKQ6deo-I/0.jpg)](https://www.youtube.com/watch?v=P0kKQ6deo-I)
@@ -411,11 +433,23 @@ In the video above discussing quaternions and phone rotation I don't describe th
 
 [![https://gyazo.com/b12ed89ba2d704cb963b50ccf8f486cd](https://i.gyazo.com/b12ed89ba2d704cb963b50ccf8f486cd.png)](https://gyazo.com/b12ed89ba2d704cb963b50ccf8f486cd)
 
-# Write more about animation curves
+Declaring a public AnimationCurve will allow users to create complicated and detailed curves for a variety of reasons.
+
+```chsarp
+public AnimationCurve curve;
+
+void Start() {
+    curve = GetComponent<AnimationCurve>();
+}
+```
+
+These curves represent a mathematical formula, hidden from the user, and plot the Y value as X changes. This formula can be accessed using ``` curve.Evaluate(float); ```. This returns the value of Y at the provided X argument value. This was employed to create a smooth transition  between the rotation the player has provided when moving their phone around and the rotation the game would like to return to. Using an ```AnimationCurve``` is much more flexible and elegant than creating a complex loop wherein a programmer writes a formula themselves and uses ```Time.deltaTime```. ```AnimationCurve``` is also more accessible to designers, as it doesn't require them to read or write code or ask an engineer to change the formula.
 
 ## Balance Beam
 
 Make a short video, add a code snippet.
+
+[![Magical Porttrait System.](https://img.youtube.com/vi/y2RY-GC1FVQ/0.jpg)](https://www.youtube.com/watch?v=y2RY-GC1FVQ)
 
 ## Immersive Environmental Interaction
 
@@ -547,7 +581,8 @@ public class Tappable : MonoBehaviour , ITouchInteractive {
 }
 ```
 
-Before deciding to use Event Triggers, raycasting was used as described in the video. It was hoped to have a variety of different interactions be powered by tapping and so I wrote a small set of systems to accomplish this using inheritance and polymorphism. [You can find the relevant code here](https://github.com/matt123miller/FantabulousFiveGitMirror/tree/master/Assets/Scripts/Touch%20Interaction), though the DragRigidbody.cs file was provided by Unity in the Standard Assets package.
+Before deciding to use Event Triggers, raycasting was used as described in the video. It was hoped to have a variety of different interactions be powered by tapping and so I wrote a small set of systems to accomplish this using inheritance and polymorphism. [You can find the relevant code here](https://github.com/matt123miller/FantabulousFiveGitMirror/tree/master/Assets/Scripts/Touch%20Interaction), though the ```DragRigidbody.cs``` file was provided by Unity in the Standard Assets package.
+
 ## Artificial Intelligence
 
 The code for the AI is quite long, so I won't include snippets here. However please feel free to read the code [for the controller](https://github.com/matt123miller/FantabulousFiveGitMirror/blob/master/Assets/Scripts/Character/AICharacterControl.cs) and for the [AIs vision.](https://github.com/matt123miller/FantabulousFiveGitMirror/blob/master/Assets/Scripts/Character/AISight.cs)
@@ -561,6 +596,7 @@ Interacts with noise
 Scare the AI away
 Editor configurable
 
+[![https://gyazo.com/2bbfb0b82f5a878353e967e299d46e4c](https://i.gyazo.com/2bbfb0b82f5a878353e967e299d46e4c.gif)](https://gyazo.com/2bbfb0b82f5a878353e967e299d46e4c)
 
 ## A little level design
 
