@@ -22,7 +22,7 @@ The art team, responsible for creating, and texturing all our 3D models. Also, w
 * Maytham
 * Aron 
 
-Before we began brainstorming ideas for the project, we knew we wanted to achieve certain goals.
+Before we began discussing ideas for the project, we knew we wanted to achieve certain goals.
 
 * Developed in Unity using C#
 * Targeting Android phones, as we each had access to Android devices
@@ -50,11 +50,12 @@ Whilst I focused upon the programming and systemic aspects of the game, I was al
  
 [![Overview video.](https://img.youtube.com/vi/l7lVipuXxNo/0.jpg)](https://www.youtube.com/watch?v=l7lVipuXxNo)
 
-## Code Quality and Style
+## Code Quality, Style, Design Patterns and Software Engineering Principles
 
 * Try to maintian good code practices and patterns
 * SOLID programming
 * Discussed the Singleton pattern and Liskov Substituion Principle, which is fairly close the to Strategy pattern.
+
 
 [![Overview video.](https://img.youtube.com/vi/V30I5yyePi0/0.jpg)](https://www.youtube.com/watch?v=V30I5yyePi0)
 
@@ -455,6 +456,7 @@ This feature was inspired by the paintings and pictures found in the Harry
 Potter universe and is intended to be a useful way of creating environmental storytelling.
 
 [![https://gyazo.com/c7012c7d58511b1e05ff0c461339e68e](https://i.gyazo.com/c7012c7d58511b1e05ff0c461339e68e.gif)](https://gyazo.com/c7012c7d58511b1e05ff0c461339e68e)
+
 Taken from the movie Harry Potter and the Prisoner of Azkaban (2004) directed by Alfonso Cuarón and distributed by Warner Bros. Pictures.
 
 ```csharp
@@ -616,13 +618,13 @@ The witch entering, which scares the AI and makes them run away.
 - Z fighting textures when pages of turning book get into the same position
 - Patrolling AI relies on there being waypoints assigned in the inspector. If there are none assigned the AI walks on the spot and creates runtime errors.
 
-A variety of issues arose when incorporating final assets from the Art team. There were ongoing struggles with the art team in terms of individual organisation, communication and the lack of a standardised approach. Throughout the project they were seemingly unable to work in an iterative manner and intended to only share and upload assets when they were finished. There was much encouragement from myself and Tish, the producer, to commit and push early during asset development to share work in progress assets. This would allow myself and Tish to begin incorporating their work into the prefabs and test everything worked together nicely. This was not the case however, as Git shows throughout the project each member only made 2-5 commits during 99% of the project. [This excel file](https://1drv.ms/x/s!AkUigMlwGE0g2hmABGItT0vaFqPW) is also a convenient export of the Git logs, though this is best viewed in your Git GUI application of choice.
+The team had agreed early in the project with our project supervisor that 15/5/17 would be an ingroup deadline, simulating a release date. This deadline date for our group meant that no work would be performed following 15/5/17, giving us ample time to write other documentation for the project. Once this date was agreed I ensured that I provided encouragement for each member of our group. This included reminders of the importance to import work into Unity early and often, and to learn the workflow required. I also supported my fellow team members with any issues they may encounter during the project process.
 
-This brings us to the final week of the project. We had previously agreed with the project supervisor and as a group that 15/5/17 would be the our “release date” for the project, and no work would be performed after that date. Even though we had all agreed to this, the art team were completely unprepared for this and were rushing their final work which included texturing all the existing assets, finishing any new assets they’d developed and importing the 2 playable characters and 2 AI characters into Unity with their textures and animations. I encouraged them throughout the project to import their work into Unity early and often, to learn the workflow required and any issues they may encounter along the way. However, this advice was ignored, and on the 15th (our chosen deadline) none of them were ready and most assets was still unfinished or broken. 
+Unfortunately, during the late evening of 15/5/17 the art team made our producer Tish, as well as myself, aware that they were unprepared for the previously agreed deadline. It was eventually agreed to push back release by 2 days. The Git logs (which can be [viewed here](https://1drv.ms/x/s!AkUigMlwGE0g2hmABGItT0vaFqPW) exported to an Excel file) go to show they made 20 commits between them over the course of 4 days – and all of those after our original, mutually agreed upon release date. What was uploaded appeared rushed which included: texturing all the existing assets, finishing any new assets they’d developed and importing the 2 playable characters and 2 AI characters into Unity with their textures and animations.
 
-The Git logs go to show they made 20 commits between them over the course of 4 days – and all of those after our original, mutually agreed upon release date. This entire situation could have been avoided if they were more organised and followed the advice given to both import early and often and share work via Git or even only amongst themselves. Their poor time management and organisation not only impacted their own work, but also myself and Tish. We had to rapidly try to incorporate all their assets within the existing project and mechanics we’d developed within a few hours each day. Because the art team didn't learn to use Unity, outside of just importing their assets, Tish and myself had to learn to use the art and animation tools ourselves, entirely through googling the same things they had every opportunity to search for throughout the last 8 months. We did our best, yet the whole product suffered for their lack of time management and organisation.
+This last-minute rush due to poor-time management and organisation not only impacted the art teams work but also the programmers. Tish and myself were forced to rapidly try and incorporate all of the new assets produced by the art team into the existing project and mechanics that we had developed within a few hours each day. Additionally, due to the art team not able to use Unity aside from importing assets, the programmers had to learn to use art and animation tools ourselves. This led to an unnecessary blending of roles as the programmers adopted art-team skills, skills we learnt by googling the same things they had every opportunity to search for throughout the last 8 months.
 
-
+It is felt that the entire experience of the last several days of the project could have been avoided if the art team had sufficiently imported early and often, shared work via Git or even amongst themselves. Nonetheless we all did our best, yet the final product has suffered due to time management and organisation failings from the art team.
 
 ## Sources used
 
