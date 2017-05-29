@@ -63,6 +63,7 @@ In hindsight we should've used ```DontDestroyOnLoad()``` and hooked into the [sc
 ### How To Implement A Singleton
 
 ```csharp
+// The rest of this class can be found at https://github.com/matt123miller/FantabulousFiveGitMirror/blob/master/Assets/Scripts/Managers/GlobalGameManager.cs
 public class GlobalGameManager : MonoBehaviour
 {
     private static GlobalGameManager _instance;
@@ -313,7 +314,7 @@ public static class DeviceRotation
 
 
 ```csharp
-
+//https://github.com/matt123miller/FantabulousFiveGitMirror/blob/master/Assets/Scripts/Camera/TiltCamera.cs
     [RequireComponent(typeof(Camera))]
     public class TiltCamera : MonoBehaviour
     {
@@ -457,6 +458,7 @@ Potter universe and is intended to be a useful way of creating environmental sto
 Taken from the movie Harry Potter and the Prisoner of Azkaban (2004) directed by Alfonso Cuarón and distributed by Warner Bros. Pictures.
 
 ```csharp
+// https://github.com/matt123miller/FantabulousFiveGitMirror/blob/master/Assets/Scripts/Level%20Design/MovingPortraits.cs
 public class MovingPortraits : MonoBehaviour
 {
     // TODO Maybe turn the render camera off when it's far away from the player for optimisation?
@@ -509,7 +511,7 @@ public class MovingPortraits : MonoBehaviour
 The video was unclear, when showing the set of "drawers" in our main scene, it was using the class and functionality I described in the previous scene. The code is shown below.
 
 ```csharp
-// Find the class here
+// Find the class here https://github.com/matt123miller/FantabulousFiveGitMirror/blob/master/Assets/Scripts/Touch%20Interaction/Tappable.cs
 // This ensures that whatever object this class is attached to has an Animator and EventTrigger.
 // This is useful to reduce the knowledge and memory requirements for others.
 [RequireComponent(typeof(Animator))]
