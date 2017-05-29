@@ -9,7 +9,7 @@ This project tasked our team with collaborating on the design and development of
 
 This page will document the designs and planned outcome of the project, followed by an evaluation of the prototype and my role in its creation. I fulfilled the roles of programmer and game designer, this page evaluates the project from those perspectives. Where relevant I have included code snippets of interesting parts. You're more than welcome to browse the code in full by [checking the repo here](https://bitbucket.org/FantasticFourDesi1212/fantastic-four), which contains the project as of our final submitted work. All code linked from now on will be hosted on my own Github, which mirrors the Bitbucket repo our group shared.
 
-This page will include links to Youtube videos, accessible by clicking the thumbnail like the one shown below. Please click that now!
+This page will include links to Youtube videos, accessible by clicking the thumbnail like the one shown below. Please be aware they will open in this tab instead of making a new one. Please click that now!
 
 [![welcome video here.](https://img.youtube.com/vi/rVGuKL1mfjE/0.jpg)](https://www.youtube.com/watch?v=rVGuKL1mfjE)
 
