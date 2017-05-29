@@ -2,20 +2,12 @@
 # Fantabulous Five - Prototype Mobile Game
 
 
-```
-[![Put a little welcome video here.](https://img.youtube.com/vi/VIDEO ID/0.jpg)](https://www.youtube.com/watch?v=VIDEO ID)
-```
-
-# Contents
-
-Here will be links to each section I hope
-
 
 ## Introduction
 
 This project tasked our team with collaborating on the design and development of a theoretically release worthy prototype in eight months. Working together within a multidisciplinary team, we possessed a range of skills including 3d modelling and animation, programming and game design, supporting each other throughout the process. 
 
-This page will document the designs and planned outcome of the project, followed by an evaluation of the prototype and my role in its creation. I fulfilled the roles of programmer and game designer, this page evaluates the project from those perspectives. Where relevant I have included code snippets of interesting parts. You're more than welcome to browse the code in full by [checking the repo here.](https://github.com/matt123miller/FantabulousFiveGitMirror/tree/master/Assets/Scripts)
+This page will document the designs and planned outcome of the project, followed by an evaluation of the prototype and my role in its creation. I fulfilled the roles of programmer and game designer, this page evaluates the project from those perspectives. Where relevant I have included code snippets of interesting parts. You're more than welcome to browse the code in full by [checking the repo here](https://bitbucket.org/FantasticFourDesi1212/fantastic-four), which contains the project as of our final submitted work. All code linked from now on will be hosted on my own Github, which mirrors the Bitbucket repo our group shared.
 
 This page will include links to Youtube videos, accessible by clicking the thumbnail like the one shown below. Please click that now!
 
@@ -44,6 +36,8 @@ The game is set in the house of the (presumably evil) Witch. Bought to life by s
 The following video was recorded by Tish and gives a quick overview of the game and each mechanic created.
 
 [![Overview video.](https://img.youtube.com/vi/G2uLNMtMSz0/0.jpg)](https://www.youtube.com/watch?v=G2uLNMtMSz0)
+
+Whilst I focused upon the programming and systemic aspects of the game, I was also involved heavily in the games design of mechanics and theme. Throughout the process I was primarily interested in making the player feel a certain way and aimed to design mechanics that reinforce those emotions and themes. Each video should hopefully contain some discussion about why certain mechanics were developed, the design decisionds behind individual parts of a mechanic and the design goals the mechanic should fulfill. I also created the vast majority of our LevelOne scene layout, the main game scene found after character selection.
 
 ## Technical Project Management
 
@@ -429,7 +423,7 @@ public static class DeviceRotation
 ```
 
 
-In the video above discussing quaternions and phone rotation I don't describe the benefits of [animation curves](https://docs.unity3d.com/ScriptReference/AnimationCurve.html). Animation curves can be utilised for all manner of things that require changing a float value over time.
+In the video above discussing quaternions and phone rotation I don't describe the benefits of [animation curves](https://docs.unity3d.com/ScriptReference/AnimationCurve.html). ```AnimationCurve``` can be utilised for all manner of things that require changing a float value over time.
 
 [![https://gyazo.com/b12ed89ba2d704cb963b50ccf8f486cd](https://i.gyazo.com/b12ed89ba2d704cb963b50ccf8f486cd.png)](https://gyazo.com/b12ed89ba2d704cb963b50ccf8f486cd)
 
@@ -447,7 +441,6 @@ These curves represent a mathematical formula, hidden from the user, and plot th
 
 ## Balance Beam
 
-Make a short video, add a code snippet.
 
 [![Magical Porttrait System.](https://img.youtube.com/vi/y2RY-GC1FVQ/0.jpg)](https://www.youtube.com/watch?v=y2RY-GC1FVQ)
 
@@ -457,10 +450,11 @@ Make a short video, add a code snippet.
 
 [![Magical Porttrait System.](https://img.youtube.com/vi/fJjtDoapKW8/0.jpg)](https://www.youtube.com/watch?v=fJjtDoapKW8)
 
-Just like Harry Potter.
-```
-Find image of the portraits
-```
+This feature was inspired by the paintings and pictures found in the Harry 
+Potter universe and is intended to be a useful way of creating environmental storytelling.
+
+[![https://gyazo.com/c7012c7d58511b1e05ff0c461339e68e](https://i.gyazo.com/c7012c7d58511b1e05ff0c461339e68e.gif)](https://gyazo.com/c7012c7d58511b1e05ff0c461339e68e)
+Taken from the movie Harry Potter and the Prisoner of Azkaban (2004) directed by Alfonso Cuarón and distributed by Warner Bros. Pictures.
 
 ```csharp
 public class MovingPortraits : MonoBehaviour
@@ -585,38 +579,61 @@ Before deciding to use Event Triggers, raycasting was used as described in the v
 
 ## Artificial Intelligence
 
-The code for the AI is quite long, so I won't include snippets here. However please feel free to read the code [for the controller](https://github.com/matt123miller/FantabulousFiveGitMirror/blob/master/Assets/Scripts/Character/AICharacterControl.cs) and for the [AIs vision.](https://github.com/matt123miller/FantabulousFiveGitMirror/blob/master/Assets/Scripts/Character/AISight.cs)
+The code for the AI is quite long, so I won't include snippets here. However please feel free to read the code [for the controller](https://github.com/matt123miller/FantabulousFiveGitMirror/blob/master/Assets/Scripts/Character/AICharacterControl.cs) and for the [AIs vision.](https://github.com/matt123miller/FantabulousFiveGitMirror/blob/master/Assets/Scripts/Character/AISight.cs). The video below discusses the AI in detail and it's design goals, whilst below that are 3 GIFs showcasing certain actions the AI can take.
 
-Lots to say here
-Started with what we wanted the AI to achieve
-Different states
-Balance of an FSM vs a single class. Added complexity, FSM doesn't scale well
-Method based
-Interacts with noise
-Scare the AI away
-Editor configurable
 
+Appologies for the long video, but there is a lot to discuss.
+
+[![Magical Porttrait System.](https://img.youtube.com/vi/Xw48p0yyH0E/0.jpg)](https://www.youtube.com/watch?v=Xw48p0yyH0E)
+
+Patrolling
 [![https://gyazo.com/2bbfb0b82f5a878353e967e299d46e4c](https://i.gyazo.com/2bbfb0b82f5a878353e967e299d46e4c.gif)](https://gyazo.com/2bbfb0b82f5a878353e967e299d46e4c)
 
-## A little level design
+Spotted, chasing, then attack.
+[![https://gyazo.com/1d9ad23022f7e5d17f8f545215442ac9](https://i.gyazo.com/1d9ad23022f7e5d17f8f545215442ac9.gif)](https://gyazo.com/1d9ad23022f7e5d17f8f545215442ac9)
 
-Video flying around the level
+The witch entering, which scares the AI and makes them run away.
+[![https://gyazo.com/f8abb5333578853a7b760726ea17dead](https://i.gyazo.com/f8abb5333578853a7b760726ea17dead.gif)](https://gyazo.com/f8abb5333578853a7b760726ea17dead)
+
 
 ## Known Problems
+
+
+- The player randomly teleports to certain locations in the map - thought to be a problem with the grab trigger system with the new assets
+- When reloading to a checkpoint, the invisible wall that handled leaving the spawn point is gone and won't turn back on.
+- New umbrella model does not attatch to new characters properly - appears more like as shield than an umbrella
+- Nnew models for some reason will not co-operate with rope balancing system - was fine using ethan model
+- Camera lerping from idle to travelling positions no longer return to idle position with the new characters
+- The obj script applied on the player adds noise when performing a small jump - should be negated from the system
+- Camera clips through objects
+- Texture on the chests of drawers cause white flickering dots
+- Gap in the sofa model causes strange white pixels to appear between the base and the right arm 
+- Green colour change on the tappable drawers does not appear because of the yellow outline shader
+- Hitting a checkpoint then using the level skip sometimes causes the player to fall out of the world in the next scene
+	- needs a double check when instantiating to check whether checkpoint is in scene at the same pos and if not then load to spawn point instead.
+- Z fighting textures when pages of turning book get into the same position
+- Patrolling AI relies on there being waypoints assigned in the inspector. If there are none assigned the AI walks on the spot and creates runtime errors.
+
+A variety of issues arose when incorporating final assets from the Art team. There were ongoing struggles with the art team in terms of individual organisation, communication and the lack of a standardised approach. Throughout the project they were seemingly unable to work in an iterative manner and intended to only share and upload assets when they were finished. There was much encouragement from myself and Tish, the producer, to commit and push early during asset development to share work in progress assets. This would allow myself and Tish to begin incorporating their work into the prefabs and test everything worked together nicely. This was not the case however, as Git shows throughout the project each member only made 2-5 commits during 99% of the project. [This excel file](https://1drv.ms/x/s!AkUigMlwGE0g2hmABGItT0vaFqPW) is also a convenient export of the Git logs, though this is best viewed in your Git GUI application of choice.
+
+This brings us to the final week of the project. We had previously agreed with the project supervisor and as a group that 15/5/17 would be the our “release date” for the project, and no work would be performed after that date. Even though we had all agreed to this, the art team were completely unprepared for this and were rushing their final work which included texturing all the existing assets, finishing any new assets they’d developed and importing the 2 playable characters and 2 AI characters into Unity with their textures and animations. I encouraged them throughout the project to import their work into Unity early and often, to learn the workflow required and any issues they may encounter along the way. However, this advice was ignored, and on the 15th (our chosen deadline) none of them were ready and most assets was still unfinished or broken. 
+
+The Git logs go to show they made 20 commits between them over the course of 4 days – and all of those after our original, mutually agreed upon release date. This entire situation could have been avoided if they were more organised and followed the advice given to both import early and often and share work via Git or even only amongst themselves. Their poor time management and organisation not only impacted their own work, but also myself and Tish. We had to rapidly try to incorporate all their assets within the existing project and mechanics we’d developed within a few hours each day. Because the art team didn't learn to use Unity, outside of just importing their assets, Tish and myself had to learn to use the art and animation tools ourselves, entirely through googling the same things they had every opportunity to search for throughout the last 8 months. We did our best, yet the whole product suffered for their lack of time management and organisation.
 
 
 
 ## Sources used
 
-I acknowledge the use of the following sources when my own development for this prototype. 
+I acknowledge the use of the following sources when my own development for this prototype:
 
-[Unity documentation](https://docs.unity3d.com/Manual/index.html)
+* [Unity documentation](https://docs.unity3d.com/Manual/index.html)
 
-[Microsoft's C# documentation](https://docs.microsoft.com/en-gb/dotnet/)
+* [Microsoft's C# documentation](https://docs.microsoft.com/en-gb/dotnet/)
 
-Code for reading the [current rotation of the phone]() was provided by [codingChris on the Unity forums](http://answers.unity3d.com/comments/842596/view.html)
+* Code for reading the [current rotation of the phone]() was provided by [codingChris on the Unity forums](http://answers.unity3d.com/comments/842596/view.html)
 
-[Texture pack used for one wooden texture.](https://opengameart.org/content/free-texture-resource-pack-wood-structure-walls-and-textile?page=1)
+* [Texture pack used for one wooden texture.](https://opengameart.org/content/free-texture-resource-pack-wood-structure-walls-and-textile?page=1)
 
-[5 dark wood textures](https://opengameart.org/content/dark-wood-textures)
+* [5 dark wood textures](https://opengameart.org/content/dark-wood-textures)
 
+* [Our music](https://www.dl-sounds.com/royalty-free/puzzle-theme1/)
