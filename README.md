@@ -50,16 +50,18 @@ Whilst I focused upon the programming and systemic aspects of the game, I was al
  
 [![Overview video.](https://img.youtube.com/vi/l7lVipuXxNo/0.jpg)](https://www.youtube.com/watch?v=l7lVipuXxNo)
 
+During development 2 resources were very useful for diagnosing and solving problems I created in Git. These were [Oh Shit, Git!](http://ohshitgit.com/) and [On undoing, fixing, or removing commits in git](http://sethrobertson.github.io/GitFixUm/fixup.html). These are resources providing command line instructions to fix common problems encountered when using Git. These problems are typically use error, which was definitely the case with my work!
+
 ## Code Quality, Style, Design Patterns and Software Engineering Principles
 
 * Try to maintian good code practices and patterns
 * SOLID programming
-* Discussed the Singleton pattern and Liskov Substituion Principle, which is fairly close the to Strategy pattern.
+* Discussed the Singleton pattern and Liskov Substituion Principle, the basis of most other patterns.
 
 
 [![Overview video.](https://img.youtube.com/vi/V30I5yyePi0/0.jpg)](https://www.youtube.com/watch?v=V30I5yyePi0)
 
-In hindsight we should've used ```DontDestroyOnLoad()``` and hooked into the [sceneLoaded event](https://docs.unity3d.com/ScriptReference/SceneManagement.SceneManager-sceneLoaded.html) instead of relying on Singleton objects and their Awake() or Start() methods. This would have simplified some of our design and implementation.
+In hindsight we should've used ```DontDestroyOnLoad()``` and hooked into the [sceneLoaded event](https://docs.unity3d.com/ScriptReference/SceneManagement.SceneManager-sceneLoaded.html) instead of relying on Singleton objects and their Awake() or Start() methods. This would have simplified some of our design and implementation. I learnt to use design patterns from [Robert Nystrom (2004)](http://gameprogrammingpatterns.com/contents.html) and [Head First Design Patterns (Bates, Freeman, Sierra, Robson 2004)](http://shop.oreilly.com/product/9780596007126.do). During the video discussed [SOLID](http://butunclebob.com/ArticleS.UncleBob.PrinciplesOfOod), a famous mnemonic created by Robert Martin (2003). I forgot the I, which is of course the [Interface Segregation Principle](https://drive.google.com/file/d/0BwhCYaYDn8EgOTViYjJhYzMtMzYxMC00MzFjLWJjMzYtOGJiMDc5N2JkYmJi/view) and completely mistook the D from memory, which is the [Dependency Inversion Principle](https://drive.google.com/file/d/0BwhCYaYDn8EgMjdlMWIzNGUtZTQ0NC00ZjQ5LTkwYzQtZjRhMDRlNTQ3ZGMz/view)!
 
 ### How To Implement A Singleton
 
@@ -424,14 +426,22 @@ public static class DeviceRotation
     }
 ```
 
+In the code above I use ```Quaternion.Slerp(a,b,c)```, which is basically the same as the normal ```Mathf.lerp(a,b,c)```, except it performs spherical interpolation to find the rotation. The theory is the same though, you want to know the value that is ```c```% between ```a``` and ```b```. Many developers are using lerp wrong however, which is understandable as the [Unity documentation](https://docs.unity3d.com/ScriptReference/Mathf.Lerp.html) labels the method signature as ```Lerp(float a, float b, float t)```. Because lerp is often used in the context of an update loop where we often use ```Time.deltaTime``` it's a sensible leap to equate the argument ```t``` with time. It's very common to see code such as this: 
 
-In the video above discussing quaternions and phone rotation I don't describe the benefits of [animation curves](https://docs.unity3d.com/ScriptReference/AnimationCurve.html). ```AnimationCurve``` can be utilised for all manner of things that require changing a float value over time.
+```csharp
+transform.position = Vector3.lerp(transform.position, target.position, Time.deltaTime)
+```
+
+This is unwise however, as ```transform.position``` will APPROACH the given ```target.position``` but it won't actually reach it. [This post](http://www.rorydriscoll.com/2016/03/07/frame-rate-independent-damping-using-lerp/) by Rory Driscoll argues that developers who make this mistake are actually performing something very similar to Exponential Decay, whether they are aware of it's existence or not. Instead, [this forum post](http://www.blueraja.com/blog/404/how-to-use-unity-3ds-linear-interpolation-vector3-lerp-correctly) by user BlueRaja explains the correct use of lerp in a clearer fashion than the documentation. 
+
+
+In the video above discussing quaternions and phone rotation I don't describe the benefits of [animation curves](https://docs.unity3d.com/ScriptReference/AnimationCurve.html). ```AnimationCurve``` can be utilised for all manner of things that require changing a float value over time. 
 
 [![https://gyazo.com/b12ed89ba2d704cb963b50ccf8f486cd](https://i.gyazo.com/b12ed89ba2d704cb963b50ccf8f486cd.png)](https://gyazo.com/b12ed89ba2d704cb963b50ccf8f486cd)
 
 Declaring a public AnimationCurve will allow users to create complicated and detailed curves for a variety of reasons.
 
-```chsarp
+```csharp
 public AnimationCurve curve;
 
 void Start() {
@@ -439,7 +449,21 @@ void Start() {
 }
 ```
 
-These curves represent a mathematical formula, hidden from the user, and plot the Y value as X changes. This formula can be accessed using ``` curve.Evaluate(float); ```. This returns the value of Y at the provided X argument value. This was employed to create a smooth transition  between the rotation the player has provided when moving their phone around and the rotation the game would like to return to. Using an ```AnimationCurve``` is much more flexible and elegant than creating a complex loop wherein a programmer writes a formula themselves and uses ```Time.deltaTime```. ```AnimationCurve``` is also more accessible to designers, as it doesn't require them to read or write code or ask an engineer to change the formula.
+These curves represent a mathematical formula, hidden from the user, and plot the Y value as X changes. This formula can be accessed using ``` curve.Evaluate(float) ```. This returns the value of Y at the provided X argument value. This was employed to create a smooth transition  between the rotation the player has provided when moving their phone around and the rotation the game would like to return to. This allowed me to avoid the issues described by Driscoll and follow the advice of BlueRaj's forum post to get the most out of lerping.
+
+```csharp
+while (lerpCompletion < 0.99) 
+{
+    lerpCompletion += Time.smoothDeltaTime * lerpMultiplier;
+    var curveValue = curve.Evaluate(lerpCompletion);
+
+    transform.localRotation = Quaternion.Slerp(_currentRotation, _desiredRotation, curveValue);
+
+    yield return null
+}
+```
+
+Using an ```AnimationCurve``` is much more flexible and elegant than creating a complex loop wherein a programmer writes a formula themselves and uses ```Time.deltaTime```. ```AnimationCurve``` is also more accessible to designers, as it doesn't require them to read or write code or ask an engineer to change the formula.
 
 ## Balance Beam
 
@@ -583,7 +607,7 @@ Before deciding to use Event Triggers, raycasting was used as described in the v
 
 ## Artificial Intelligence
 
-The code for the AI is quite long, so I won't include snippets here. However please feel free to read the code [for the controller](https://github.com/matt123miller/FantabulousFiveGitMirror/blob/master/Assets/Scripts/Character/AICharacterControl.cs) and for the [AIs vision.](https://github.com/matt123miller/FantabulousFiveGitMirror/blob/master/Assets/Scripts/Character/AISight.cs). The video below discusses the AI in detail and it's design goals, whilst below that are 3 GIFs showcasing certain actions the AI can take.
+The code for the AI is quite long, so I won't include snippets here. However please feel free to read the code [for the controller](https://github.com/matt123miller/FantabulousFiveGitMirror/blob/master/Assets/Scripts/Character/AICharacterControl.cs) and for the [AIs vision.](https://github.com/matt123miller/FantabulousFiveGitMirror/blob/master/Assets/Scripts/Character/AISight.cs) The video below discusses the AI in detail and it's design goals, whilst below that are 3 GIFs showcasing certain actions the AI can take.
 
 
 Appologies for the long video, but there is a lot to discuss.
@@ -606,17 +630,19 @@ The witch entering, which scares the AI and makes them run away.
 - The player randomly teleports to certain locations in the map - thought to be a problem with the grab trigger system with the new assets
 - When reloading to a checkpoint, the invisible wall that handled leaving the spawn point is gone and won't turn back on.
 - New umbrella model does not attatch to new characters properly - appears more like as shield than an umbrella
-- Nnew models for some reason will not co-operate with rope balancing system - was fine using ethan model
+- New models for some reason will not co-operate with rope balancing system - was fine using ethan model
 - Camera lerping from idle to travelling positions no longer return to idle position with the new characters
 - The obj script applied on the player adds noise when performing a small jump - should be negated from the system
-- Camera clips through objects
+- Camera clips through objects. 
+    - There is a Unity provided free camera rig that solves this, however because we lerp the camera between various positions depending on the players actions it wouldn't work.
 - Texture on the chests of drawers cause white flickering dots
 - Gap in the sofa model causes strange white pixels to appear between the base and the right arm 
 - Green colour change on the tappable drawers does not appear because of the yellow outline shader
 - Hitting a checkpoint then using the level skip sometimes causes the player to fall out of the world in the next scene
-	- needs a double check when instantiating to check whether checkpoint is in scene at the same pos and if not then load to spawn point instead.
-- Z fighting textures when pages of turning book get into the same position
+	- This could be fixed by checking when instantiating whether a checkpoint is in scene at the same position and if not then load to spawn point instead.
+- The page turning book experiences Z fighting textures the pages get into the same position
 - Patrolling AI relies on there being waypoints assigned in the inspector. If there are none assigned the AI walks on the spot and creates runtime errors.
+
 
 The team had agreed early in the project with our project supervisor that 15/5/17 would be an ingroup deadline, simulating a release date. This deadline date for our group meant that no work would be performed following 15/5/17, giving us ample time to write other documentation for the project. Once this date was agreed I ensured that I provided encouragement for each member of our group. This included reminders of the importance to import work into Unity early and often, and to learn the workflow required. I also supported my fellow team members with any issues they may encounter during the project process.
 
